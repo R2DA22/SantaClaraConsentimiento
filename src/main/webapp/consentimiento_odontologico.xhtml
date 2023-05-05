@@ -32,10 +32,10 @@
                                             </p:outputPanel> 
                                             <p:spacer height="15px" />
                                             <p:dataTable id="procedimientos" var="area"  
-                                                         value="{consentimientoBean.lstArea}" 
+                                                         value="{uiBean.lstArea}"
                                                          editable="true" editMode="cell" rowIndexVar="index"
                                                          widgetVar="cellProcedimientos">
-                                                <p:ajax event="cellEdit" listener="{consentimientoBean.onCellEdit}" process="frmFormulario:procedimientos"  />
+                                                <p:ajax event="cellEdit" listener="{uiBean.onCellEdit}" process="frmFormulario:procedimientos"  />
                                                 <p:column selectionMode="multiple" style="width:40px;text-align:center"/>
                                                                             <p:ajax event="rowEdit" listener="{dtEditView.onRowEdit}" update=":form:msgs" />
                                                                             <p:ajax event="rowEditCancel" listener="{dtEditView.onRowCancel}" update=":form:msgs" />

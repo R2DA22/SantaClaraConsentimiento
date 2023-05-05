@@ -23,7 +23,7 @@ public class Constantes {
     public static final String NAME_ESTILO_SBCPM = "formulario_sbcpm.css";
     public static final String ID_OTRO_PROCEDIMIENTO = "18";
     public static final String REGEX_DOCUMENTO = "^([A-Z]{2})?\\d{6,15}([-\\s]\\d{1})?$";
-    public static final String REGEX_NOMBRE = "^[a-zA-ZÀ-ÿ\\s]{1,40}$";
+    public static final String REGEX_NOMBRE = "^[a-zA-ZÀ-ÿ\\s]{1,150}$";
     public static final String REGEX_DIGITO = "^\\d+$";
     public static final String REGEX_TELEFONO = "^3([0-9]){9}$";
     public static final String REGEX_EMAIL = "^[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$";

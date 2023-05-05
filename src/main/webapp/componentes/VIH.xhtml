@@ -1,0 +1,344 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
+<h:body>
+    <h:inputHidden  value="#{uiBean.consent.anotherTransmission}"  id="transmission"/>
+    <h:inputHidden  value="#{uiBean.consent.mood}"  id="mood"/>
+    <h:inputHidden  value="#{uiBean.consent.useCondom}"  id="condom"/>
+    <p:panelGrid columns="1" layout="grid" styleClass="ui-panelgrid-blank ui-fluid r2da-pnl-grid">
+        <p:outputLabel styleClass="r2da-lbl"
+                       value="Evento a notificar"/>
+        <p:selectOneButton id="rbtn-si-no-0" style="margin-bottom: 10px;"
+                           styleClass="btn-one-button"
+                           value="#{uiBean.consent.event}">
+            <f:selectItem itemLabel="Asintomatico (VIH)" itemValue="Asintomatico (VIH)"/>
+            <f:selectItem itemLabel="Caso SIDA" itemValue="Caso SIDA"/>
+            <f:selectItem itemLabel="Muerte" itemValue="Muerte"/>
+            <p:ajax event="change" process="@this" update="@this"/>
+        </p:selectOneButton>
+        <p:spacer height="15px"/>
+
+        <p:outputPanel styleClass="rd2a-header">
+            <p:outputLabel value="Formulario VIH"/>
+        </p:outputPanel>
+        <p:spacer height="15px"/>
+        <p:outputLabel styleClass="r2da-lbl" value="Captación" rendered="#{catchment}"/>
+        <p:selectOneMenu id="slc-catchment" value="#{uiBean.consent.catchment}" rendered="#{catchment}"
+                         styleClass="rd2a-slc-on-menu">
+            <f:selectItem itemLabel="Remitido" itemValue="Remitido"/>
+            <f:selectItem itemLabel="Espontáneo" itemValue="Espontáneo"/>
+            <f:selectItem itemLabel="Hospitalizado" itemValue="Hospitalizado"/>
+            <f:selectItem itemLabel="Consulta externa" itemValue="Consulta externa"/>
+            <p:ajax event="change" process="@this" oncomplete="setFoco('frmFormulario', 'fecha-vacuna');"/>
+        </p:selectOneMenu>
+        <p:spacer height="15px" rendered="#{aboutHIV}"/>
+        <p:outputLabel rendered="#{aboutHIV}" styleClass="r2da-lbl"
+                       value="¿Sabe de manera correcta y completa que es el sida?"/>
+        <p:selectOneButton rendered="#{aboutHIV}" id="rbtn-si-no-4" style="margin-bottom: 10px;"
+                           styleClass="btn-one-button"
+                           value="#{uiBean.consent.knowledgeAboutHIV}">
+            <f:selectItem itemLabel="Si" itemValue="Si"/>
+            <f:selectItem itemLabel="No" itemValue="No"/>
+            <f:selectItem itemLabel="Parcialmente" itemValue="Parcialmente"/>
+            <p:ajax event="change" process="@this" update="@this"/>
+        </p:selectOneButton>
+        <p:outputLabel rendered="#{aboutMST}" styleClass="r2da-lbl"
+                       value="¿Tiene conocimiento sobre metodos de transmisión?"/>
+        <p:selectOneButton rendered="#{aboutMST}" id="rbtn-si-no-5" style="margin-bottom: 10px;"
+                           styleClass="btn-one-button"
+                           value="#{uiBean.consent.knowledgeAboutMST}">
+            <f:selectItem itemLabel="SI" itemValue="true"/>
+            <f:selectItem itemLabel="NO" itemValue="false"/>
+            <p:ajax event="change" process="@this" update="@this"/>
+        </p:selectOneButton>
+        <p:outputLabel rendered="#{prevention}" styleClass="r2da-lbl"
+                       value="¿Tiene conocimiento sobre modos de prevención?"/>
+        <p:selectOneButton rendered="#{prevention}" id="rbtn-si-no-6" style="margin-bottom: 10px;"
+                           styleClass="btn-one-button"
+                           value="#{uiBean.consent.prevention}">
+            <f:selectItem itemLabel="SI" itemValue="true"/>
+            <f:selectItem itemLabel="NO" itemValue="false"/>
+            <p:ajax event="change" process="@this" update="@this"/>
+        </p:selectOneButton>
+        <p:outputLabel rendered="#{condom}" styleClass="r2da-lbl" value="¿Usa condón?"/>
+        <p:selectOneButton rendered="#{condom}" id="rbtn-si-no-7" style="margin-bottom: 10px;"
+                           styleClass="btn-one-button"
+                           value="#{uiBean.consent.useCondom}">
+            <f:selectItem itemLabel="SI" itemValue="true"/>
+            <f:selectItem itemLabel="NO" itemValue="false"/>
+            <p:ajax event="change" process="@this @(.grp-use-condom)"
+                    update="@this @(.grp-use-condom)" oncomplete="actualizarInputs()"/>
+        </p:selectOneButton>
+        <p:outputPanel styleClass="grp-use-condom">
+            <p:outputPanel rendered="#{uiBean.consent.useCondom}"
+                           styleClass="formulario__grupo" id="grupo-use-condom-reason">
+                <p:outputLabel styleClass="r2da-lbl" value="¿Con que finalidad?"/>
+                <p:inputText id="use-condom-reason"
+                             onkeypress="if (event.keyCode === 13) {
+                                     siguiente('frmFormulario','use-condom-reason');
+                                 }"
+                             styleClass="form-control" value="#{uiBean.consent.useCondomReason}">
+                    <p:ajax event="blur" process="@this"/>
+                </p:inputText>
+                <p class="formulario__input-error">No puede llevar números o caracteres especiales.</p>
+            </p:outputPanel>
+            <p:outputLabel rendered="#{uiBean.consent.useCondom}" styleClass="r2da-lbl"
+                           value="¿Con qué frecuencia?"/>
+            <p:selectOneButton rendered="#{uiBean.consent.useCondom}" id="rbtn-si-no-8" style="margin-bottom: 10px;"
+                               styleClass="btn-one-button"
+                               value="#{uiBean.consent.frequency}">
+                <f:selectItem itemLabel="Siempre" itemValue="Siempre"/>
+                <f:selectItem itemLabel="Algunas veces" itemValue="Algunas veces"/>
+                <p:ajax event="change" process="@this" update="@this"/>
+            </p:selectOneButton>
+            <p:outputPanel styleClass="formulario__grupo" id="grupo-why-no-use-condom">
+                <p:outputLabel rendered="#{!uiBean.consent.useCondom}" styleClass="r2da-lbl"
+                               value="¿Porqué no lo usa?"/>
+                <p:inputText rendered="#{!uiBean.consent.useCondom}" id="why-no-use-condom"
+                             styleClass="form-control" value="#{uiBean.consent.notUseCondomReason}">
+                    <p:ajax event="blur" process="@this"/>
+                </p:inputText>
+                <p class="formulario__input-error">No puede llevar números o caracteres especiales.</p>
+            </p:outputPanel>
+        </p:outputPanel>
+
+        <p:outputLabel rendered="#{typeOfSexualIntercourse}" styleClass="r2da-lbl"
+                       value="¿Tipo de relaciones sexuales?"/>
+        <p:selectOneButton rendered="#{typeOfSexualIntercourse}" id="rbtn-si-no-9" style="margin-bottom: 10px;"
+                           styleClass="btn-one-button"
+                           value="#{uiBean.consent.typeOfSexualIntercourse}">
+            <f:selectItem itemLabel="Estable" itemValue="true"/>
+            <f:selectItem itemLabel="Promiscua" itemValue="false"/>
+            <p:ajax event="change" process="@this" update="@this"/>
+        </p:selectOneButton>
+        <p:outputLabel styleClass="r2da-lbl" value="Mecanismo probable de transmisión"
+                       rendered="#{probableTransmissionMechanism}"/>
+        <p:selectOneMenu rendered="#{probableTransmissionMechanism}" id="slc-transmission-mechanism"
+                         value="#{uiBean.consent.probableTransmissionMechanism}"
+                         styleClass="rd2a-slc-on-menu">
+            <f:selectItem itemLabel="Heterosexual" itemValue="Heterosexual"/>
+            <f:selectItem itemLabel="Homosexual" itemValue="Homosexual"/>
+            <f:selectItem itemLabel="Bisexual" itemValue="Bisexual"/>
+            <f:selectItem itemLabel="Perinatal" itemValue="Perinatal"/>
+            <f:selectItem itemLabel="Psicoactivos Intravenoso" itemValue="Psicoactivos Intravenoso"/>
+            <f:selectItem itemLabel="Accidente de trabajo" itemValue="Accidente de trabajo"/>
+            <f:selectItem itemLabel="Transfusión" itemValue="Transfusión"/>
+            <f:selectItem itemLabel="Otro" itemValue="Otro"/>
+            <f:selectItem itemLabel="Desconocido" itemValue="Desconocido"/>
+            <p:ajax event="change" process="@this @(.grp-transfusion-another)"
+                    update="@this @(.grp-transfusion-another)" oncomplete="actualizarInputs()"/>
+        </p:selectOneMenu>
+        <p:outputPanel styleClass="grp-transfusion-another">
+            <p:outputPanel rendered="#{probableTransmissionMechanism}" styleClass="formulario__grupo"
+                           id="grupo-transfusion-date">
+                <p:outputLabel styleClass="r2da-lbl" value="¿Cuando y donde fue la transfusión?"
+                               rendered="#{uiBean.consent.probableTransmissionMechanism.equals('Transfusión')}"/>
+                <p:inputText id="transfusion-date"
+                             rendered="#{uiBean.consent.probableTransmissionMechanism.equals('Transfusión')}"
+                             onkeypress="if (event.keyCode === 13) {
+                                     siguiente('frmFormulario','transfusion-date');
+                                 }"
+                             styleClass="form-control" value="#{uiBean.consent.transfusionSite}">
+                    <p:ajax event="blur" process="@this"/>
+                </p:inputText>
+            </p:outputPanel>
+            <p:outputPanel rendered="#{probableTransmissionMechanism}" styleClass="formulario__grupo"
+                           id="grupo-another-transmission">
+                <p:outputLabel styleClass="r2da-lbl" value="¿Cuál?"
+                               rendered="#{uiBean.consent.probableTransmissionMechanism.equals('Otro')}"/>
+                <p:inputText id="another-transmission"
+                             rendered="#{uiBean.consent.probableTransmissionMechanism.equals('Otro')}"
+                             onkeypress="if (event.keyCode === 13) {
+                                     siguiente('frmFormulario','another-transmission');
+                                 }"
+                             styleClass="form-control" value="#{uiBean.consent.anotherTransmission}">
+                    <p:ajax event="blur" process="@this"/>
+                </p:inputText>
+                <p class="formulario__input-error">No puede llevar números o caracteres especiales.</p>
+            </p:outputPanel>
+        </p:outputPanel>
+        <p:spacer height="15px"/>
+
+        <p:outputPanel styleClass="rd2a-header">
+            <p:outputLabel value="Enfermedades Asociada"/>
+        </p:outputPanel>
+        <p:dataScroller value="#{uiBean.consent.sicknessList}" var="sick" chunkSize="10">
+            <h:panelGrid columns="1" style="width:100%">
+                <p:selectBooleanCheckbox styleClass="r2da-lbl" value="#{sick.sick}"
+                                         itemLabel="#{sick.name}" process="@this">
+                    <p:ajax update="@(.grp-sickness)" process="@this" />
+                </p:selectBooleanCheckbox>
+                <p:outputPanel styleClass="grp-sickness">
+                    <h:panelGrid columns="2" rendered="#{sick.sick}" width="100%">
+                        <p:outputLabel styleClass="r2da-lbl" value="Organo Compr:"/>
+                        <p:outputPanel styleClass="formulario__grupo" id="grupo-organ">
+                            <p:inputText id="organ"
+                                         onkeypress="if (event.keyCode === 13) {
+                                     siguiente('frmFormulario',#{sick.name}-'organ');
+                                 }"
+                                         styleClass="form-control" value="#{sick.organDescription}">
+                                <p:ajax event="blur" process="@this"/>
+                            </p:inputText>
+                            <p class="formulario__input-error">No puede llevar números o caracteres especiales.</p>
+                        </p:outputPanel>
+
+                        <p:outputLabel styleClass="r2da-lbl" value="Institución DX:"/>
+                        <p:outputPanel styleClass="formulario__grupo" id="grupo-institution" >
+                            <p:inputText id="institution"
+                                         onkeypress="if (event.keyCode === 13) {
+                                     siguiente('frmFormulario','institution');
+                                 }"
+                                         styleClass="form-control" value="#{sick.institutionDX}">
+                                <p:ajax event="blur" process="@this"/>
+                            </p:inputText>
+                            <p class="formulario__input-error">No puede llevar números o caracteres especiales.</p>
+                        </p:outputPanel>
+
+                        <p:outputLabel styleClass="r2da-lbl" value="Fecha"/>
+                        <p:calendar id="sick-date" mask="true" pattern="dd-MM-yyyy"
+                                    value="#{sick.sickDate}">
+                            <p:ajax event="blur" process="@this"/>
+                        </p:calendar>
+                    </h:panelGrid>
+                </p:outputPanel>
+            </h:panelGrid>
+        </p:dataScroller>
+        <p:spacer height="15px"/>
+        <p:outputPanel rendered="#{positiveResultReaction}" styleClass="formulario__grupo"
+                       id="grupo-positive-result-reaction">
+            <p:outputLabel styleClass="r2da-lbl" value="¿Que haría al recibir el resultado positivo?"/>
+            <p:inputText id="positive-result-reaction"
+                         onkeypress="if (event.keyCode === 13) {
+                                     siguiente('frmFormulario','positive-result-reaction');
+                                 }"
+                         styleClass="form-control" value="#{uiBean.consent.positiveResultReaction}">
+                <p:ajax event="blur" process="@this"/>
+            </p:inputText>
+            <p class="formulario__input-error">No puede llevar números o caracteres especiales.</p>
+        </p:outputPanel>
+        <p:spacer height="15px"/>
+
+        <p:outputLabel styleClass="r2da-lbl" value="Cómo se encuentra el paciente durante la entrevista?"
+                       rendered="#{mood}"/>
+        <p:selectOneMenu rendered="#{mood}" id="slc-mood"
+                         value="#{uiBean.consent.mood}"
+                         styleClass="rd2a-slc-on-menu">
+            <f:selectItem itemLabel="Tranquilo" itemValue="Tranquilo"/>
+            <f:selectItem itemLabel="Angustiado" itemValue="Angustiado"/>
+            <f:selectItem itemLabel="Agresivo" itemValue="Agresivo"/>
+            <f:selectItem itemLabel="Deprimido" itemValue="Deprimido"/>
+            <f:selectItem itemLabel="Otra" itemValue="Otra"/>
+            <p:ajax event="change" process="@this @(.grp-another-mood)"
+                    update="@this @(.grp-another-mood)" oncomplete="actualizarInputs()"/>
+        </p:selectOneMenu>
+        <p:outputPanel styleClass="grp-another-mood">
+            <p:outputPanel rendered="#{mood}" styleClass="formulario__grupo"
+                           id="grupo-another-mood">
+                <p:outputLabel styleClass="r2da-lbl" value="¿Cuál?"
+                               rendered="#{uiBean.consent.mood.equals('Otra')}"/>
+                <p:inputText id="another-mood"
+                             rendered="#{uiBean.consent.mood.equals('Otra')}"
+                             onkeypress="if (event.keyCode === 13) {
+                                     siguiente('frmFormulario','another-mood');
+                                 }"
+                             styleClass="form-control" value="#{uiBean.consent.anotherMood}">
+                    <p:ajax event="blur" process="@this"/>
+                </p:inputText>
+                <p class="formulario__input-error">No puede llevar números o caracteres especiales.</p>
+            </p:outputPanel>
+        </p:outputPanel>
+        <p:spacer height="15px"/>
+        <p:outputLabel rendered="#{test}" styleClass="r2da-lbl"
+                       value="¿Debe tomarse la muestra para el VIH?"/>
+        <p:selectOneButton rendered="#{test}" id="rbtn-si-no-10" style="margin-bottom: 10px;"
+                           styleClass="btn-one-button"
+                           value="#{uiBean.consent.test}">
+            <f:selectItem itemLabel="SI" itemValue="true"/>
+            <f:selectItem itemLabel="NO" itemValue="false"/>
+            <p:ajax event="change" process="@this" update="@this"/>
+        </p:selectOneButton>
+        <p:outputPanel rendered="#{test}" styleClass="formulario__grupo"
+                       id="grupo-test-reason">
+            <p:outputLabel styleClass="r2da-lbl" value="¿por qué?"/>
+            <p:inputText id="test-reason"
+                         onkeypress="if (event.keyCode === 13) {
+                                     siguiente('frmFormulario','test-reason');
+                                 }"
+                         styleClass="form-control" value="#{uiBean.consent.testReason}">
+                <p:ajax event="blur" process="@this"/>
+            </p:inputText>
+            <p class="formulario__input-error">No puede llevar números o caracteres especiales.</p>
+        </p:outputPanel>
+        <p:spacer height="15px"/>
+
+        <p:outputPanel styleClass="rd2a-header" rendered="#{laboratoryHIV}">
+            <p:outputLabel value="Laboratorio"/>
+        </p:outputPanel>
+        <p:spacer height="15px"/>
+
+        <p:outputPanel styleClass="formulario__grupo" id="grupo-lab-date" rendered="#{laboratoryHIV}">
+            <p:outputLabel styleClass="r2da-lbl" value="Fecha"/>
+            <p:calendar id="lab-date" mask="true" pattern="dd-MM-yyyy"
+                        value="#{uiBean.consent.laboratoryHIVDate}">
+                <p:ajax event="blur" process="@this"/>
+            </p:calendar>
+        </p:outputPanel>
+        <p:spacer height="15px"/>
+        <p:selectOneButton rendered="#{laboratoryHIV}" id="rbtn-si-no-11" style="margin-bottom: 10px;"
+                           styleClass="btn-one-button"
+                           value="#{uiBean.consent.laboratoryHIV}">
+            <f:selectItem itemLabel="Reactivo" itemValue="true"/>
+            <f:selectItem itemLabel="No reactivo" itemValue="false"/>
+            <p:ajax event="change" process="@this" update="@this"/>
+        </p:selectOneButton>
+        <p:spacer height="15px"/>
+        <p:outputPanel styleClass="rd2a-header" rendered="#{confirmHIV}">
+            <p:outputLabel value="Confirmatoria"/>
+        </p:outputPanel>
+        <p:spacer height="15px"/>
+
+        <p:outputPanel styleClass="formulario__grupo" id="grupo-confirm-date" rendered="#{confirmHIV}">
+            <p:outputLabel styleClass="r2da-lbl" value="Fecha"/>
+            <p:calendar id="confirm-date" mask="true" pattern="dd-MM-yyyy"
+                        value="#{uiBean.consent.confirmHIVDate}">
+                <p:ajax event="blur" process="@this"/>
+            </p:calendar>
+        </p:outputPanel>
+        <p:spacer height="15px"/>
+
+        <p:selectOneButton rendered="#{confirmHIV}" id="rbtn-si-no-12" style="margin-bottom: 10px;"
+                           styleClass="btn-one-button"
+                           value="#{uiBean.consent.confirmHIV}">
+            <f:selectItem itemLabel="Positivo" itemValue="Positivo"/>
+            <f:selectItem itemLabel="Negativo" itemValue="Negativo"/>
+            <f:selectItem itemLabel="Indeterminado" itemValue="Indeterminado"/>
+            <p:ajax event="change" process="@this" update="@this"/>
+        </p:selectOneButton>
+        <p:spacer height="15px"/>
+        <p:outputPanel styleClass="rd2a-header" rendered="#{fastTestDate}">
+            <p:outputLabel value="Prueba rapida utilizada"/>
+        </p:outputPanel>
+        <p:spacer height="15px"/>
+        <p:outputPanel styleClass="formulario__grupo" id="grupo-fast-test-date" rendered="#{fastTestDate}">
+            <p:outputLabel styleClass="r2da-lbl" value="Lote"/>
+            <p:calendar id="fast-test-date" mask="true" pattern="dd-MM-yyyy"
+                        value="#{uiBean.consent.fastTestDate}">
+                <p:ajax event="blur" process="@this"/>
+            </p:calendar>
+        </p:outputPanel>
+        <p:outputPanel styleClass="formulario__grupo" id="grupo-fast-test-date-expiration" rendered="#{fastTestDate}">
+            <p:outputLabel styleClass="r2da-lbl" value="Fecha de vencimiento"/>
+            <p:calendar id="fast-test-date-expiration" mask="true" pattern="dd-MM-yyyy"
+                        value="#{uiBean.consent.fastTestExpirationDate}">
+                <p:ajax event="blur" process="@this"/>
+            </p:calendar>
+        </p:outputPanel>
+
+    </p:panelGrid>
+
+</h:body>
+</html>

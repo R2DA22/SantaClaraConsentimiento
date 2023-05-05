@@ -1,57 +1,61 @@
 <?xml version='1.0' encoding='UTF-8' ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:p="http://primefaces.org/ui"
-      >
-    <h:head>
-        <title>Consentimiento informado aceptación de procedimiento</title>
-        <h:outputStylesheet name="bootstrap/css/bootstrap.min.css"/>
-        <h:outputStylesheet name="css/general.css"/>
-        <h:outputScript name="bootstrap/js/bootstrap.min.js"/>
-        <h:outputScript name="js/general.js"/>
-        <link rel="icon" type="image/png"  href="resources/imagenes/logo.png" />
-        <meta http-equiv="Expires" content="0"/>
-        <meta http-equiv="Last-Modified" content="0"/>
-        <meta http-equiv="Cache-Control" content="no-cache, mustrevalidate"/>
-        <meta http-equiv="Pragma" content="no-cache"></meta>
-        <meta name="viewport" content="width=device-width"></meta>
-    </h:head>
-    <h:body style="background: white">
-        <p:focus context="frmFormulario"/>
-        <h:form id="frmFormulario" >
-            <div  style="margin-left: 5%;  ">
-                    <p:panelGrid id="pnl-menu" columns="3" columnClasses="ui-g-12 ui-md-4,ui-g-12 ui-md-4,ui-g-12 ui-md-4" layout="grid" styleClass="ui-panelgrid-blank ui-fluid">
-                        <p:commandButton id="btn-1" value="Procedimiento" styleClass="btn-menu btn-blue"  
-                                         onstart="PF('statusDialog').show()"  
-                                         action="#{consentimientoBean.redirect(1)}"
-                                         />
-                        <p:commandButton id="btn-2" value="Covid" styleClass="btn-menu btn-green" 
-                                         onstart="PF('statusDialog').show()" 
-                                         action="#{consentimientoBean.redirect(2)}"
-                                         process="@form"/>
-                        <p:commandButton id="btn-3" value="Urgencias" styleClass="btn-menu btn-red" onstart="PF('statusDialog').show()"  
-                                         action="#{consentimientoBean.redirect(3)}"
-                                         process="@form"/>
-                        <p:commandButton id="btn-4" rendered="true" value="Odontología" styleClass="btn-menu btn-blue" onstart="PF('statusDialog').show()"  
-                                         action="#{consentimientoBean.redirect(4)}"
-                                         process="@form"/>
-                        <p:commandButton id="btn-5" rendered="true"
-                                         value="Odontología Marco Covid" styleClass="btn-menu btn-green" onstart="PF('statusDialog').show()"  
-                                         action="#{consentimientoBean.redirect(5)}"
-                                         process="@form"/>
-                        <p:commandButton id="btn-6" rendered="true"
-                                         value="Profesionales" styleClass="btn-menu btn-blue" onstart="PF('statusDialog').show()"  
-                                         action="#{consentimientoBean.redirect(6)}"
-                                         process="@form"/>
+>
+<h:head>
+    <title>Consentimiento informado aceptación de procedimiento</title>
+    <h:outputStylesheet name="bootstrap/css/bootstrap.min.css"/>
+    <h:outputStylesheet name="css/general.css"/>
+    <h:outputScript name="bootstrap/js/bootstrap.min.js"/>
+    <h:outputScript name="js/general.js"/>
+    <link rel="icon" type="image/png" href="resources/imagenes/logo.png"/>
+    <meta http-equiv="Expires" content="0"/>
+    <meta http-equiv="Last-Modified" content="0"/>
+    <meta http-equiv="Cache-Control" content="no-cache, mustrevalidate"/>
+    <meta http-equiv="Pragma" content="no-cache"></meta>
+    <meta name="viewport" content="width=device-width"></meta>
+</h:head>
+<h:body style="background: white">
+    <p:focus context="frmFormulario"/>
+    <h:form id="frmFormulario">
+        <div style="margin-left: 5%;  ">
+            <p:panelGrid id="pnl-menu" columns="3" columnClasses="ui-g-12 ui-md-4,ui-g-12 ui-md-4,ui-g-12 ui-md-4"
+                         layout="grid" styleClass="ui-panelgrid-blank ui-fluid">
+                <p:commandButton id="btn-1" value="Procedimiento" styleClass="btn-menu btn-blue"
+                                 onstart="PF('statusDialog').show()"
+                                 action="#{uiBean.redirect(1)}"/>
+                <p:commandButton id="btn-2" value="Covid" styleClass="btn-menu btn-green"
+                                 onstart="PF('statusDialog').show()"
+                                 action="#{uiBean.redirect(2)}"
+                                 process="@form"/>
+                <p:commandButton id="btn-3" value="Urgencias" styleClass="btn-menu btn-red"
+                                 onstart="PF('statusDialog').show()"
+                                 action="#{uiBean.redirect(3)}"
+                                 process="@form"/>
+                <p:commandButton id="btn-4" rendered="true" value="Odontología" styleClass="btn-menu btn-blue"
+                                 onstart="PF('statusDialog').show()"
+                                 action="sub-index-odontologico.xhtml?faces-redirect=true"
+                                 process="@form"/>
+                <p:commandButton id="btn-7" rendered="true"
+                                 value="VIH" styleClass="btn-menu btn-green" onstart="PF('statusDialog').show()"
+                                 action="#{uiBean.redirect(7)}"
+                                 process="@form"/>
+                <p:commandButton id="btn-6" rendered="true"
+                                 value="Profesionales" styleClass="btn-menu btn-red"
+                                 onstart="PF('statusDialog').show()"
+                                 action="#{uiBean.redirect(6)}"
+                                 process="@form"/>
 
-                    </p:panelGrid>
-            </div>
-        </h:form>
-        <div class="footer" style="color: black">
-            <h:outputText value="Versión 6.2" />
+            </p:panelGrid>
         </div>
-    </h:body>
+    </h:form>
+    <div class="footer" style="color: black">
+        <h:outputText value="Versión 6.2"/>
+    </div>
+</h:body>
 </html>
 
 

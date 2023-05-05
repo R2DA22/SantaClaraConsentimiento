@@ -6,19 +6,19 @@
       xmlns:f="http://java.sun.com/jsf/core">
     <h:body>
                 <p:outputLabel id="pnl-acudiente" style="width: 100%;" >
-                    <p:spacer height="15px" rendered="#{!consentimientoBean.quienDiligencia}" />
-                    <p:panelGrid  rendered="#{!consentimientoBean.quienDiligencia}" 
+                    <p:spacer height="15px" rendered="#{uiBean.consent.guardian}" />
+                    <p:panelGrid  rendered="#{uiBean.consent.guardian}"
                                   columns="1" layout="grid" styleClass="ui-panelgrid-blank ui-fluid r2da-pnl-grid"  >
                         <p:outputPanel styleClass="rd2a-header" >
                             <p:outputLabel value="Datos del acudiente" />
                         </p:outputPanel> 
                         <p:spacer height="15px" />
                         <p:outputLabel styleClass="r2da-lbl" value="Tipo documento" />
-                        <p:selectOneMenu id="slc-tipo-documento" value="#{consentimientoBean.consentimiento.paciente.acudiente.tipoDocumento}"
+                        <p:selectOneMenu id="slc-tipo-documento" value="#{uiBean.consent.guardianData.documentType}"
                                          converter="objectConverter"
                                          styleClass="rd2a-slc-on-menu"  >
-                            <f:selectItems value="#{consentimientoBean.lstTipoDocumento}" var="tipodoc" 
-                                           itemLabel="#{tipodoc.descripcion}"  
+                            <f:selectItems value="#{uiBean.listDocumentTypes}" var="tipodoc"
+                                           itemLabel="#{tipodoc.description}"
                                            itemValue="#{tipodoc}" />
                             <p:ajax event="change" process="@this" oncomplete="setFoco('frmFormulario', 'documento-acudiente');" />
                         </p:selectOneMenu>
@@ -28,9 +28,9 @@
                                          onkeypress="if (event.keyCode === 13) {
                                                      siguiente('frmFormulario', 'documento-acudiente');
                                                  }"
-                                         styleClass="form-control" value="#{consentimientoBean.consentimiento.paciente.acudiente.nroDocumento}"  >
+                                         styleClass="form-control" value="#{uiBean.consent.guardianData.documentNumber}"  >
                                 <p:ajax event="blur" process="@this" update="frmFormulario:grupo-nombre-acudiente"
-                                        listener="#{consentimientoBean.consultarAcudiente()}" oncomplete="actualizarInputs()"/>
+                                        listener="#{uiBean.findGuardian()}" oncomplete="actualizarInputs()"/>
                             </p:inputText>
                             <p class="formulario__input-error">El documento solo llevar máximo 15 digitos.</p>
                         </p:outputPanel>
@@ -43,7 +43,7 @@
                                                      siguiente('frmFormulario', 'nombre-acudiente');
 
                                                  }"
-                                         styleClass="form-control" value="#{consentimientoBean.consentimiento.paciente.acudiente.nombre}">
+                                         styleClass="form-control" value="#{uiBean.consent.guardianData.name}">
                                 <p:ajax event="blur" process="@this" />
                             </p:inputText>
                             <p class="formulario__input-error">El nombre no puede llevar números o caracteres especiales.</p>

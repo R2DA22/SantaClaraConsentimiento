@@ -11,6 +11,8 @@ import java.net.URISyntaxException;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpServletRequest;
+
+import app.config.Properties;
 import org.primefaces.context.RequestContext;
 
 /**
@@ -44,7 +46,7 @@ public class UtilWeb {
     public String getRealPath() {
         String realPath = "";
         try {
-            URI u = getClass().getResource(Propiedades.class.getSimpleName() + ".class").toURI();
+            URI u = getClass().getResource(PdfFile.class.getSimpleName() + ".class").toURI();
             realPath = u.getPath().substring(0, u.getPath().indexOf("classes"));
             try {
                 String OS = System.getProperty("os.name").toLowerCase();

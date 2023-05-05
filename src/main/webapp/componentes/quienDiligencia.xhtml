@@ -8,9 +8,9 @@
         <p:panelGrid columns="1"  layout="grid" styleClass="ui-panelgrid-blank ui-fluid r2da-pnl-grid">
             <p:outputLabel styleClass="r2da-lbl" value="Con acudiente?"/>
             <p:selectOneButton id="rbtn-quien-diligencia" style="margin-bottom: 10px;" 
-                               styleClass="btn-one-button" value="#{consentimientoBean.quienDiligencia}"  >
-                <f:selectItem   itemLabel="SI" itemValue="false"  />
-                <f:selectItem   itemLabel="NO" itemValue="true" />
+                               styleClass="btn-one-button" value="#{uiBean.consent.guardian}"  >
+                <f:selectItem   itemLabel="SI" itemValue="true"  />
+                <f:selectItem   itemLabel="NO" itemValue="false" />
                 <p:ajax event="change" process="@this" update="@this pnl-acudiente pnl-paciente @(.pnl-profesional)"  oncomplete="actualizarInputs()"  />
             </p:selectOneButton>
         </p:panelGrid>

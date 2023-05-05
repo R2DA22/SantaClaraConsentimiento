@@ -10,14 +10,13 @@ import com.itextpdf.html2pdf.HtmlConverter;
 import com.itextpdf.kernel.geom.PageSize;
 import com.itextpdf.kernel.pdf.PdfDocument;
 import com.itextpdf.kernel.pdf.PdfWriter;
-import controlador.GestorBD;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.Objects;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import modelo.Consentimiento;
-import modelo.Procedimiento;
+import core.domain.Consentimiento;
+import core.domain.process.Process;
 
 /**
  *
@@ -28,53 +27,33 @@ public class PdfFile {
     public PdfFile() {
     }
 
-    public static String generarPDF(Consentimiento consentimiento, String HTML, String tipoFormulario) {
+    public static void createPDF(String pathPdf, String HTML) {
         PdfWriter writer = null;
         try {
-            GestorBD configuracion = new GestorBD();
             ConverterProperties converterProperties = new ConverterProperties();
-            String dest = configuracion.cargarConfiguracion("PATH_SAVE_PDF_FILES") + consentimiento.getPaciente().getNroDocumento() + " " + consentimiento.getFecha("dd_MM_yyyy_HH_mm") + ".pdf";
-            writer = new PdfWriter(new File(dest));
+            writer = new PdfWriter(new File(pathPdf));
             PdfDocument pdfDocument = new PdfDocument(writer);
             pdfDocument.setDefaultPageSize(PageSize.LETTER);
-//            HTML = HTML.replace("@LstProcedimientos@", procedimientos);
-//
-////            Document doc = HtmlConverter.convertToDocument(HTML, pdfDocument, converterProperties);
-//            //        BufferedImage imagen = new BufferedImage(100, 100, BufferedImage.TYPE_INT_RGB);
-////        try {
-////            File file = new File("c:\\davis.png");
-////            imagen.setValue(ImageIO.write(ConvertirTxtPng(pruebaImagen, "png", file)));
-////        } catch (IOException ex) {
-////
-////        }
-////            doc.close();
-//            String formularioDiligenciado=diligenciarFormulario(consentimiento, HTML, tipoFormulario);
+
             HtmlConverter.convertToPdf(HTML, pdfDocument, converterProperties);
-            return dest;
-//            System.out.println("PDF Created!");
-        } catch (FileNotFoundException ex) {
-            Logger.getLogger(PdfFile.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IOException ex) {
-            Logger.getLogger(PdfFile.class.getName()).log(Level.SEVERE, null, ex);
         } catch (Exception ex) {
             Logger.getLogger(PdfFile.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
             try {
-                writer.close();
+                Objects.requireNonNull(writer).close();
             } catch (IOException ex) {
                 Logger.getLogger(PdfFile.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
-        return "";
     }
 
-    public static String diligenciarFormulario(Consentimiento datos, String formatoHtml, String tipoFormulario) {
+    public static String diligenciarFormulario(Consentimiento datos, String formatoHtml) {
         formatoHtml = formatoHtml.replace("@Fecha@", datos.getFecha("dd/MM/yyyy"));
-        if (datos.getProfesional() != null && datos.getProfesional().getNombre() != null) {
-            formatoHtml = formatoHtml.replace("@NombreEnfermero@", datos.getProfesional().getNombre());
+        if (datos.getProfesional() != null && datos.getProfesional().getName() != null) {
+            formatoHtml = formatoHtml.replace("@NombreEnfermero@", datos.getProfesional().getName());
         }
-        if (datos.getProfesional().getNroRegistro() != null) {
-            formatoHtml = formatoHtml.replace("@NroRegistro@", datos.getProfesional().getNroRegistro().toString());
+        if (datos.getProfesional().getRegistryNumber() != null) {
+            formatoHtml = formatoHtml.replace("@NroRegistro@", datos.getProfesional().getRegistryNumber().toString());
         }
         if (datos.getNroAdmision() != null) {
             formatoHtml = formatoHtml.replace("@NroAdmision@", "A" + datos.getNroAdmision().toString());
@@ -86,21 +65,21 @@ public class PdfFile {
         formatoHtml = formatoHtml.replace("@Dia@", datos.getNombreDia() + " " + datos.getFecha("dd"));
         formatoHtml = formatoHtml.replace("@Mes@", datos.getNombreMes());
         formatoHtml = formatoHtml.replace("@Anio@", datos.getFecha("yyyy"));
-        if (datos.getPaciente() != null && datos.getPaciente().getAcudiente() != null && datos.getPaciente().getAcudiente().getNroDocumento() != null) {
-            formatoHtml = formatoHtml.replace("@TipoDoc@", datos.getPaciente().getAcudiente().getTipoDocumento().getInicial());
-            formatoHtml = formatoHtml.replace("@NroDocumento@", datos.getPaciente().getAcudiente().getNroDocumento());
-            formatoHtml = formatoHtml.replace("@TipoDoc2@", datos.getPaciente().getTipoDocumento().getInicial());
-            formatoHtml = formatoHtml.replace("@NroDocumento2@", datos.getPaciente().getNroDocumento());
-            formatoHtml = formatoHtml.replace("@Acudiente@", datos.getPaciente().getAcudiente().getNombre());
+        if (datos.getPaciente() != null && datos.getPaciente().getGuardian() != null && datos.getPaciente().getGuardian().getDocumentNumber() != null) {
+            formatoHtml = formatoHtml.replace("@TipoDoc@", datos.getPaciente().getGuardian().getDocumentType().getInitials());
+            formatoHtml = formatoHtml.replace("@NroDocumento@", datos.getPaciente().getGuardian().getDocumentNumber());
+            formatoHtml = formatoHtml.replace("@TipoDoc2@", datos.getPaciente().getDocumentType().getInitials());
+            formatoHtml = formatoHtml.replace("@NroDocumento2@", datos.getPaciente().getDocumentNumber());
+            formatoHtml = formatoHtml.replace("@Acudiente@", datos.getPaciente().getGuardian().getName());
         } else {
-            formatoHtml = formatoHtml.replace("@TipoDoc@", datos.getPaciente().getTipoDocumento().getInicial());
-            formatoHtml = formatoHtml.replace("@NroDocumento@", datos.getPaciente().getNroDocumento());
+            formatoHtml = formatoHtml.replace("@TipoDoc@", datos.getPaciente().getDocumentType().getInitials());
+            formatoHtml = formatoHtml.replace("@NroDocumento@", datos.getPaciente().getDocumentNumber());
             formatoHtml = formatoHtml.replace("@TipoDoc2@", "");
             formatoHtml = formatoHtml.replace("@NroDocumento2@", "");
             formatoHtml = formatoHtml.replace("@Acudiente@", "");
         }
         if (datos.getPaciente() != null) {
-            formatoHtml = formatoHtml.replace("@Paciente@", datos.getPaciente().getNombre());
+            formatoHtml = formatoHtml.replace("@Paciente@", datos.getPaciente().getName());
         } else {
             formatoHtml = formatoHtml.replace("@Paciente@", "____________________________________");
         }
@@ -110,8 +89,8 @@ public class PdfFile {
         formatoHtml = formatoHtml.replace("@datosPersonalesNO@", datos.getTratamientoDatos() ? "_" : "<u><i>X</i></u>");
 
         if (datos.getProcedimiento() != null && !datos.getProcedimiento().isEmpty()) {
-            for (Procedimiento procedure : datos.getProcedimiento()) {
-                formatoHtml = formatoHtml.replace("@Procedimiento" + procedure.getIdProcedimiento() + "@", "<div align=\"center\">X</div>");
+            for (Process procedure : datos.getProcedimiento()) {
+                formatoHtml = formatoHtml.replace("@Procedimiento" + procedure.getIdProcess() + "@", "<div align=\"center\">X</div>");
             }
             formatoHtml = formatoHtml.replaceAll("@Procedimiento\\d+@", "");
         }
@@ -121,8 +100,8 @@ public class PdfFile {
         }
         if (datos.getDisiente()) {
             String desentimientos = "";
-            for (Procedimiento desentimiento : datos.getDesentimientos()) {
-                desentimientos = desentimientos + (desentimientos.equals("") ? desentimiento.getDescripcion() : ", " + desentimiento.getDescripcion());
+            for (Process desentimiento : datos.getDesentimientos()) {
+                desentimientos = desentimientos + (desentimientos.equals("") ? desentimiento.getDescription() : ", " + desentimiento.getDescription());
             }
             formatoHtml = formatoHtml.replace("@desentimientos@", desentimientos);
             formatoHtml = formatoHtml.replace("@displayFirma@", "block");
@@ -148,7 +127,7 @@ public class PdfFile {
         }
         if (datos.getVacunado() != null) {
             if (datos.getVacunado()) {
-                formatoHtml = formatoHtml.replaceAll("@nombreVacuna@", datos.getVacuna().getNombre());
+                formatoHtml = formatoHtml.replaceAll("@nombreVacuna@", datos.getVacuna().getName());
                 formatoHtml = formatoHtml.replaceAll("@fechaVacuna@", datos.getFechaVacuna("dd/MM/yyyy"));
             } else {
                 formatoHtml = formatoHtml.replaceAll("@nombreVacuna@", "");
@@ -182,9 +161,9 @@ public class PdfFile {
         } else {
             formatoHtml = formatoHtml.replace("@dosis@", "_");
         }
-        if (datos.getProfesional() != null && datos.getProfesional().getNroDocumento() != null) {
-            formatoHtml = formatoHtml.replace("@NroDocumentoProfesional@", datos.getProfesional().getNroDocumento());
-            formatoHtml = formatoHtml.replace("@TipoDocProfesional@", datos.getProfesional().getTipoDocumento().getInicial());
+        if (datos.getProfesional() != null && datos.getProfesional().getDocumentNumber() != null) {
+            formatoHtml = formatoHtml.replace("@NroDocumentoProfesional@", datos.getProfesional().getDocumentNumber());
+            formatoHtml = formatoHtml.replace("@TipoDocProfesional@", datos.getProfesional().getDocumentType().getInitials());
         }
         formatoHtml = formatoHtml.replace("@riesgoSI@", datos.getRiesgoBeneficio() ? "<u><i>X</i></u>" : "_");
         formatoHtml = formatoHtml.replace("@riesgoNO@", !datos.getRiesgoBeneficio() ? "<u><i>X</i></u>" : "_");

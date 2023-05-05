@@ -10,7 +10,7 @@
             <p:spacer height="15px" rendered="#{riesgos}"/>
             <p:outputLabel rendered="#{riesgos}" styleClass="r2da-lbl" value="Se explicó la naturaleza,el objetivo, riesgos y beneficios:" />
             <p:selectOneButton rendered="#{riesgos}" id="rbtn-si-no-1" style="margin-bottom: 10px;" styleClass="btn-one-button" 
-                               value="#{consentimientoBean.consentimiento.riesgoBeneficio}"  >
+                               value="#{uiBean.consent.riskBenefit}"  >
                 <f:selectItem   itemLabel="SI" itemValue="true"  />
                 <f:selectItem   itemLabel="NO" itemValue="false" />
                 <p:ajax event="change" process="@this" update="@this"   />
@@ -19,7 +19,7 @@
 
             <p:outputLabel rendered="#{tratamiento_datos}" styleClass="r2da-lbl" value="Se autoriza el tratamiento de datos personales:" />
             <p:selectOneButton rendered="#{tratamiento_datos}" id="rbtn-si-no-2" style="margin-bottom: 10px;" 
-                               styleClass="btn-one-button" value="#{consentimientoBean.consentimiento.tratamientoDatos}"  >
+                               styleClass="btn-one-button" value="#{uiBean.consent.dataTreatment}"  >
                 <f:selectItem   itemLabel="SI" itemValue="true"  />
                 <f:selectItem   itemLabel="NO" itemValue="false" />
                 <p:ajax event="change" process="@this" update="@this"   />

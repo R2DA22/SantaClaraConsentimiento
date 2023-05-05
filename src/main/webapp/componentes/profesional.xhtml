@@ -13,11 +13,11 @@
                 </p:outputPanel> 
                 <p:spacer height="15px" />
                 <p:outputLabel styleClass="r2da-lbl" value="Tipo documento" rendered="#{documento}" />
-                <p:selectOneMenu rendered="#{documento}" id="slc-tipo-documento-profesional" value="#{consentimientoBean.consentimiento.profesional.tipoDocumento}"
+                <p:selectOneMenu rendered="#{documento}" id="slc-tipo-documento-profesional" value="#{uiBean.consent.professional.documentType}"
                                  converter="objectConverter"
                                  styleClass="rd2a-slc-on-menu"  >
-                    <f:selectItems value="#{consentimientoBean.lstTipoDocumento}" var="tipodoc" 
-                                   itemLabel="#{tipodoc.descripcion}"  
+                    <f:selectItems value="#{uiBean.listDocumentTypes}" var="tipodoc"
+                                   itemLabel="#{tipodoc.description}"
                                    itemValue="#{tipodoc}" />
                     <p:ajax event="change" process="@this" oncomplete="setFoco('frmFormulario', 'documento-profesional');" />
                 </p:selectOneMenu>
@@ -25,13 +25,13 @@
                 <p:outputPanel styleClass="formulario__grupo"  id="grupo-documento-profesional" rendered="#{documento}" >
 
                     <p:outputLabel styleClass="r2da-lbl" value="Nro. documento" />
-                    <p:inputText id="documento-profesional" 
+                    <p:inputText id="documento-profesional"
                                  onkeypress="if (event.keyCode === 13) {
                                              siguiente('frmFormulario', 'documento-profesional');
                                          }"
-                                 styleClass="form-control" value="#{consentimientoBean.consentimiento.profesional.nroDocumento}"  >
-                            <p:ajax event="blur" process="@this" update="@(.formulario__grupo) slc-especialidad-profesional"
-                                    listener="#{consentimientoBean.consultarProfesional()}" oncomplete="actualizarInputs()"/>
+                                 styleClass="form-control" value="#{uiBean.consent.professional.documentNumber}"  >
+                            <p:ajax event="blur" process="@this" update="grupo-nombre-profesional, grupo-registro, slc-especialidad-profesional"
+                                    listener="#{uiBean.findProfessional()}" oncomplete="actualizarInputs()"/>
                     </p:inputText>
                     <p class="formulario__input-error">El documento solo llevar máximo 15 digitos.</p>
                 </p:outputPanel>
@@ -43,17 +43,17 @@
                                               siguiente('frmFormulario', 'nombre-profesional');
                                           }
                                   "
-                                  styleClass="form-control" value="#{consentimientoBean.consentimiento.profesional.nombre}" >
+                                  styleClass="form-control" value="#{uiBean.consent.professional.name}" >
                         <p:ajax event="blur" process="@this" />
                     </p:inputText>
                     <div id="prueba"/>
                     <p class="formulario__input-error">El nombre no puede llevar números o caracteres especiales.</p>
                 </p:outputPanel>
                 <p:outputLabel styleClass="r2da-lbl" value="Especialidad" rendered="#{especialidad}" />
-                <p:selectOneMenu rendered="#{especialidad}" id="slc-especialidad-profesional" value="#{consentimientoBean.consentimiento.profesional.especialidad}"
+                <p:selectOneMenu rendered="#{especialidad}" id="slc-especialidad-profesional" value="#{uiBean.consent.professional.specialty}"
                                  styleClass="rd2a-slc-on-menu" converter="objectConverter" >
-                    <f:selectItems value="#{consentimientoBean.lstEspecialidades}" var="espe" 
-                                   itemLabel="#{espe.descripcion}"  
+                    <f:selectItems value="#{uiBean.specialities}" var="espe"
+                                   itemLabel="#{espe.descripcion}"
                                    itemValue="#{espe}" />
                     <p:ajax event="change" process="@this" oncomplete="setFoco('frmFormulario', 'registro');" />
                 </p:selectOneMenu>
@@ -63,7 +63,7 @@
                                 if (event.keyCode === 13) {
                                     siguiente('frmFormulario', 'registro');
                             }"
-                                 styleClass="form-control" value="#{consentimientoBean.consentimiento.profesional.nroRegistro}" >
+                                 styleClass="form-control" value="#{uiBean.consent.professional.registryNumber}" >
                         <p:ajax event="blur" process="@this" />
                     </p:inputText>
                     <p class="formulario__input-error">No es un número válido.</p>

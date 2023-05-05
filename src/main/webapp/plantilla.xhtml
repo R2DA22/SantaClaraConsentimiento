@@ -24,14 +24,18 @@
                     <h:form>
                         <p:remoteCommand name="settearMensajeAlert" 
                                          update="modalAlert " process="@this"/>
-                        <p:remoteCommand name="guardar"  actionListener="#{consentimientoBean.guardar()}" 
-                                         update="formSoporte" 
-                                         onstart="PF('statusDialog').show()" 
+                        <p:remoteCommand name="saveConsent"  actionListener="#{uiBean.saveConsent()}"
+                                         update="formSoporte"
+                                         onstart="PF('statusDialog').show()"
                                          oncomplete="PF('statusDialog').hide()" />
-                        <p:remoteCommand name="limpiarFormulario"  action="#{consentimientoBean.limpiarCampos()}" />
+                        <p:remoteCommand name="saveProfessional"  actionListener="#{uiBean.saveProfessional()}"
+                                         update="formSoporte"
+                                         onstart="PF('statusDialog').show()"
+                                         oncomplete="PF('statusDialog').hide()" />
+                        <p:remoteCommand name="limpiarFormulario"  action="#{uiBean.cleanFields()}" />
 
-                        <p:remoteCommand name="reiniciar"  action="#{consentimientoBean.limpiarCampos()}"              />
-                        <p:remoteCommand name="volver"  action="#{consentimientoBean.redirect(0)}"              />
+                        <p:remoteCommand name="reiniciar"  action="#{uiBean.cleanFields()}"              />
+                        <p:remoteCommand name="volver"  action="#{uiBean.redirect(0)}"              />
 
 
                     </h:form>
@@ -46,19 +50,19 @@
                   closeOnEscape="true" 
                   showHeader="false"  modal="true" closable="false" resizable="false"  >
             <h:form id="modalAlert" >
-                <p:outputPanel styleClass="alert-#{consentimientoBean.tipoalerta}" style="display:block"  >
-                    <h:outputText value="#{consentimientoBean.headerMessage}"  />
+                <p:outputPanel styleClass="alert-#{uiBean.alertType}" style="display:block"  >
+                    <h:outputText value="#{uiBean.headerMessage}"  />
                 </p:outputPanel>
                 <br/>
-                <center><h:graphicImage value="/resources/imagenes/#{consentimientoBean.tipoalerta}.png" style="height: 10%;width: 10%;"/></center><br/>
+                <center><h:graphicImage value="/resources/imagenes/#{uiBean.alertType}.png" style="height: 10%;width: 10%;"/></center><br/>
                 <center>
-                    <h:outputLabel id="lblAlert" style="word-wrap: break-word;max-width: 397px;color:#616161;" value="#{consentimientoBean.mensajeError}">
+                    <h:outputLabel id="lblAlert" style="word-wrap: break-word;max-width: 397px;color:#616161;" value="#{uiBean.errorMessage}">
                     </h:outputLabel>
                 </center>
                 <br/>
                 <center>
-                    <p:commandButton id="btncerrar" value="Cerrar" styleClass="btn btn-#{consentimientoBean.tipoalerta}"
-                                     actionListener="#{consentimientoBean.limpiarCampos()}" 
+                    <p:commandButton id="btncerrar" value="Cerrar" styleClass="btn btn-#{uiBean.alertType}"
+                                     actionListener="#{uiBean.cleanFields()}"
                                      oncomplete="PF('dlgAlertModal').hide();" />
                 </center>
 
@@ -71,9 +75,9 @@
                   modal="true"   >
             <h:form id="formSoporte" styleClass="formSoporte">
                 <p:media width="100%" height="500" 
-                         rendered="#{consentimientoBean.streamedContent != null and consentimientoBean.streamedContent!= ''}" 
-                         player="pdf" value="#{consentimientoBean.streamedContent}"  cache="false">
-                    Su navegador no soporta el formato pdf, por favor de <h:outputLink value="#{consentimientoBean.streamedContent}">click aqui</h:outputLink> para descargarlo.
+                         rendered="#{uiBean.streamedContent != null and uiBean.streamedContent!= ''}" 
+                         player="pdf" value="#{uiBean.streamedContent}"  cache="false">
+                    Su navegador no soporta el formato pdf, por favor de <h:outputLink value="#{uiBean.streamedContent}">click aqui</h:outputLink> para descargarlo.
                 </p:media>
             </h:form>
         </p:dialog>
@@ -86,7 +90,7 @@
             <p:graphicImage  name="imagenes/consultando.gif" />
         </p:dialog>
         <div class="footer">
-            <h:outputText value="Versión 6.2" />
+            <h:outputText value="Versión 6.3" />
         </div>
     </h:body>
 </html>

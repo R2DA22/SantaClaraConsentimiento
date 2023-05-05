@@ -8,7 +8,7 @@
             <p:outputPanel styleClass="formulario__grupo"  id="grupo-firma" >
                 <p:outputLabel styleClass="r2da-lbl"  value="#{descripcionFirma}" />
                 <p:signature id="firma" style="width:100%;height:300px;" widgetVar="wgdfirma"  
-                             value="#{consentimientoBean.consentimiento.firma}"  guideline="true" >
+                             value="#{uiBean.consent.signature}"  guideline="true" >
                     <span class="ui-icon ui-icon-closethick r2da-icon-times" title="Limpiar firma"  onclick="PF('wgdfirma').clear()"/>
                 </p:signature>
                 <p class="formulario__input-error">No se puede generar el registro sin la firma del paciente o acudiente.</p>

@@ -12,7 +12,7 @@
                     <!--                    <p:panelGrid columns="1"  layout="grid" styleClass="ui-panelgrid-blank ui-fluid r2da-pnl-grid">
                                             <p:outputLabel styleClass="r2da-lbl" value="Con acudiente?"/>
                                             <p:selectOneButton id="rbtn-quien-diligencia" style="margin-bottom: 10px;" 
-                                                               styleClass="btn-one-button" value="{consentimientoBean.quienDiligencia}"  >
+                                                               styleClass="btn-one-button" value="{uiBean.quienDiligencia}"  >
                                                 <f:selectItem   itemLabel="SI" itemValue="false"  />
                                                 <f:selectItem   itemLabel="NO" itemValue="true" />
                                                 <p:ajax event="change" process="@this" update="@this pnl-acudiente pnl-paciente pnl-profesional"  oncomplete="actualizarInputs()"  />
@@ -33,7 +33,7 @@
                                                                               setFoco('frmFormulario', 'registro');
                                                                           }
                                                                   "
-                                                                  styleClass="form-control" value="{consentimientoBean.consentimiento.profesional}" >
+                                                                  styleClass="form-control" value="{uiBean.consentimiento.profesional}" >
                                                         <p:ajax event="blur" process="@this" />
                                                     </p:inputText>
                                                     <div id="prueba"/>
@@ -42,7 +42,7 @@
                                                 <p:outputPanel styleClass="formulario__grupo"  id="grupo-registro" >
                                                     <p:outputLabel styleClass="r2da-lbl" value="Nro. registro" />
                                                     <p:inputText id="registro" onkeypress="
-                                                            if ({consentimientoBean.quienDiligencia}) {
+                                                            if ({uiBean.quienDiligencia}) {
                                                                 if (event.keyCode === 13) {
                                                                     setFoco('frmFormulario', 'documento-paciente');
                                                                 }
@@ -51,7 +51,7 @@
                                                                     setFoco('frmFormulario', 'documento-acudiente');
                                                                 }
                                                             }"
-                                                                 styleClass="form-control" value="{consentimientoBean.consentimiento.nroRegistro}" >
+                                                                 styleClass="form-control" value="{uiBean.consentimiento.nroRegistro}" >
                                                         <p:ajax event="blur" process="@this" />
                                                     </p:inputText>
                                                     <p class="formulario__input-error">No es un número válido.</p>
@@ -79,18 +79,18 @@
                         <ui:param name="area" value="false" />
                     </ui:include>
                     <!--                    <p:outputLabel id="pnl-acudiente" style="width: 100%;" >
-                                            <p:spacer height="15px" rendered="{!consentimientoBean.quienDiligencia}" />
-                                            <p:panelGrid  rendered="{!consentimientoBean.quienDiligencia}" 
+                                            <p:spacer height="15px" rendered="{!uiBean.quienDiligencia}" />
+                                            <p:panelGrid  rendered="{!uiBean.quienDiligencia}"
                                                           columns="1" layout="grid" styleClass="ui-panelgrid-blank ui-fluid r2da-pnl-grid"  >
                                                 <p:outputPanel styleClass="rd2a-header" >
                                                     <p:outputLabel value="Datos del acudiente" />
                                                 </p:outputPanel> 
                                                 <p:spacer height="15px" />
                                                 <p:outputLabel styleClass="r2da-lbl" value="Tipo documento" />
-                                                <p:selectOneMenu id="slc-tipo-documento" value="{consentimientoBean.consentimiento.paciente.acudiente.tipoDocumento}"
+                                                <p:selectOneMenu id="slc-tipo-documento" value="{uiBean.consentimiento.paciente.acudiente.tipoDocumento}"
                                                                  converter="objectConverter"
                                                                  styleClass="rd2a-slc-on-menu"  >
-                                                    <f:selectItems value="{consentimientoBean.lstTipoDocumento}" var="tipodoc" 
+                                                    <f:selectItems value="{uiBean.lstTipoDocumento}" var="tipodoc"
                                                                    itemLabel="{tipodoc.descripcion}"  
                                                                    itemValue="{tipodoc}" />
                                                     <p:ajax event="change" process="@this" oncomplete="setFoco('frmFormulario', 'documento-acudiente');" />
@@ -101,9 +101,9 @@
                                                                  onkeypress="if (event.keyCode === 13) {
                                                                              setFoco('frmFormulario', 'nombre-acudiente');
                                                                          }"
-                                                                 styleClass="form-control" value="{consentimientoBean.consentimiento.paciente.acudiente.nroDocumento}"  >
+                                                                 styleClass="form-control" value="{uiBean.consentimiento.paciente.acudiente.nroDocumento}"  >
                                                         <p:ajax event="blur" process="@this" update="frmFormulario:grupo-nombre-acudiente"
-                                                                listener="{consentimientoBean.consultarAcudiente()}" oncomplete="actualizarInputs()"/>
+                                                                listener="{uiBean.consultarAcudiente()}" oncomplete="actualizarInputs()"/>
                                                     </p:inputText>
                                                     <p class="formulario__input-error">El documento solo llevar máximo 15 digitos.</p>
                                                 </p:outputPanel>
@@ -116,28 +116,28 @@
                                                                              setFoco('frmFormulario', 'documento-paciente');
                     
                                                                          }"
-                                                                 styleClass="form-control" value="{consentimientoBean.consentimiento.paciente.acudiente.nombre}">
+                                                                 styleClass="form-control" value="{uiBean.consentimiento.paciente.acudiente.nombre}">
                                                         <p:ajax event="blur" process="@this" />
                                                     </p:inputText>
                                                     <p class="formulario__input-error">El nombre no puede llevar números o caracteres especiales.</p>
                     
                                                                                     <br/>
-                                                                                    <p:inputText id="input-apellido" styleClass="form-control" value="{consentimientoBean.consentimiento.paciente.apellido}" placeholder="Apellido"/>
+                                                                                    <p:inputText id="input-apellido" styleClass="form-control" value="{uiBean.consentimiento.paciente.apellido}" placeholder="Apellido"/>
                                                 </p:outputPanel>
                                             </p:panelGrid>
                                         </p:outputLabel>-->
                     <!--                    <p:outputLabel id="pnl-paciente" style="width: 100%;" >
-                                            <p:spacer height="15px"  rendered="{!consentimientoBean.quienDiligencia}" />
+                                            <p:spacer height="15px"  rendered="{!uiBean.quienDiligencia}" />
                                             <p:panelGrid  columns="1" layout="grid" styleClass="ui-panelgrid-blank ui-fluid r2da-pnl-grid"  >
                                                 <p:outputPanel styleClass="rd2a-header" >
                                                     <p:outputLabel value="Datos del paciente" />
                                                 </p:outputPanel> 
                                                 <p:spacer height="15px" />
                                                 <p:outputLabel styleClass="r2da-lbl" value="Tipo documento" />
-                                                <p:selectOneMenu id="slc-tipo-documento-paciente" value="{consentimientoBean.consentimiento.paciente.tipoDocumento}"
+                                                <p:selectOneMenu id="slc-tipo-documento-paciente" value="{uiBean.consentimiento.paciente.tipoDocumento}"
                                                                  converter="objectConverter"
                                                                  styleClass="rd2a-slc-on-menu"  >
-                                                    <f:selectItems value="{consentimientoBean.lstTipoDocumento}" var="tipodoc" 
+                                                    <f:selectItems value="{uiBean.lstTipoDocumento}" var="tipodoc"
                                                                    itemLabel="{tipodoc.descripcion}"  
                                                                    itemValue="{tipodoc}" />
                                                     <p:ajax event="change" process="@this"  oncomplete="setFoco('frmFormulario', 'documento-paciente');" />
@@ -149,9 +149,9 @@
                                                                  onkeypress="if (event.keyCode === 13) {
                                                                              setFoco('frmFormulario', 'nombre-paciente');
                                                                          }"
-                                                                 styleClass="form-control" value="{consentimientoBean.consentimiento.paciente.nroDocumento}"  >
+                                                                 styleClass="form-control" value="{uiBean.consentimiento.paciente.nroDocumento}"  >
                                                         <p:ajax event="blur" process="@this" update="grupo-nombre-paciente"
-                                                                listener="{consentimientoBean.consultarPaciente()}" oncomplete="actualizarInputs()"/>
+                                                                listener="{uiBean.consultarPaciente()}" oncomplete="actualizarInputs()"/>
                                                     </p:inputText>
                                                     <p class="formulario__input-error">El documento solo llevar máximo 15 digitos.</p>
                     
@@ -165,7 +165,7 @@
                                                                              setFoco('frmFormulario', 'admision');
                     
                                                                          }"
-                                                                 styleClass="form-control" value="{consentimientoBean.consentimiento.paciente.nombre}">
+                                                                 styleClass="form-control" value="{uiBean.consentimiento.paciente.nombre}">
                                                         <p:ajax event="blur" process="@this" />
                                                     </p:inputText>
                     
@@ -179,7 +179,7 @@
                                             <p:outputPanel styleClass="formulario__grupo"  id="grupo-admision" >
                                                 <p:outputLabel styleClass="r2da-lbl" value="Nro. Admisión" />
                                                 <p:inputText id="admision" 
-                                                             styleClass="form-control" value="{consentimientoBean.consentimiento.nroAdmision}" >
+                                                             styleClass="form-control" value="{uiBean.consentimiento.nroAdmision}" >
                                                     <p:ajax event="blur" process="@this" />
                                                 </p:inputText>
                                                 <p class="formulario__input-error">No es un número válido.</p>
@@ -193,9 +193,9 @@
                         </p:outputPanel> 
                         <p:spacer height="15px" />
                         <p:selectManyCheckbox styleClass="r2d-one-radio" id="procedimiento" converter="objectConverter"
-                                              value="{consentimientoBean.consentimiento.procedimiento}" style="width: 100%;" 
+                                              value="{uiBean.consentimiento.procedimiento}" style="width: 100%;"
                                               layout="responsive" columns="2"   >
-                            <f:selectItems  value="{consentimientoBean.lstProcedimiento}" 
+                            <f:selectItems  value="{uiBean.lstProcedimiento}"
                                             var="procedimiento" itemLabel="{procedimiento.descripcion}" 
                                             itemValue="{procedimiento}"/>
                             <p:ajax event="change" process="@this @(.grp-otro)"   update="@this @(.grp-otro)" />
@@ -203,10 +203,10 @@
 
                         <p:spacer height="15px" />
                         <p:outputPanel styleClass="grp-otro" >
-                            <p:outputPanel rendered="{consentimientoBean.consentimiento.procedimiento.contains(consentimientoBean.otroProcedimiento)}"  style="font-size: 15px">
+                            <p:outputPanel rendered="{uiBean.consentimiento.procedimiento.contains(uiBean.otroProcedimiento)}"  style="font-size: 15px">
                                 <p:outputLabel styleClass="r2da-lbl" value="¿Otro?, cual:"/>
                                 <p:inputText  id="input-otro" styleClass="form-control" 
-                                              value="{consentimientoBean.consentimiento.otroProcedimiento}" >
+                                              value="{uiBean.consentimiento.otroProcedimiento}" >
                                     <p:ajax event="blur" process="@this" />
                                 </p:inputText>
                             </p:outputPanel>
@@ -217,7 +217,7 @@
                                             <p:spacer height="15px" />
                                             <p:outputLabel styleClass="r2da-lbl" value="Se explicó la naturaleza,el objetivo, riesgos y beneficios:" />
                                             <p:selectOneButton id="rbtn-si-no-1" style="margin-bottom: 10px;" styleClass="btn-one-button" 
-                                                               value="{consentimientoBean.consentimiento.riesgoBeneficio}"  >
+                                                               value="{uiBean.consentimiento.riesgoBeneficio}"  >
                                                 <f:selectItem   itemLabel="SI" itemValue="true"  />
                                                 <f:selectItem   itemLabel="NO" itemValue="false" />
                                                 <p:ajax event="change" process="@this" update="@this"   />
@@ -226,7 +226,7 @@
                     
                                             <p:outputLabel styleClass="r2da-lbl" value="Se autoriza el tratamiento de datos personales:" />
                                             <p:selectOneButton id="rbtn-si-no-2" style="margin-bottom: 10px;" 
-                                                               styleClass="btn-one-button" value="{consentimientoBean.consentimiento.tratamientoDatos}"  >
+                                                               styleClass="btn-one-button" value="{uiBean.consentimiento.tratamientoDatos}"  >
                                                 <f:selectItem   itemLabel="SI" itemValue="true"  />
                                                 <f:selectItem   itemLabel="NO" itemValue="false" />
                                                 <p:ajax event="change" process="@this" update="@this"   />
@@ -247,7 +247,7 @@
                                                 <p:outputLabel styleClass="r2da-lbl"  value="Autorizo la realización del procedimiento" />
                     
                                                 <p:signature id="firma" style="width:100%;height:300px;" widgetVar="wgdfirma"  
-                                                             value="{consentimientoBean.consentimiento.firma}"    guideline="true">
+                                                             value="{uiBean.consentimiento.firma}"    guideline="true">
                     
                                                     <span class="ui-icon ui-icon-closethick r2da-icon-times" title="Limpiar firma"  onclick="PF('wgdfirma').clear()"/>
                                                 </p:signature>

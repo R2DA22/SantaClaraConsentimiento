@@ -1,0 +1,34 @@
+package infrastructure.repository.professional;
+
+import core.domain.professional.Professional;
+import core.usecase.professional.ProfessionalRepositoryInterface;
+import infrastructure.repository.ClientDB;
+
+import java.sql.ResultSet;
+
+public class ProfessionalRepository implements ProfessionalRepositoryInterface {
+
+    private ClientDB dataBase;
+    private MapperInterface mapper;
+
+    public ProfessionalRepository(ClientDB dataBase, MapperInterface mapper) {
+        this.dataBase = dataBase;
+        this.mapper = mapper;
+    }
+
+    @Override
+    public void create(Professional professional) throws Exception {
+        dataBase.createProfessional(professional);
+    }
+
+    @Override
+    public void update(Professional professional) throws Exception {
+        dataBase.updateProfessional(professional);
+    }
+
+    @Override
+    public Professional find(Integer idType, String id) throws Exception {
+        ResultSet resultSet= dataBase.findProfessional(idType,id);
+        return mapper.toDomain(resultSet);
+    }
+}
