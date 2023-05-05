@@ -1,0 +1,149 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
+    <h:body>
+        <p:outputLabel id="pnl-paciente" style="width: 100%;" >
+            <p:spacer height="15px"  rendered="#{!consentimientoBean.quienDiligencia}" />
+            <p:panelGrid  columns="1" layout="grid" styleClass="ui-panelgrid-blank ui-fluid r2da-pnl-grid"  >
+                <p:outputPanel styleClass="rd2a-header" >
+                    <p:outputLabel value="Datos del paciente" />
+                </p:outputPanel> 
+                <p:spacer height="15px" />
+                <p:outputLabel styleClass="r2da-lbl" value="Tipo documento" />
+                <p:selectOneMenu id="slc-tipo-documento-paciente" value="#{consentimientoBean.consentimiento.paciente.tipoDocumento}"
+                                 converter="objectConverter"
+                                 styleClass="rd2a-slc-on-menu"  >
+                    <f:selectItems value="#{consentimientoBean.lstTipoDocumento}" var="tipodoc" 
+                                   itemLabel="#{tipodoc.descripcion}"  
+                                   itemValue="#{tipodoc}" />
+                    <p:ajax event="change" process="@this"  oncomplete="setFoco('frmFormulario', 'documento-paciente');" />
+                </p:selectOneMenu>
+                <p:outputPanel styleClass="formulario__grupo"  id="grupo-documento-paciente" >
+
+                    <p:outputLabel styleClass="r2da-lbl" value="Nro. documento" />
+                    <p:inputText id="documento-paciente" 
+                                 onkeypress="if (event.keyCode === 13) {
+                                             siguiente('frmFormulario', 'documento-paciente');
+                                         }"
+                                 styleClass="form-control" value="#{consentimientoBean.consentimiento.paciente.nroDocumento}"  >
+                        <p:ajax event="blur" process="@this" update="grupo-nombre-paciente"
+                                listener="#{consentimientoBean.consultarPaciente()}" oncomplete="actualizarInputs()"/>
+                    </p:inputText>
+                    <p class="formulario__input-error">El documento solo llevar máximo 15 digitos.</p>
+
+                </p:outputPanel>
+                <p:outputPanel styleClass="formulario__grupo"  id="grupo-nombre-paciente" >
+
+                    <!--</div>-->
+                    <p:outputLabel styleClass="r2da-lbl" value="Nombre"/>
+                    <p:inputText id="nombre-paciente" 
+                                 onkeypress="if (event.keyCode === 13) {
+                                             siguiente('frmFormulario', 'nombre-paciente');
+                                         }"
+                                 styleClass="form-control" value="#{consentimientoBean.consentimiento.paciente.nombre}">
+                        <p:ajax event="blur" process="@this" />
+                    </p:inputText>
+
+                    <p class="formulario__input-error">El nombre no puede llevar números o caracteres especiales.</p>
+
+                </p:outputPanel>
+                <p:outputPanel styleClass="formulario__grupo"  id="grupo-edad-paciente"  rendered="#{edad}" >
+
+                    <p:outputLabel styleClass="r2da-lbl" value="Edad"/>
+                    <p:inputText id="edad-paciente" 
+                                 onkeypress="if (event.keyCode === 13) {
+                                             siguiente('frmFormulario', 'edad-paciente');
+
+                                         }"
+                                 styleClass="form-control" value="#{consentimientoBean.consentimiento.edad}">
+                        <p:ajax event="blur" process="@this" />
+                    </p:inputText>
+                    <p class="formulario__input-error">Edad no válida.</p>
+                </p:outputPanel>
+                <p:outputPanel styleClass="formulario__grupo"  id="grupo-telefono-paciente"   rendered="#{telefono}">
+
+                    <p:outputLabel styleClass="r2da-lbl" value="Teléfono"/>
+                    <p:inputText id="telefono-paciente" 
+                                 onkeypress="if (event.keyCode === 13) {
+                                             siguiente('frmFormulario', 'telefono-paciente');
+
+                                         }"
+                                 styleClass="form-control" value="#{consentimientoBean.consentimiento.telefono}">
+                        <p:ajax event="blur" process="@this" />
+                    </p:inputText>
+                    <p class="formulario__input-error">Número de telefono no válido.</p>
+                </p:outputPanel>
+                <p:outputPanel styleClass="formulario__grupo"  id="grupo-email-paciente"  rendered="#{email}" >
+
+                    <p:outputLabel styleClass="r2da-lbl" value="Correo electrónico"/>
+                    <p:inputText id="email-paciente" 
+                                 onkeypress="if (event.keyCode === 13) {
+                                             siguiente('frmFormulario', 'email-paciente');
+                                         }"
+                                 styleClass="form-control" value="#{consentimientoBean.consentimiento.email}">
+                        <p:ajax event="blur" process="@this" />
+                    </p:inputText>
+                    <p class="formulario__input-error">Correo no válido.</p>
+                </p:outputPanel>
+                <p:outputPanel styleClass="formulario__grupo"  id="grupo-ocupacion-paciente"  rendered="#{ocupacion}" >
+
+                    <!--</div>-->
+                    <p:outputLabel styleClass="r2da-lbl" value="Ocupacion"/>
+                    <p:inputText id="ocupacion-paciente" 
+                                 onkeypress="if (event.keyCode === 13) {
+                                             siguiente('frmFormulario', 'ocupacion-paciente');
+
+                                         }"
+                                 styleClass="form-control" value="#{consentimientoBean.consentimiento.ocupacion}">
+                        <p:ajax event="blur" process="@this" />
+                    </p:inputText>
+
+                    <p class="formulario__input-error">No puede llevar números o caracteres especiales.</p>
+
+                </p:outputPanel>
+                <p:outputPanel styleClass="formulario__grupo"  id="grupo-eps-paciente"  rendered="#{eps}" >
+                    <p:outputLabel styleClass="r2da-lbl" value="EPS"/>
+                    <p:inputText id="eps-paciente" 
+                                 onkeypress="if (event.keyCode === 13) {
+                                             siguiente('frmFormulario', 'eps-paciente');
+
+                                         }"
+                                 styleClass="form-control" value="#{consentimientoBean.consentimiento.EPS}">
+                        <p:ajax event="blur" process="@this" />
+                    </p:inputText>
+                    <p class="formulario__input-error">La EPS no puede llevar números o caracteres especiales.</p>
+                    <p:spacer height="15px" />
+                </p:outputPanel>
+                <p:outputPanel styleClass="formulario__grupo"  id="grupo-admision" rendered="#{nro_admision}" >
+                    <p:outputLabel styleClass="r2da-lbl" value="Nro. Admisión" />
+                    <p:inputText id="admision" 
+                                 onkeypress="if (event.keyCode === 13) {
+                                             siguiente('frmFormulario', 'admision');
+
+                                         }"
+                                 styleClass="form-control" value="#{consentimientoBean.consentimiento.nroAdmision}" >
+                        <p:ajax event="blur" process="@this" />
+                    </p:inputText>
+                    <p class="formulario__input-error">No es un número válido.</p>
+                </p:outputPanel>
+                <p:spacer height="15px"   />
+                <p:outputPanel styleClass="formulario__grupo"  id="grupo-usuario-de"  rendered="#{usuario_de}">
+                    <p:outputLabel styleClass="r2da-lbl" value="Siendo usuario de"/>
+                    <p:inputText id="usuario-de" 
+                                 onkeypress="if (event.keyCode === 13) {
+                                             setFoco('frmFormulario', 'firma');
+
+                                         }"
+                                 styleClass="form-control" value="#{consentimientoBean.consentimiento.EPS}">
+                        <p:ajax event="blur" process="@this" />
+                    </p:inputText>
+                    <p class="formulario__input-error">No puede llevar números o caracteres especiales.</p>
+                    <p:spacer height="15px" />
+                </p:outputPanel>
+            </p:panelGrid>
+        </p:outputLabel>
+    </h:body>
+</html>

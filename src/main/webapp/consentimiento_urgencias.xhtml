@@ -1,0 +1,178 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+    <h:body>
+        <ui:composition template="plantilla.xhtml" >        
+            <ui:define name="content">
+                <p:focus context="frmFormulario"/>
+                <h:form id="frmFormulario" >
+                    <!--                    <p:panelGrid columns="1"  layout="grid" styleClass="ui-panelgrid-blank ui-fluid r2da-pnl-grid">
+                                            <p:outputLabel styleClass="r2da-lbl" value="Con acudiente?"/>
+                                            <p:selectOneButton id="rbtn-quien-diligencia" style="margin-bottom: 10px;" 
+                                                               styleClass="btn-one-button" value="{consentimientoBean.quienDiligencia}"  >
+                                                <f:selectItem   itemLabel="SI" itemValue="false"  />
+                                                <f:selectItem   itemLabel="NO" itemValue="true" />
+                                                <p:ajax event="change" process="@this" update="@this pnl-acudiente pnl-paciente"  oncomplete="actualizarInputs()"  />
+                                            </p:selectOneButton>
+                                        </p:panelGrid>
+                                        <p:spacer height="15px"  />
+                    
+                    
+                                        <p:outputLabel id="pnl-acudiente" style="width: 100%;" >
+                                            <p:spacer height="15px" rendered="{!consentimientoBean.quienDiligencia}" />
+                                            <p:panelGrid  rendered="{!consentimientoBean.quienDiligencia}" 
+                                                          columns="1" layout="grid" styleClass="ui-panelgrid-blank ui-fluid r2da-pnl-grid"  >
+                                                <p:outputPanel styleClass="rd2a-header" >
+                                                    <p:outputLabel value="Datos del acudiente" />
+                                                </p:outputPanel> 
+                                                <p:spacer height="15px" />
+                                                <p:outputLabel styleClass="r2da-lbl" value="Tipo documento" />
+                                                <p:selectOneMenu id="slc-tipo-documento" value="{consentimientoBean.consentimiento.paciente.acudiente.tipoDocumento}"
+                                                                 converter="objectConverter"
+                                                                 styleClass="rd2a-slc-on-menu"  >
+                                                    <f:selectItems value="{consentimientoBean.lstTipoDocumento}" var="tipodoc" 
+                                                                   itemLabel="{tipodoc.descripcion}"  
+                                                                   itemValue="{tipodoc}" />
+                                                    <p:ajax event="change" process="@this" oncomplete="setFoco('frmFormulario', 'documento-acudiente');" />
+                                                </p:selectOneMenu>
+                                                <p:outputPanel styleClass="formulario__grupo"  id="grupo-documento-acudiente" >
+                                                    <p:outputLabel styleClass="r2da-lbl" value="Nro. documento" />
+                                                    <p:inputText id="documento-acudiente" 
+                                                                 onkeypress="if (event.keyCode === 13) {
+                                                                             setFoco('frmFormulario', 'nombre-acudiente');
+                                                                         }"
+                                                                 styleClass="form-control" value="{consentimientoBean.consentimiento.paciente.acudiente.nroDocumento}"  >
+                                                        <p:ajax event="blur" process="@this" update="frmFormulario:grupo-nombre-acudiente"
+                                                                listener="{consentimientoBean.consultarAcudiente()}" oncomplete="actualizarInputs()"/>
+                                                    </p:inputText>
+                                                    <p class="formulario__input-error">El documento solo llevar máximo 15 digitos.</p>
+                                                </p:outputPanel>
+                                                <p:outputPanel styleClass="formulario__grupo"  id="grupo-nombre-acudiente" >
+                    
+                                                    </div>
+                                                    <p:outputLabel styleClass="r2da-lbl" value="Nombre"/>
+                                                    <p:inputText id="nombre-acudiente" 
+                                                                 onkeypress="if (event.keyCode === 13) {
+                                                                             setFoco('frmFormulario', 'documento-paciente');
+                    
+                                                                         }"
+                                                                 styleClass="form-control" value="{consentimientoBean.consentimiento.paciente.acudiente.nombre}">
+                                                        <p:ajax event="blur" process="@this" />
+                                                    </p:inputText>
+                                                    <p class="formulario__input-error">El nombre no puede llevar números o caracteres especiales.</p>
+                    
+                                                </p:outputPanel>
+                                            </p:panelGrid>
+                                        </p:outputLabel>
+                                        <p:outputLabel id="pnl-paciente" style="width: 100%;" >
+                                            <p:spacer height="15px"  rendered="{!consentimientoBean.quienDiligencia}" />
+                                            <p:panelGrid  columns="1" layout="grid" styleClass="ui-panelgrid-blank ui-fluid r2da-pnl-grid"  >
+                                                <p:outputPanel styleClass="rd2a-header" >
+                                                    <p:outputLabel value="Datos del paciente" />
+                                                </p:outputPanel> 
+                                                <p:spacer height="15px" />
+                                                <p:outputLabel styleClass="r2da-lbl" value="Tipo documento" />
+                                                <p:selectOneMenu id="slc-tipo-documento-paciente" value="{consentimientoBean.consentimiento.paciente.tipoDocumento}"
+                                                                 converter="objectConverter"
+                                                                 styleClass="rd2a-slc-on-menu"  >
+                                                    <f:selectItems value="{consentimientoBean.lstTipoDocumento}" var="tipodoc" 
+                                                                   itemLabel="{tipodoc.descripcion}"  
+                                                                   itemValue="{tipodoc}" />
+                                                    <p:ajax event="change" process="@this"  oncomplete="setFoco('frmFormulario', 'documento-paciente');" />
+                                                </p:selectOneMenu>
+                                                <p:outputPanel styleClass="formulario__grupo"  id="grupo-documento-paciente" >
+                    
+                                                    <p:outputLabel styleClass="r2da-lbl" value="Nro. documento" />
+                                                    <p:inputText id="documento-paciente" 
+                                                                 onkeypress="if (event.keyCode === 13) {
+                                                                             setFoco('frmFormulario', 'nombre-paciente');
+                                                                         }"
+                                                                 styleClass="form-control" value="{consentimientoBean.consentimiento.paciente.nroDocumento}"  >
+                                                        <p:ajax event="blur" process="@this" update="grupo-nombre-paciente"
+                                                                listener="{consentimientoBean.consultarPaciente()}" oncomplete="actualizarInputs()"/>
+                                                    </p:inputText>
+                                                    <p class="formulario__input-error">El documento solo llevar máximo 15 digitos.</p>
+                    
+                                                </p:outputPanel>
+                                                <p:outputPanel styleClass="formulario__grupo"  id="grupo-nombre-paciente" >
+                    
+                                                    </div>
+                                                    <p:outputLabel styleClass="r2da-lbl" value="Nombre"/>
+                                                    <p:inputText id="nombre-paciente" 
+                                                                 onkeypress="if (event.keyCode === 13) {
+                                                                             setFoco('frmFormulario', 'eps-paciente');
+                    
+                                                                         }"
+                                                                 styleClass="form-control" value="{consentimientoBean.consentimiento.paciente.nombre}">
+                                                        <p:ajax event="blur" process="@this" />
+                                                    </p:inputText>
+                    
+                                                    <p class="formulario__input-error">El nombre no puede llevar números o caracteres especiales.</p>
+                    
+                                                </p:outputPanel>
+                    
+                                                <p:outputPanel styleClass="formulario__grupo"  id="grupo-eps-paciente" >
+                                                    <p:outputLabel styleClass="r2da-lbl" value="Siendo usuario de"/>
+                                                    <p:inputText id="eps-paciente" 
+                                                                 onkeypress="if (event.keyCode === 13) {
+                                                                             setFoco('frmFormulario', 'firma');
+                    
+                                                                         }"
+                                                                 styleClass="form-control" value="{consentimientoBean.consentimiento.EPS}">
+                                                        <p:ajax event="blur" process="@this" />
+                                                    </p:inputText>
+                                                    <p class="formulario__input-error">No puede llevar números o caracteres especiales.</p>
+                                                </p:outputPanel>
+                                                <p:spacer height="15px" />
+                                            </p:panelGrid>
+                                        </p:outputLabel>
+                                        <p:spacer height="15px" />
+                    
+                                        <p:panelGrid  columns="1" layout="grid" styleClass="ui-panelgrid-blank ui-fluid r2da-pnl-grid"  >
+                                            <p:outputPanel styleClass="formulario__grupo"  id="grupo-firma" >
+                                                <p:outputLabel styleClass="r2da-lbl"  value="Autorizo el ingreso a urgencias" />
+                    
+                                                <p:signature id="firma" style="width:100%;height:300px;" widgetVar="wgdfirma"  
+                                                             value="{consentimientoBean.consentimiento.firma}"    guideline="true">
+                    
+                                                    <span class="ui-icon ui-icon-closethick r2da-icon-times" title="Limpiar firma"  onclick="PF('wgdfirma').clear()"/>
+                                                </p:signature>
+                                                <p class="formulario__input-error">No se puede generar el registro sin la firma del paciente o acudiente.</p>
+                                            </p:outputPanel>
+                                        </p:panelGrid>-->
+                    <ui:include src="componentes/quienDiligencia.xhtml"/>
+                    <ui:include src="componentes/acudiente.xhtml"/>
+                    <ui:include src="componentes/paciente.xhtml">
+                        <ui:param name="eps" value="false" />
+                        <ui:param name="telefono" value="false" />
+                        <ui:param name="usuario_de" value="false" />
+                        <ui:param name="email" value="false" />
+                        <ui:param name="edad" value="false" />
+                        <ui:param name="ocupacion" value="false" />
+                        <ui:param name="covid" value="false" />
+                        <ui:param name="nro_admision" value="false" />
+                        <ui:param name="usuario_de" value="true" />
+                    </ui:include>
+
+                    <ui:include src="componentes/firmas.xhtml" >
+                        <ui:param name="firma_profesional" value="false" />
+                        <ui:param name="firma_paciente" value="true" />
+                        <ui:param name="descripcionFirma" value="Autorizo el ingreso a urgencias" />
+
+                    </ui:include>
+                    <p:panelGrid  columns="1" layout="grid" styleClass="ui-panelgrid-blank ui-fluid r2da-pnl-grid"  >
+                        <p:commandButton id="btn-submint" value="Guardar" styleClass="btn btn-info btn-confirmar"  
+                                         style="height: 60px;" process="@form"
+                                         oncomplete="validarGuardarFormUrgencias()" />
+
+                    </p:panelGrid>
+                </h:form>
+                <h:outputScript name="js/validacion.js"/>
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>

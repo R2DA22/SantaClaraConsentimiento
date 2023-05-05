@@ -1,0 +1,59 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+    <h:body>
+        <ui:composition template="plantilla.xhtml" >        
+            <ui:define name="content">
+                <p:focus context="frmFormulario"/>
+                <h:form id="frmFormulario" >
+                    <ui:include src="componentes/quienDiligencia.xhtml"/>
+                    <ui:include src="componentes/profesional.xhtml" >
+                        <ui:param name="nro_registro" value="true" />
+                        <ui:param name="documento" value="true" />
+                    </ui:include>
+                    <ui:include src="componentes/acudiente.xhtml"/>
+                    <ui:include src="componentes/paciente.xhtml">
+                        <ui:param name="eps" value="false" />
+                        <ui:param name="telefono" value="false" />
+                        <ui:param name="usuario_de" value="false" />
+                        <ui:param name="email" value="false" />
+                        <ui:param name="edad" value="true" />
+                        <ui:param name="ocupacion" value="false" />
+                        <ui:param name="covid" value="false" />
+                        <ui:param name="nro_admision" value="false" />
+                    </ui:include>
+                    <ui:include src="componentes/cuestionario_covid.xhtml" >
+                        <ui:param name="trabaja_salud" value="false" />
+                        <ui:param name="contacto_covid" value="true" />
+                        <ui:param name="descripcion_sintomas" value="false" />
+                        <ui:param name="sintomas" value="true" />
+                        <ui:param name="fecha_sintomas" value="false" />
+                        <ui:param name="descripcion_viajes" value="false" />
+                        <ui:param name="vacunado" value="false" />
+                        <ui:param name="viajes" value="true" />
+                    </ui:include>
+                    <ui:include src="componentes/tratamiento_datos.xhtml" >
+                        <ui:param name="riesgos" value="true" />
+                        <ui:param name="tratamiento_datos" value="true" />
+                    </ui:include>
+                    <ui:include src="componentes/firmas.xhtml" >
+                        <ui:param name="firma_profesional" value="false" />
+                        <ui:param name="firma_paciente" value="true" />
+                        <ui:param name="descripcionFirma" value="Autorizo la realización del procedimiento odontológico" />
+                    </ui:include>
+                    <p:panelGrid  columns="1" layout="grid" styleClass="ui-panelgrid-blank ui-fluid r2da-pnl-grid"  >
+                        <p:commandButton id="btn-submit" value="Guardar" styleClass="btn btn-info btn-confirmar"  
+                                         style="height: 60px;" process="@form"
+                                         oncomplete="validarGuardarFormOdontologiaCovid()" />
+                    </p:panelGrid>
+                </h:form>
+                <h:outputScript name="js/validacion.js"/>
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>
+

@@ -1,0 +1,33 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+    <h:body>
+        <ui:composition template="plantilla.xhtml" >        
+            <ui:define name="content">
+                <p:focus context="frmFormulario"/>
+                <h:form id="frmFormulario" >
+                    <ui:include src="componentes/profesional.xhtml" >
+                        <ui:param name="nro_registro" value="true" />
+                        <ui:param name="documento" value="true" />
+                        <ui:param name="especialidad" value="true" />
+                    </ui:include>
+                    <ui:include src="componentes/firmas.xhtml" >
+                        <ui:param name="firma_paciente" value="true" />
+                        <ui:param name="descripcionFirma" value="Firma a digitalizar" />
+                    </ui:include>
+                    <p:panelGrid  columns="1" layout="grid" styleClass="ui-panelgrid-blank ui-fluid r2da-pnl-grid"  >
+                        <p:commandButton id="btn-submint" value="Guardar" styleClass="btn btn-info btn-confirmar"  
+                                         style="height: 60px;" process="@form" 
+                                         onclick="validarGuardarFormRegistroProfesional();"
+                                         />
+
+                    </p:panelGrid>
+                </h:form>
+                <h:outputScript name="js/validacion.js"/>
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>
