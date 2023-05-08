@@ -1,8 +1,6 @@
 package infrastructure.platform.postgresql;
 
 
-import app.config.Properties;
-
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -18,8 +16,8 @@ public class DataBaseManager {
     private DataBase dataBase;
     private Statement query;
 
-    public DataBaseManager() throws Exception {
-        dataBase = new DataBase(Properties.getInstance().getProperties());
+    public DataBaseManager(java.util.Properties properties) throws Exception {
+        dataBase = new DataBase(properties);
     }
 
     public void openConnection() throws Exception {

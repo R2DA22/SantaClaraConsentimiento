@@ -1,12 +1,13 @@
 package core.domain.consent;
 
+import app.config.Configuration;
 import core.domain.bus.command.Command;
 
 public class EmergencyConsent extends ConsentInterface implements Command {
 
     private static final String TYPE = "URGENCIAS";
     private static final String URL = "consentimiento_urgencias.xhtml?faces-redirect=true";
-    private static final String FORMAT_DOCUMENT_WITHOUT_GUARDIAN = "<html>\n"
+     private String FORMAT_DOCUMENT_WITHOUT_GUARDIAN = "<html>\n"
             + "<head>\n"
             + "<title>SBCPM-F-001.V3 Consentimiento Informado de Proc.</title>\n"
             + "<meta charset=\"utf-8\">\n"
@@ -51,7 +52,7 @@ public class EmergencyConsent extends ConsentInterface implements Command {
             + "</body>\n"
             + "</html>";
 
-    private static final String FORMAT_DOCUMENT_WITH_GUARDIAN = "<html>\n"
+     private String FORMAT_DOCUMENT_WITH_GUARDIAN = "<html>\n"
             + "<head>\n"
             + "<title>SBCPM-F-001.V3 Consentimiento Informado de Proc.</title>\n"
             + "<meta charset=\"utf-8\">\n"
@@ -96,10 +97,9 @@ public class EmergencyConsent extends ConsentInterface implements Command {
             + "</body>\n"
             + "</html>";
 
-    public EmergencyConsent() {
+    public EmergencyConsent(Configuration configuration) {
+        super(configuration);
         setTypeConsent(TYPE);
-        setDocumentFormatWithGuardian(FORMAT_DOCUMENT_WITH_GUARDIAN);
-        setDocumentFormatWithoutGuardian(FORMAT_DOCUMENT_WITHOUT_GUARDIAN);
     }
 
 

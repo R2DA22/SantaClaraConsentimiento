@@ -7,9 +7,7 @@
 package app.ui;
 
 import app.config.Environment;
-import core.domain.*;
 import core.domain.area.Area;
-import core.domain.bus.command.Command;
 import core.domain.configuration.Configuration;
 import core.domain.consent.ConsentInterface;
 import core.domain.consent.ConsentVIH;
@@ -44,7 +42,6 @@ import javax.faces.event.PhaseId;
 import javax.servlet.http.HttpServletRequest;
 
 import org.primefaces.context.RequestContext;
-import org.primefaces.event.CellEditEvent;
 import org.primefaces.model.DefaultStreamedContent;
 import org.primefaces.model.StreamedContent;
 import utilidades.Constantes;
@@ -77,8 +74,6 @@ public class UIBean implements Serializable {
     private String headerMessage;
     private String urlFile;
     private StreamedContent streamedContent;
-    private String typeConsent;
-    private File signature;
     private Process anotherProcess;
     private String errorMessage;
 
@@ -158,7 +153,7 @@ public class UIBean implements Serializable {
         signatureConsent.create();
 
         String html = consent.getFormat();
-        PdfFile.createPDF(this.urlFile + consent.getPatient().getDocumentNumber() + " " + consent.getDate("dd_MM_yyyy_HH_mm") + ".pdf",
+        PdfFile.createPDF(this.urlFile + consent.getPatient().getDocumentNumber() + "_" + consent.getDate("dd_MM_yyyy_HH_mm") + ".pdf",
                 html);
 
         this.AlertType = "success";
@@ -298,9 +293,6 @@ public class UIBean implements Serializable {
             reBuildConsent();
 
             consent.getPatient().setDocumentType(new DocumentType());
-            if (this.signature != null) {
-                this.signature.delete();
-            }
             ExternalContext ec = FacesContext.getCurrentInstance().getExternalContext();
             if (((HttpServletRequest) ec.getRequest()).getRequestURI().contains("consentimiento_procedimiento")) {
                 return redirect(1);
@@ -309,7 +301,6 @@ public class UIBean implements Serializable {
                 return redirect(2);
             }
             if (((HttpServletRequest) ec.getRequest()).getRequestURI().contains("consentimiento_urgencias")) {
-                consent = new EmergencyConsent();
                 return redirect(3);
             }
             if (((HttpServletRequest) ec.getRequest()).getRequestURI().contains("consentimiento_odontologico")) {
@@ -330,19 +321,19 @@ public class UIBean implements Serializable {
 
     private void reBuildConsent() {
         if (consent instanceof EmergencyConsent) {
-            consent = new EmergencyConsent();
+            consent = new EmergencyConsent(environment.getConfiguration());
         }
         if (consent instanceof DentalConsent) {
-            consent = new DentalConsent(areas);
+            consent = new DentalConsent(environment.getConfiguration(), areas);
         }
         if (consent instanceof DentalCovidConsent) {
-            consent = new DentalCovidConsent();
+            consent = new DentalCovidConsent(environment.getConfiguration());
         }
         if (consent instanceof CovidConsent) {
-            consent = new CovidConsent();
+            consent = new CovidConsent(environment.getConfiguration());
         }
         if (consent instanceof ProfessionalForm) {
-            consent = new ProfessionalForm();
+            consent = new ProfessionalForm(environment.getConfiguration());
         }
     }
 
@@ -359,33 +350,32 @@ public class UIBean implements Serializable {
         switch (option) {
             case 1:
                 findAllProcess(new Area(0));
-                consent = new ProcessConsent(processes);
+                consent = new ProcessConsent(environment.getConfiguration(), processes);
                 break;
             case 2:
-                consent = new CovidConsent();
+                consent = new CovidConsent(environment.getConfiguration());
                 findAllVaccine();
                 consent.getProfessional().setName("Antonio Jose Sanchez Niñez");
                 break;
             case 3:
-                consent = new EmergencyConsent();
+                consent = new EmergencyConsent(environment.getConfiguration());
                 break;
             case 4:
                 findAllAreas();
-                consent = new DentalConsent(areas);
+                consent = new DentalConsent(environment.getConfiguration(), areas);
                 findAllProcess(null);
                 break;
             case 5:
-                consent = new DentalCovidConsent();
+                consent = new DentalCovidConsent(environment.getConfiguration());
                 break;
             case 6:
-                consent = new ProfessionalForm();
+                consent = new ProfessionalForm(environment.getConfiguration());
                 findAllSpeciality();
                 break;
             case 7:
-                consent = new ConsentVIH();
+                consent = new ConsentVIH(environment.getConfiguration());
                 break;
             default:
-                typeConsent = "";
                 return "index.xhtml?faces-redirect=true";
         }
         return consent.getUrl();

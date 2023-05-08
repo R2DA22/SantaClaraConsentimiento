@@ -1,5 +1,6 @@
 package core.domain.consent;
 
+import app.config.Configuration;
 import core.domain.bus.command.Command;
 import utilidades.Constantes;
 
@@ -9,7 +10,7 @@ public class DentalCovidConsent extends ConsentInterface implements Command {
     private static final String URL = "consentimiento_odontologico_covid.xhtml?faces-redirect=true";
 
 
-    private static final String FORMAT_DOCUMENT_WITHOUT_GUARDIAN = "<html>\n"
+     private String FORMAT_DOCUMENT_WITHOUT_GUARDIAN = "<html>\n"
             + "            <head>\n"
             + "            <title>SBCPM-F-001.V3 Consentimiento Informado de Proc.</title>\n"
             + "            <meta charset=\"utf-8\">\n"
@@ -138,7 +139,7 @@ public class DentalCovidConsent extends ConsentInterface implements Command {
             + "            </div>\n"
             + "            </body>\n"
             + "            </html>";
-    public static final String FORMAT_DOCUMENT_WITH_GUARDIAN = "<html>\n"
+    public  String FORMAT_DOCUMENT_WITH_GUARDIAN = "<html>\n"
             + "            <head>\n"
             + "            <title>SBCPM-F-001.V3 Consentimiento Informado de Proc.</title>\n"
             + "            <meta charset=\"utf-8\">\n"
@@ -268,10 +269,9 @@ public class DentalCovidConsent extends ConsentInterface implements Command {
             + "            </body>\n"
             + "            </html>";
 
-    public DentalCovidConsent() {
+    public DentalCovidConsent(Configuration configuration) {
+        super(configuration);
         setTypeConsent(TYPE);
-        setDocumentFormatWithGuardian(FORMAT_DOCUMENT_WITH_GUARDIAN);
-        setDocumentFormatWithoutGuardian(FORMAT_DOCUMENT_WITHOUT_GUARDIAN);
     }
 
     @Override

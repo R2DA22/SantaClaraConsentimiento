@@ -1,5 +1,6 @@
 package core.domain.consent;
 
+import app.config.Configuration;
 import core.domain.bus.command.Command;
 import core.domain.professional.Professional;
 import core.domain.sickness.Sickness;
@@ -24,9 +25,9 @@ import java.util.Locale;
 public abstract class ConsentInterface implements Command {
 
     public static final String IMAGE_FORMAT = "png";
-    public static final String APPLICATION_SERVER = getRealPath() + "resources\\";
-    public static final String PATH_IMAGES_APP = APPLICATION_SERVER + "imagenes\\";
-    public static final String PATH_CSS_APP = APPLICATION_SERVER + "css\\";
+    public String APPLICATION_SERVER;
+    public String PATH_IMAGES_APP;
+    public String PATH_CSS_APP;
     public static final String NAME_SIGNATURE = "firma";
     public static final String NAME_LOGO = "logo.png";
     public static final String STYLES = "formulario_sbcpm.css";
@@ -48,8 +49,6 @@ public abstract class ConsentInterface implements Command {
     private String signature;
     private boolean isGuardian;
     private String typeConsent;
-    private String documentFormatWithoutGuardian;
-    private String documentFormatWithGuardian;
     private int id;
     private Boolean dataTreatment;
     private Boolean riskBenefit;
@@ -100,7 +99,10 @@ public abstract class ConsentInterface implements Command {
     private Date fastTestExpirationDate;
     private List<Sickness> sicknessList;
 
-    public ConsentInterface() {
+    public ConsentInterface(Configuration configuration) {
+        this.APPLICATION_SERVER=configuration.getApplicationPath();
+        this.PATH_IMAGES_APP=APPLICATION_SERVER+configuration.getImagesPath();
+        this.PATH_CSS_APP=APPLICATION_SERVER+configuration.getCssPath();
         this.patient = new Patient();
         professional = new Professional();
         this.signature = "";
@@ -125,23 +127,6 @@ public abstract class ConsentInterface implements Command {
             return this.getGuardianData().getDocumentType().getInitials() + this.getGuardianData().getDocumentNumber();
         }
         return this.getPatient().getDocumentType().getInitials() + this.getPatient().getDocumentNumber();
-    }
-
-
-    public static String getRealPath() {
-        String realPath = "";
-        try {
-            URI u = ConsentInterface.class.getResource(ConsentInterface.class.getSimpleName() + CLASS_EXT).toURI();
-            realPath = u.getPath().substring(0, u.getPath().indexOf(CLASSES));
-            String OS = System.getProperty(OS_NAME).toLowerCase();
-            if (OS.contains(WINDOWS)) {
-                realPath = realPath.substring(1);
-                realPath = realPath.replaceAll("/", "\\\\");
-            }
-        } catch (URISyntaxException e) {
-        }
-        String part[] = realPath.split(WEB_INF);
-        return part[0];
     }
 
     public String getSignature() {
@@ -194,15 +179,6 @@ public abstract class ConsentInterface implements Command {
 
     public void setTypeConsent(String typeConsent) {
         this.typeConsent = typeConsent;
-    }
-
-
-    public void setDocumentFormatWithoutGuardian(String documentFormatWithoutGuardian) {
-        this.documentFormatWithoutGuardian = documentFormatWithoutGuardian;
-    }
-
-    public void setDocumentFormatWithGuardian(String documentFormatWithGuardian) {
-        this.documentFormatWithGuardian = documentFormatWithGuardian;
     }
 
     public String getDate(String type) {

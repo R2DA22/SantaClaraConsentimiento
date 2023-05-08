@@ -1,7 +1,6 @@
 package app.config;
 
 import core.domain.area.Area;
-import core.domain.configuration.Configuration;
 import core.domain.consent.CovidConsent;
 import core.domain.consent.DentalConsent;
 import core.domain.consent.DentalCovidConsent;
@@ -76,15 +75,20 @@ import infrastructure.repository.speciality.SpecialityMapper;
 import infrastructure.repository.speciality.SpecialityRepository;
 import infrastructure.repository.vaccine.VaccineMapper;
 import infrastructure.repository.vaccine.VaccineRepository;
+import java.util.Properties;
 
 
 public class Environment {
 
     private final Postgresql db;
+    private String scope;
+    private Configuration configuration;
     private final Controller controller;
 
     public Environment() throws Exception {
-        db = new Postgresql();
+        configuration = Configuration.getInstance();
+        Properties properties = configuration.getProperties();
+        db = new Postgresql(properties);
 
         DocumentRepository documentRepository = new DocumentRepository(db, new DocumentMapper());
         PatientRepository patientRepository = new PatientRepository(db, new PatientMapper());
@@ -119,7 +123,8 @@ public class Environment {
         CreateProcessUseCase createProcessUseCase = new CreateProcessUseCase(processRepository);
 
         CreateDentalConsentHandler createDentalConsentHandler = new CreateDentalConsentHandler(createDentalConsentUseCase);
-        CreateDentalCovidConsentHandler createDentalCovidConsentHandler = new CreateDentalCovidConsentHandler(createDentalCovidConsentUseCase);
+        CreateDentalCovidConsentHandler createDentalCovidConsentHandler =
+                new CreateDentalCovidConsentHandler(createDentalCovidConsentUseCase);
         CreateEmergencyConsentHandler createEmergencyConsentHandler = new CreateEmergencyConsentHandler(createEmergencyConsentUseCase);
         CreateProcessConsentHandler createProcessConsentHandler = new CreateProcessConsentHandler(createProcessConsentUseCase);
         CreateCovidConsentHandler createCovidConsentHandler = new CreateCovidConsentHandler(createCovidConsentUseCase);
@@ -161,12 +166,16 @@ public class Environment {
         queryBus.register(Patient.class.getName(), findPatientHandler);
         queryBus.register(IdConsent.class.getName(), findNextIdHandler);
         queryBus.register(DocumentType.class.getName(), findAllTypeDocumentHandler);
-        queryBus.register(Configuration.class.getName(), findConfigurationHandler);
+        queryBus.register(core.domain.configuration.Configuration.class.getName(), findConfigurationHandler);
 
         controller = new Controller(commandBus, queryBus);
     }
 
     public Controller getController() {
         return controller;
+    }
+
+    public Configuration getConfiguration() {
+        return configuration;
     }
 }

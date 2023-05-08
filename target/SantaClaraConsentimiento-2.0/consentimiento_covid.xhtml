@@ -1,0 +1,383 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+    <h:body>
+        <ui:composition template="plantilla.xhtml" >        
+            <ui:define name="content">
+                <p:focus context="frmFormulario"/>
+                <h:form id="frmFormulario" >
+                    <!--                    <p:panelGrid columns="1"  layout="grid" styleClass="ui-panelgrid-blank ui-fluid r2da-pnl-grid">
+                                            <p:outputLabel styleClass="r2da-lbl" value="Con acudiente?"/>
+                                            <p:selectOneButton id="rbtn-quien-diligencia" style="margin-bottom: 10px;" 
+                                                               styleClass="btn-one-button" value="{uiBean.quienDiligencia}"  >
+                                                <f:selectItem   itemLabel="SI" itemValue="false"  />
+                                                <f:selectItem   itemLabel="NO" itemValue="true" />
+                                                <p:ajax event="change" process="@this" update="@this pnl-acudiente pnl-paciente pnl-profesional"  oncomplete="actualizarInputs()"  />
+                                            </p:selectOneButton>
+                                        </p:panelGrid>
+                                        <p:spacer height="15px"  />-->
+                    <!--                    <p:outputLabel id="pnl-profesional" style="width: 100%;" >
+                                            <p:panelGrid columns="1"  layout="grid" styleClass="ui-panelgrid-blank ui-fluid r2da-pnl-grid">
+                                                <p:outputPanel styleClass="rd2a-header" style="display:block" >
+                                                    <p:outputLabel value="Datos del profesional" />
+                                                </p:outputPanel> 
+                                                <p:spacer height="15px" />
+                                                <p:outputPanel styleClass="formulario__grupo"  id="grupo-nombre-profesional" >
+                                                    <p:outputLabel styleClass="r2da-lbl" value="Nombre"/>
+                                                    <p:inputText  id="nombre-profesional"  
+                                                                  onkeypress="
+                                                                          if ({uiBean.quienDiligencia}) {
+                                                                              if (event.keyCode === 13) {
+                                                                                  setFoco('frmFormulario', 'documento-paciente');
+                                                                              }
+                                                                          } else {
+                                                                              if (event.keyCode === 13) {
+                                                                                  setFoco('frmFormulario', 'documento-acudiente');
+                                                                              }
+                                                                          }"
+                                                                  styleClass="form-control" value="{uiBean.consentimiento.profesional}" >
+                                                        <p:ajax event="blur" process="@this" />
+                                                    </p:inputText>
+                                                    <div id="prueba"/>
+                                                    <p class="formulario__input-error">El nombre no puede llevar números o caracteres especiales.</p>
+                                                </p:outputPanel>
+                                            </p:panelGrid>
+                                        </p:outputLabel>
+                    
+                                        <p:outputLabel id="pnl-acudiente" style="width: 100%;" >
+                                            <p:spacer height="15px" rendered="{!uiBean.quienDiligencia}" />
+                                            <p:panelGrid  rendered="{!uiBean.quienDiligencia}"
+                                                          columns="1" layout="grid" styleClass="ui-panelgrid-blank ui-fluid r2da-pnl-grid"  >
+                                                <p:outputPanel styleClass="rd2a-header" >
+                                                    <p:outputLabel value="Datos del acudiente" />
+                                                </p:outputPanel> 
+                                                <p:spacer height="15px" />
+                                                <p:outputLabel styleClass="r2da-lbl" value="Tipo documento" />
+                                                <p:selectOneMenu id="slc-tipo-documento" value="{uiBean.consentimiento.paciente.acudiente.tipoDocumento}"
+                                                                 converter="objectConverter"
+                                                                 styleClass="rd2a-slc-on-menu"  >
+                                                    <f:selectItems value="{uiBean.lstTipoDocumento}" var="tipodoc"
+                                                                   itemLabel="{tipodoc.descripcion}"  
+                                                                   itemValue="{tipodoc}" />
+                                                    <p:ajax event="change" process="@this" oncomplete="setFoco('frmFormulario', 'documento-acudiente');" />
+                                                </p:selectOneMenu>
+                                                <p:outputPanel styleClass="formulario__grupo"  id="grupo-documento-acudiente" >
+                                                    <p:outputLabel styleClass="r2da-lbl" value="Nro. documento" />
+                                                    <p:inputText id="documento-acudiente" 
+                                                                 onkeypress="if (event.keyCode === 13) {
+                                                                             setFoco('frmFormulario', 'nombre-acudiente');
+                                                                         }"
+                                                                 styleClass="form-control" value="{uiBean.consentimiento.paciente.acudiente.nroDocumento}"  >
+                                                        <p:ajax event="blur" process="@this" update="frmFormulario:grupo-nombre-acudiente"
+                                                                listener="{uiBean.consultarAcudiente()}" oncomplete="actualizarInputs()"/>
+                                                    </p:inputText>
+                                                    <p class="formulario__input-error">El documento solo llevar máximo 15 digitos.</p>
+                                                </p:outputPanel>
+                                                <p:outputPanel styleClass="formulario__grupo"  id="grupo-nombre-acudiente" >
+                    
+                                                    </div>
+                                                    <p:outputLabel styleClass="r2da-lbl" value="Nombre"/>
+                                                    <p:inputText id="nombre-acudiente" 
+                                                                 onkeypress="if (event.keyCode === 13) {
+                                                                             setFoco('frmFormulario', 'documento-paciente');
+                    
+                                                                         }"
+                                                                 styleClass="form-control" value="{uiBean.consentimiento.paciente.acudiente.nombre}">
+                                                        <p:ajax event="blur" process="@this" />
+                                                    </p:inputText>
+                                                    <p class="formulario__input-error">El nombre no puede llevar números o caracteres especiales.</p>
+                    
+                                                                                    <br/>
+                                                                                    <p:inputText id="input-apellido" styleClass="form-control" value="{uiBean.consentimiento.paciente.apellido}" placeholder="Apellido"/>
+                                                </p:outputPanel>
+                                            </p:panelGrid>
+                                        </p:outputLabel>
+                                        <p:outputLabel id="pnl-paciente" style="width: 100%;" >
+                                            <p:spacer height="15px"  rendered="{!uiBean.quienDiligencia}" />
+                                            <p:panelGrid  columns="1" layout="grid" styleClass="ui-panelgrid-blank ui-fluid r2da-pnl-grid"  >
+                                                <p:outputPanel styleClass="rd2a-header" >
+                                                    <p:outputLabel value="Datos del paciente" />
+                                                </p:outputPanel> 
+                                                <p:spacer height="15px" />
+                                                <p:outputLabel styleClass="r2da-lbl" value="Tipo documento" />
+                                                <p:selectOneMenu id="slc-tipo-documento-paciente" value="{uiBean.consentimiento.paciente.tipoDocumento}"
+                                                                 converter="objectConverter"
+                                                                 styleClass="rd2a-slc-on-menu"  >
+                                                    <f:selectItems value="{uiBean.lstTipoDocumento}" var="tipodoc"
+                                                                   itemLabel="{tipodoc.descripcion}"  
+                                                                   itemValue="{tipodoc}" />
+                                                    <p:ajax event="change" process="@this"  oncomplete="setFoco('frmFormulario', 'documento-paciente');" />
+                                                </p:selectOneMenu>
+                                                <p:outputPanel styleClass="formulario__grupo"  id="grupo-documento-paciente" >
+                    
+                                                    <p:outputLabel styleClass="r2da-lbl" value="Nro. documento" />
+                                                    <p:inputText id="documento-paciente" 
+                                                                 onkeypress="if (event.keyCode === 13) {
+                                                                             setFoco('frmFormulario', 'nombre-paciente');
+                                                                         }"
+                                                                 styleClass="form-control" value="{uiBean.consentimiento.paciente.nroDocumento}"  >
+                                                        <p:ajax event="blur" process="@this" update="grupo-nombre-paciente"
+                                                                listener="{uiBean.consultarPaciente()}" oncomplete="actualizarInputs()"/>
+                                                    </p:inputText>
+                                                    <p class="formulario__input-error">El documento solo llevar máximo 15 digitos.</p>
+                    
+                                                </p:outputPanel>
+                                                <p:outputPanel styleClass="formulario__grupo"  id="grupo-nombre-paciente" >
+                    
+                                                    </div>
+                                                    <p:outputLabel styleClass="r2da-lbl" value="Nombre"/>
+                                                    <p:inputText id="nombre-paciente" 
+                                                                 onkeypress="if (event.keyCode === 13) {
+                                                                             setFoco('frmFormulario', 'edad-paciente');
+                    
+                                                                         }"
+                                                                 styleClass="form-control" value="{uiBean.consentimiento.paciente.nombre}">
+                                                        <p:ajax event="blur" process="@this" />
+                                                    </p:inputText>
+                    
+                                                    <p class="formulario__input-error">El nombre no puede llevar números o caracteres especiales.</p>
+                    
+                                                </p:outputPanel>
+                                                <p:outputPanel styleClass="formulario__grupo"  id="grupo-edad-paciente" >
+                    
+                                                    <p:outputLabel styleClass="r2da-lbl" value="Edad"/>
+                                                    <p:inputText id="edad-paciente" 
+                                                                 onkeypress="if (event.keyCode === 13) {
+                                                                             setFoco('frmFormulario', 'telefono-paciente');
+                    
+                                                                         }"
+                                                                 styleClass="form-control" value="{uiBean.consentimiento.edad}">
+                                                        <p:ajax event="blur" process="@this" />
+                                                    </p:inputText>
+                                                    <p class="formulario__input-error">Edad no válida.</p>
+                                                </p:outputPanel>
+                                                <p:outputPanel styleClass="formulario__grupo"  id="grupo-telefono-paciente" >
+                    
+                                                    <p:outputLabel styleClass="r2da-lbl" value="Teléfono"/>
+                                                    <p:inputText id="telefono-paciente" 
+                                                                 onkeypress="if (event.keyCode === 13) {
+                                                                             setFoco('frmFormulario', 'email-paciente');
+                    
+                                                                         }"
+                                                                 styleClass="form-control" value="{uiBean.consentimiento.telefono}">
+                                                        <p:ajax event="blur" process="@this" />
+                                                    </p:inputText>
+                                                    <p class="formulario__input-error">Número de telefono no válido.</p>
+                                                </p:outputPanel>
+                                                <p:outputPanel styleClass="formulario__grupo"  id="grupo-email-paciente" >
+                    
+                                                    <p:outputLabel styleClass="r2da-lbl" value="Correo electrónico"/>
+                                                    <p:inputText id="email-paciente" 
+                                                                 onkeypress="if (event.keyCode === 13) {
+                                                                             setFoco('frmFormulario', 'ocupacion-paciente');
+                                                                         }"
+                                                                 styleClass="form-control" value="{uiBean.consentimiento.email}">
+                                                        <p:ajax event="blur" process="@this" />
+                                                    </p:inputText>
+                                                    <p class="formulario__input-error">Correo no válido.</p>
+                                                </p:outputPanel>
+                                                <p:outputPanel styleClass="formulario__grupo"  id="grupo-ocupacion-paciente" >
+                    
+                                                    </div>
+                                                    <p:outputLabel styleClass="r2da-lbl" value="Ocupacion"/>
+                                                    <p:inputText id="ocupacion-paciente" 
+                                                                 onkeypress="if (event.keyCode === 13) {
+                                                                             setFoco('frmFormulario', 'eps-paciente');
+                    
+                                                                         }"
+                                                                 styleClass="form-control" value="{uiBean.consentimiento.ocupacion}">
+                                                        <p:ajax event="blur" process="@this" />
+                                                    </p:inputText>
+                    
+                                                    <p class="formulario__input-error">No puede llevar números o caracteres especiales.</p>
+                    
+                                                </p:outputPanel>
+                                                <p:outputPanel styleClass="formulario__grupo"  id="grupo-eps-paciente" >
+                                                    <p:outputLabel styleClass="r2da-lbl" value="EPS"/>
+                                                    <p:inputText id="eps-paciente" 
+                                                                 onkeypress="if (event.keyCode === 13) {
+                                                                             setFoco('frmFormulario', 'firma');
+                    
+                                                                         }"
+                                                                 styleClass="form-control" value="{uiBean.consentimiento.EPS}">
+                                                        <p:ajax event="blur" process="@this" />
+                                                    </p:inputText>
+                                                    <p class="formulario__input-error">La EPS no puede llevar números o caracteres especiales.</p>
+                                                </p:outputPanel>
+                                                <p:spacer height="15px" />
+                                                <p:outputLabel styleClass="r2da-lbl" value="¿Trabaja en salud?" />
+                                                <p:selectOneButton id="rbtn-si-no-3" style="margin-bottom: 10px;" styleClass="btn-one-button" 
+                                                                   value="{uiBean.consentimiento.trabajadorSalud}"  >
+                                                    <f:selectItem   itemLabel="SI" itemValue="true"  />
+                                                    <f:selectItem   itemLabel="NO" itemValue="false" />
+                                                    <p:ajax event="change" process="@this" update="@this"   />
+                                                </p:selectOneButton>
+                                                <p:spacer height="15px" />
+                                                <p:outputLabel styleClass="r2da-lbl" value="¿Ha tenido contacto con caso confirmado de covid?" />
+                                                <p:selectOneButton id="rbtn-si-no-4" style="margin-bottom: 10px;" styleClass="btn-one-button" 
+                                                                   value="{uiBean.consentimiento.contactoCovid}"  >
+                                                    <f:selectItem   itemLabel="SI" itemValue="true"  />
+                                                    <f:selectItem   itemLabel="NO" itemValue="false" />
+                                                    <p:ajax event="change" process="@this" update="@this grupo-sintomas-paciente grupo-fecha-sintomas"   />
+                                                </p:selectOneButton>
+                                                <p:outputPanel styleClass="formulario__grupo"  id="grupo-sintomas-paciente" >
+                                                    <p:outputLabel styleClass="r2da-lbl" value="¿Qué sintomas presenta?" rendered="{uiBean.consentimiento.contactoCovid}"/>
+                                                    <p:inputText id="sintomas-paciente"  rendered="{uiBean.consentimiento.contactoCovid}"
+                                                                 onkeypress="if (event.keyCode === 13) {
+                                                                             return false;
+                    
+                                                                         }"
+                                                                 styleClass="form-control" value="{uiBean.consentimiento.sintomas}">
+                                                        <p:ajax event="blur" process="@this" />
+                                                    </p:inputText>
+                                                    <p class="formulario__input-error">No puede llevar números o caracteres especiales.</p>
+                                                </p:outputPanel>
+                                                <p:outputPanel styleClass="formulario__grupo"  id="grupo-fecha-sintomas" >
+                                                    <p:outputLabel styleClass="r2da-lbl" value="¿Fecha en que iniciaron los sintomas?" rendered="{uiBean.consentimiento.contactoCovid}"/>
+                                                    <p:calendar id="fecha-sintomas"   pattern="dd-MM-yyyy" mask="true"
+                                                                rendered="{uiBean.consentimiento.contactoCovid}"
+                                                                value="{uiBean.consentimiento.fechaInicioSintomas}">
+                                                        <p:ajax event="blur" process="@this" />
+                                                    </p:calendar>
+                                                </p:outputPanel>
+                                                <p:outputPanel styleClass="formulario__grupo"  id="grupo-viajes-paciente"  >
+                                                    <p:outputLabel styleClass="r2da-lbl" value="¿Qué viajes realizó?" rendered="{uiBean.consentimiento.contactoCovid}" />
+                                                    <p:inputText id="viajes-paciente" rendered="{uiBean.consentimiento.contactoCovid}"
+                                                                 onkeypress="if (event.keyCode === 13) {
+                                                                             setFoco('frmFormulario', 'fecha-vacuna');
+                                                                         }"
+                                                                 styleClass="form-control" value="{uiBean.consentimiento.viajesRealizados}">
+                                                        <p:ajax event="blur" process="@this" />
+                                                    </p:inputText>
+                                                    <p class="formulario__input-error">No puede llevar números o caracteres especiales.</p>
+                                                </p:outputPanel>
+                                                <p:spacer height="15px" />
+                                                <p:outputLabel styleClass="r2da-lbl" value="¿Está vacunado?" />
+                                                <p:selectOneButton id="rbtn-si-no-5" style="margin-bottom: 10px;" styleClass="btn-one-button" 
+                                                                   value="{uiBean.consentimiento.vacunado}"  >
+                                                    <f:selectItem   itemLabel="SI" itemValue="true"  />
+                                                    <f:selectItem   itemLabel="NO" itemValue="false" />
+                                                    <p:ajax event="change" process="@this" update="@this,pnl-vacuna"   />
+                                                </p:selectOneButton>
+                                            </p:panelGrid>
+                                        </p:outputLabel>
+                                        <p:outputLabel id="pnl-vacuna" style="width: 100%;" >
+                                            <p:spacer height="15px" rendered="{uiBean.consentimiento.vacunado}" />
+                                            <p:panelGrid  rendered="{uiBean.consentimiento.vacunado}"
+                                                          columns="1" layout="grid" styleClass="ui-panelgrid-blank ui-fluid r2da-pnl-grid"  >
+                                                <p:outputPanel styleClass="rd2a-header" >
+                                                    <p:outputLabel value="Datos vacuna" />
+                                                </p:outputPanel> 
+                                                <p:spacer height="15px" />
+                                                <p:outputLabel styleClass="r2da-lbl" value="Nombre"/>
+                                                <p:selectOneMenu id="slc-vacuna-paciente" value="{uiBean.consentimiento.vacuna}"
+                                                                 converter="objectConverter"
+                                                                 styleClass="rd2a-slc-on-menu"  >
+                                                    <f:selectItems value="{uiBean.lstVacuna}" var="vacuna"
+                                                                   itemLabel="{vacuna.nombre}"  
+                                                                   itemValue="{vacuna}" />
+                                                    <p:ajax event="change" process="@this"  oncomplete="setFoco('frmFormulario', 'fecha-vacuna');" />
+                                                </p:selectOneMenu>
+                                                <p:spacer height="15px" />
+                                                <p:outputLabel styleClass="r2da-lbl" value="¿Cuantas dosis?:" />
+                                                <p:selectOneButton id="rbtn-si-no-6" style="margin-bottom: 10px;" styleClass="btn-one-button" 
+                                                                   value="{uiBean.consentimiento.nroDosis}"  >
+                                                    <f:selectItem   itemLabel="1" itemValue="true"  />
+                                                    <f:selectItem   itemLabel="2" itemValue="false" />
+                                                    <p:ajax event="change" process="@this" update="@this"   />
+                                                </p:selectOneButton>
+                                                <p:outputPanel styleClass="formulario__grupo"  id="grupo-fecha-vacuna" >
+                                                    <p:outputLabel styleClass="r2da-lbl" value="Fecha aplicación vacuna"/>
+                                                    <p:calendar id="fecha-vacuna" mask="true" pattern="dd-MM-yyyy" 
+                                                                value="{uiBean.consentimiento.fechaVacuna}">
+                                                        <p:ajax event="blur" process="@this" />
+                                                    </p:calendar>
+                                                </p:outputPanel>
+                                            </p:panelGrid>
+                                            <p:spacer height="15px"   />
+                                        </p:outputLabel>            
+                    
+                                        <p:spacer height="15px" />
+                                        <p:panelGrid  columns="1" layout="grid" styleClass="ui-panelgrid-blank ui-fluid r2da-pnl-grid"  >
+                                            <p:spacer height="15px" />
+                                            <p:outputLabel styleClass="r2da-lbl" value="Se explicó la naturaleza,el objetivo, riesgos y beneficios:" />
+                                            <p:selectOneButton id="rbtn-si-no-1" style="margin-bottom: 10px;" styleClass="btn-one-button" 
+                                                               value="{uiBean.consentimiento.riesgoBeneficio}"  >
+                                                <f:selectItem   itemLabel="SI" itemValue="true"  />
+                                                <f:selectItem   itemLabel="NO" itemValue="false" />
+                                                <p:ajax event="change" process="@this" update="@this"   />
+                                            </p:selectOneButton>
+                                            <p:spacer height="15px"  />
+                    
+                                            <p:outputLabel styleClass="r2da-lbl" value="Se autoriza el tratamiento de datos personales:" />
+                                            <p:selectOneButton id="rbtn-si-no-2" style="margin-bottom: 10px;" 
+                                                               styleClass="btn-one-button" value="{uiBean.consentimiento.tratamientoDatos}"  >
+                                                <f:selectItem   itemLabel="SI" itemValue="true"  />
+                                                <f:selectItem   itemLabel="NO" itemValue="false" />
+                                                <p:ajax event="change" process="@this" update="@this"   />
+                                            </p:selectOneButton>
+                                        </p:panelGrid>
+                                        <p:spacer height="15px" />
+                                        <p:panelGrid  columns="1" layout="grid" styleClass="ui-panelgrid-blank ui-fluid r2da-pnl-grid"  >
+                                            <p:outputPanel styleClass="formulario__grupo"  id="grupo-firma" >
+                                                <p:outputLabel styleClass="r2da-lbl"  value="Autorizo la realización de la prueba Covid" />
+                    
+                                                <p:signature id="firma" style="width:100%;height:300px;" widgetVar="wgdfirma"  
+                                                             value="{uiBean.consentimiento.firma}"    guideline="true">
+                    
+                                                    <span class="ui-icon ui-icon-closethick r2da-icon-times" title="Limpiar firma"  onclick="PF('wgdfirma').clear()"/>
+                                                </p:signature>
+                                                <p class="formulario__input-error">No se puede generar el registro sin la firma del paciente o acudiente.</p>
+                                            </p:outputPanel>
+                                        </p:panelGrid>-->
+                    <ui:include src="componentes/quienDiligencia.xhtml"/>
+                    <ui:include src="componentes/profesional.xhtml" >
+                        <ui:param name="nro_registro" value="false" />
+                        <ui:param name="documento" value="false" />
+                    </ui:include>
+                    <ui:include src="componentes/acudiente.xhtml"/>
+                    <ui:include src="componentes/paciente.xhtml">
+                        <ui:param name="eps" value="true" />
+                        <ui:param name="telefono" value="true" />
+                        <ui:param name="email" value="true" />
+                        <ui:param name="edad" value="true" />
+                        <ui:param name="ocupacion" value="true" />
+                        <ui:param name="covid" value="true" />
+                        <ui:param name="nro_admision" value="false" />
+                        <ui:param name="usuario_de" value="false" />
+                    </ui:include>
+                    <ui:include src="componentes/cuestionario_covid.xhtml" >
+                        <ui:param name="trabaja_salud" value="true" />
+                        <ui:param name="contacto_covid" value="true" />
+                        <ui:param name="descripcion_sintomas" value="true" />
+                        <ui:param name="sintomas" value="true" />
+                        <ui:param name="fecha_sintomas" value="true" />
+                        <ui:param name="descripcion_viajes" value="true" />
+                        <ui:param name="viajes" value="true" />
+                        <ui:param name="vacunado" value="true" />
+                    </ui:include>
+                    <ui:include src="componentes/tratamiento_datos.xhtml" >
+                        <ui:param name="riesgos" value="true" />
+                        <ui:param name="tratamiento_datos" value="true" />
+                    </ui:include>
+                    <ui:include src="componentes/firmas.xhtml" >
+                        <ui:param name="firma_profesional" value="false" />
+                        <ui:param name="firma_paciente" value="true" />
+                        <ui:param name="descripcionFirma" value="Autorizo la realización de la prueba Covid" />
+                    </ui:include>
+                    <p:panelGrid  columns="1" layout="grid" styleClass="ui-panelgrid-blank ui-fluid r2da-pnl-grid"  >
+                        <p:commandButton id="btn-submint" value="Guardar" styleClass="btn btn-info btn-confirmar"  
+                                         style="height: 60px;" process="@form" 
+                                         onclick="validarGuardarFormCovid();"
+                                         />
+
+                    </p:panelGrid>
+                </h:form>
+                <h:outputScript name="js/validacion.js"/>
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>

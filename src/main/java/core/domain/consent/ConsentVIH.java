@@ -1,5 +1,6 @@
 package core.domain.consent;
 
+import app.config.Configuration;
 import core.domain.bus.command.Command;
 import core.domain.sickness.Sickness;
 import java.util.ArrayList;
@@ -10,7 +11,7 @@ public class ConsentVIH extends ConsentInterface implements Command {
 
     private static final String TYPE = "VIH";
     private static final String URL = "consentimiento_VIH.xhtml?faces-redirect=true";
-    private static final String FORMAT_DOCUMENT_WITHOUT_GUARDIAN = "<html>\n"
+     private String FORMAT_DOCUMENT_WITHOUT_GUARDIAN = "<html>\n"
             + "<head>\n"
             + "<title>SBCPM-F-001.V3 Consentimiento Informado de Proc.</title>\n"
             + "<meta charset=\"utf-8\">\n"
@@ -190,9 +191,9 @@ public class ConsentVIH extends ConsentInterface implements Command {
             "</html>";
 
 
-    public ConsentVIH() {
+    public ConsentVIH(Configuration configuration) {
+        super(configuration);
         setTypeConsent(TYPE);
-        setDocumentFormatWithoutGuardian(FORMAT_DOCUMENT_WITHOUT_GUARDIAN);
         List<Sickness> sickness = new ArrayList<>();
         sickness.add(new Sickness("Tuberculosis"));
         sickness.add(new Sickness("Toxoplasmosis"));

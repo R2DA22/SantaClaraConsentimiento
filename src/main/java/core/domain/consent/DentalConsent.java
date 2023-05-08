@@ -1,5 +1,6 @@
 package core.domain.consent;
 
+import app.config.Configuration;
 import core.domain.area.Area;
 import core.domain.bus.command.Command;
 import core.domain.process.Process;
@@ -14,7 +15,7 @@ public class DentalConsent extends ConsentInterface implements Command {
     private List<Area> areasList;
 
 
-    private static final String FORMAT_DOCUMENT_WITHOUT_GUARDIAN = "<html>\n"
+     private String FORMAT_DOCUMENT_WITHOUT_GUARDIAN = "<html>\n"
             + "            <head>\n"
             + "            <title>SBCPM-F-001.V3 Consentimiento Informado de Proc.</title>\n"
             + "            <meta charset=\"utf-8\">\n"
@@ -174,7 +175,7 @@ public class DentalConsent extends ConsentInterface implements Command {
             + "            </body>\n"
             + "            </html>";
 
-    public static final String FORMAT_DOCUMENT_WITH_GUARDIAN = "<html>\n"
+    public String FORMAT_DOCUMENT_WITH_GUARDIAN = "<html>\n"
             + "            <head>\n"
             + "            <title>SBCPM-F-001.V3 Consentimiento Informado de Proc.</title>\n"
             + "            <meta charset=\"utf-8\">\n"
@@ -334,10 +335,9 @@ public class DentalConsent extends ConsentInterface implements Command {
             + "            </body>\n"
             + "            </html>";
 
-    public DentalConsent(List<Area> areasList) {
+    public DentalConsent(Configuration configuration, List<Area> areasList) {
+        super(configuration);
         setTypeConsent(TYPE);
-        setDocumentFormatWithGuardian(FORMAT_DOCUMENT_WITH_GUARDIAN);
-        setDocumentFormatWithoutGuardian(FORMAT_DOCUMENT_WITHOUT_GUARDIAN);
         setAreasList(areasList);
     }
 

@@ -1,0 +1,84 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+    <h:body>
+        <ui:composition template="plantilla.xhtml" >        
+            <ui:define name="content">
+                <p:focus context="frmFormulario"/>
+                <h:form id="frmFormulario" >
+                    <ui:include src="componentes/quienDiligencia.xhtml"/>
+                    <ui:include src="componentes/profesional.xhtml" >
+                        <ui:param name="nro_registro" value="true" />
+                        <ui:param name="documento" value="true" />
+                    </ui:include>
+                    <ui:include src="componentes/acudiente.xhtml"/>
+                    <ui:include src="componentes/paciente.xhtml">
+                        <ui:param name="eps" value="false" />
+                        <ui:param name="telefono" value="false" />
+                        <ui:param name="usuario_de" value="false" />
+                        <ui:param name="email" value="false" />
+                        <ui:param name="edad" value="false" />
+                        <ui:param name="ocupacion" value="false" />
+                        <ui:param name="covid" value="false" />
+                        <ui:param name="nro_admision" value="false" />
+                    </ui:include>
+                    <!--                    <p:panelGrid id="dt-procedimientos" columns="1" layout="grid"  
+                                                     styleClass="ui-panelgrid-blank ui-fluid r2da-pnl-grid dt-procedimientos"  >
+                                            <p:outputPanel  styleClass="rd2a-header" >
+                                                <p:outputLabel value="Procedimiento aplicado" />
+                                            </p:outputPanel> 
+                                            <p:spacer height="15px" />
+                                            <p:dataTable id="procedimientos" var="area"  
+                                                         value="{uiBean.lstArea}"
+                                                         editable="true" editMode="cell" rowIndexVar="index"
+                                                         widgetVar="cellProcedimientos">
+                                                <p:ajax event="cellEdit" listener="{uiBean.onCellEdit}" process="frmFormulario:procedimientos"  />
+                                                <p:column selectionMode="multiple" style="width:40px;text-align:center"/>
+                                                                            <p:ajax event="rowEdit" listener="{dtEditView.onRowEdit}" update=":form:msgs" />
+                                                                            <p:ajax event="rowEditCancel" listener="{dtEditView.onRowCancel}" update=":form:msgs" />
+                                                <p:column width="5%">
+                                                    <h:panelGroup id="column-selected" >
+                                                            <span class="ui-icon ui-icon-cross hidden"></span>
+                                                    </h:panelGroup>
+                                                </p:column>
+                                                <p:column width="20%" headerText="Área">
+                                                    <p:outputLabel value="{area.nombre}" />
+                                                </p:column>
+                                                <p:column headerText="Detalle del procedimiento">
+                                                    <p:cellEditor >
+                                                        <f:facet name="output"><p:chips styleClass="r2d-chips"  value="{area.lstProcedimientos}" style="width:100%"/></f:facet>
+                                                        <f:facet name="input"><p:chips styleClass="r2d-chips" id="modelInput" 
+                                                                                           value="{area.lstProcedimientos}" style="width:100%"/></f:facet>
+                                                    </p:cellEditor>
+                                                </p:column>
+                                            </p:dataTable>
+                                        </p:panelGrid>-->
+                    <ui:include src="componentes/procedimientos.xhtml">
+                        <ui:param name="procedimiento" value="false" />
+                        <ui:param name="area" value="true" />
+                        <ui:param name="desentimiento" value="true" />
+                    </ui:include>
+                    <ui:include src="componentes/tratamiento_datos.xhtml" >
+                        <ui:param name="riesgos" value="false" />
+                        <ui:param name="tratamiento_datos" value="true" />
+                    </ui:include>
+                    <ui:include src="componentes/firmas.xhtml" >
+                        <ui:param name="firma_profesional" value="false" />
+                        <ui:param name="firma_paciente" value="true" />
+                        <ui:param name="descripcionFirma" value="Autorizo la realización del procedimiento odontológico" />
+                    </ui:include>
+                    <p:panelGrid  columns="1" layout="grid" styleClass="ui-panelgrid-blank ui-fluid r2da-pnl-grid"  >
+                        <p:commandButton id="btn-submit" value="Guardar" styleClass="btn btn-info btn-confirmar"  
+                                         style="height: 60px;" process="@form"
+                                         oncomplete="validarGuardarFormOdontologia()" />
+                    </p:panelGrid>
+                </h:form>
+                <h:outputScript name="js/validacion.js"/>
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>
+

@@ -1,5 +1,6 @@
 package core.domain.consent;
 
+import app.config.Configuration;
 import core.domain.bus.command.Command;
 import core.domain.process.Process;
 import utilidades.Constantes;
@@ -14,7 +15,7 @@ public class ProcessConsent extends ConsentInterface implements Command {
 
     public List<Process> processList;
 
-    private static final String FORMAT_DOCUMENT_WITHOUT_GUARDIAN = "<html>\n"
+    private String FORMAT_DOCUMENT_WITHOUT_GUARDIAN = "<html>\n"
             + "<head>\n"
             + "<title>SBCPM-F-001.V3 Consentimiento Informado de Proc.</title>\n"
             + "<meta charset=\"utf-8\">\n"
@@ -123,10 +124,9 @@ public class ProcessConsent extends ConsentInterface implements Command {
             + "</body>\n"
             + "</html>";
 
-    public ProcessConsent(List<Process> processes) {
-        super();
+    public ProcessConsent(Configuration configuration, List<Process> processes) {
+        super(configuration);
         setTypeConsent(TYPE);
-        setDocumentFormatWithoutGuardian(FORMAT_DOCUMENT_WITHOUT_GUARDIAN);
         setProcessList(processes);
     }
 

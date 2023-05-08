@@ -1,5 +1,6 @@
 package core.domain.consent;
 
+import app.config.Configuration;
 import core.domain.bus.command.Command;
 import utilidades.Constantes;
 
@@ -7,7 +8,7 @@ public class CovidConsent extends ConsentInterface implements Command {
 
     private static final String TYPE = "COVID";
     private static final String URL = "consentimiento_covid.xhtml?faces-redirect=true";
-    private static final String FORMAT_DOCUMENT_WITHOUT_GUARDIAN = "<html>\n"
+     private String FORMAT_DOCUMENT_WITHOUT_GUARDIAN = "<html>\n"
             + "<head>\n"
             + "<title>SBCPM-F-001.V3 Consentimiento Informado de Proc.</title>\n"
             + "<meta charset=\"utf-8\">\n"
@@ -145,7 +146,7 @@ public class CovidConsent extends ConsentInterface implements Command {
             + "</body>\n"
             + "</html>";
 
-    private static final String FORMAT_DOCUMENT_WITH_GUARDIAN = "<html>\n"
+     private String FORMAT_DOCUMENT_WITH_GUARDIAN = "<html>\n"
             + "<head>\n"
             + "<title>SBCPM-F-001.V3 Consentimiento Informado de Proc.</title>\n"
             + "<meta charset=\"utf-8\">\n"
@@ -283,10 +284,9 @@ public class CovidConsent extends ConsentInterface implements Command {
             + "</body>\n"
             + "</html>";
 
-    public CovidConsent() {
+    public CovidConsent(Configuration configuration) {
+        super(configuration);
         setTypeConsent(TYPE);
-        setDocumentFormatWithGuardian(FORMAT_DOCUMENT_WITH_GUARDIAN);
-        setDocumentFormatWithoutGuardian(FORMAT_DOCUMENT_WITHOUT_GUARDIAN);
     }
 
     @Override

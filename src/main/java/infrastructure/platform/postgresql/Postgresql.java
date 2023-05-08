@@ -14,11 +14,12 @@ import infrastructure.repository.ClientDB;
 
 import java.sql.ResultSet;
 import java.util.List;
+import java.util.Properties;
 
 public class Postgresql extends DataBaseManager implements ClientDB {
 
-    public Postgresql() throws Exception {
-        super();
+    public Postgresql(Properties properties) throws Exception {
+        super(properties);
     }
 
     @Override

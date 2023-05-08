@@ -1,0 +1,97 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+    <h:head>
+        <title>Consentimiento informado aceptación de procedimiento</title>
+        <h:outputStylesheet name="bootstrap/css/bootstrap.min.css"/>
+        <h:outputStylesheet name="css/general.css"/>
+        <h:outputScript name="bootstrap/js/bootstrap.min.js"/>
+        <h:outputScript name="js/general.js"/>
+        <link rel="icon" type="image/png"  href="resources/imagenes/logo.png" />
+        <meta http-equiv="Expires" content="0"/>
+        <meta http-equiv="Last-Modified" content="0"/>
+        <meta http-equiv="Cache-Control" content="no-cache, mustrevalidate"/>
+        <meta http-equiv="Pragma" content="no-cache"></meta>
+        <meta name="viewport" content="width=device-width"></meta>
+    </h:head>
+    <h:body>
+        <h:panelGroup layout="block" styleClass="container" >
+            <h:panelGroup layout="block" styleClass="contenedor-global">
+                <h:panelGroup layout="block" styleClass="contenedor">
+                    <h:form>
+                        <p:remoteCommand name="settearMensajeAlert" 
+                                         update="modalAlert " process="@this"/>
+                        <p:remoteCommand name="saveConsent"  actionListener="#{uiBean.saveConsent()}"
+                                         update="formSoporte"
+                                         onstart="PF('statusDialog').show()"
+                                         oncomplete="PF('statusDialog').hide()" />
+                        <p:remoteCommand name="saveProfessional"  actionListener="#{uiBean.saveProfessional()}"
+                                         update="formSoporte"
+                                         onstart="PF('statusDialog').show()"
+                                         oncomplete="PF('statusDialog').hide()" />
+                        <p:remoteCommand name="limpiarFormulario"  action="#{uiBean.cleanFields()}" />
+
+                        <p:remoteCommand name="reiniciar"  action="#{uiBean.cleanFields()}"              />
+                        <p:remoteCommand name="volver"  action="#{uiBean.redirect(0)}"              />
+
+
+                    </h:form>
+                    <ui:insert name="content"></ui:insert>
+                    <div id="btn-atras"  class="btn-atras" title="Volver a menu principal"  onclick="volver()"/>
+                </h:panelGroup>
+            </h:panelGroup>
+        </h:panelGroup>
+        <p:dialog id="alertModal" widgetVar="dlgAlertModal" styleClass="dlg-info-result" 
+                  focus="modalAlert:btncerrar"  
+                  responsive="true" 
+                  closeOnEscape="true" 
+                  showHeader="false"  modal="true" closable="false" resizable="false"  >
+            <h:form id="modalAlert" >
+                <p:outputPanel styleClass="alert-#{uiBean.alertType}" style="display:block"  >
+                    <h:outputText value="#{uiBean.headerMessage}"  />
+                </p:outputPanel>
+                <br/>
+                <center><h:graphicImage value="/resources/imagenes/#{uiBean.alertType}.png" style="height: 10%;width: 10%;"/></center><br/>
+                <center>
+                    <h:outputLabel id="lblAlert" style="word-wrap: break-word;max-width: 397px;color:#616161;" value="#{uiBean.errorMessage}">
+                    </h:outputLabel>
+                </center>
+                <br/>
+                <center>
+                    <p:commandButton id="btncerrar" value="Cerrar" styleClass="btn btn-#{uiBean.alertType}"
+                                     actionListener="#{uiBean.cleanFields()}"
+                                     oncomplete="PF('dlgAlertModal').hide();" />
+                </center>
+
+            </h:form>
+        </p:dialog>
+        <p:dialog id="dlgview-pdf" widgetVar="dlgview-pdf" 
+                  focus="modalAlert:btncerrar"  
+                  responsive="true"  onHide="PF('confirmWgt').show()"
+                  closeOnEscape="true" width="90%" height="500"
+                  modal="true"   >
+            <h:form id="formSoporte" styleClass="formSoporte">
+                <p:media width="100%" height="500" 
+                         rendered="#{uiBean.streamedContent != null and uiBean.streamedContent!= ''}" 
+                         player="pdf" value="#{uiBean.streamedContent}"  cache="false">
+                    Su navegador no soporta el formato pdf, por favor de <h:outputLink value="#{uiBean.streamedContent}">click aqui</h:outputLink> para descargarlo.
+                </p:media>
+            </h:form>
+        </p:dialog>
+        <p:confirmDialog global="true" showEffect="fade" hideEffect="fade" widgetVar="confirmWgt" 
+                         header="Confirmación" message="¿Limpiar el formulario?"  >
+            <p:commandButton value="SI" type="button" styleClass="btn btn-info"  onclick="limpiarFormulario();"/>
+            <p:commandButton value="NO" type="button" styleClass="btn btn-info"  onclick="PF('confirmWgt').hide();" />
+        </p:confirmDialog>  
+        <p:dialog widgetVar="statusDialog" modal="true" draggable="false" closable="false" resizable="false" showHeader="false">
+            <p:graphicImage  name="imagenes/consultando.gif" />
+        </p:dialog>
+        <div class="footer">
+            <h:outputText value="Versión 6.3" />
+        </div>
+    </h:body>
+</html>
+

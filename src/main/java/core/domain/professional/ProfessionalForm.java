@@ -1,5 +1,6 @@
 package core.domain.professional;
 
+import app.config.Configuration;
 import core.domain.bus.command.Command;
 import core.domain.consent.ConsentInterface;
 import utilidades.Constantes;
@@ -10,7 +11,8 @@ public class ProfessionalForm extends ConsentInterface implements Command {
     private static final String TYPE = "REGISTRO_PROFESIONAL";
     private static final String URL = "registro_profesional.xhtml?faces-redirect=true";
 
-    public ProfessionalForm() {
+    public ProfessionalForm(Configuration configuration) {
+        super(configuration);
         setTypeConsent(TYPE);
     }
 

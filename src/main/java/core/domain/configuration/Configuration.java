@@ -13,8 +13,4 @@ public class Configuration implements Query {
     public String getPathPdfFile() {
         return pathPdfFile;
     }
-
-    public void setPathPdfFile(String pathPdfFile) {
-        this.pathPdfFile = pathPdfFile;
-    }
 }

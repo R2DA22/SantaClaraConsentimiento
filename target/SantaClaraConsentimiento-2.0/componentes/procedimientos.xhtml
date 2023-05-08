@@ -1,0 +1,76 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
+    <h:body>
+        <p:remoteCommand name="adicionarChips" actionListener="#{uiBean.addItems()}" update="pnl-desentimiento" />
+        <p:panelGrid  columns="1" layout="grid"  styleClass="ui-panelgrid-blank ui-fluid r2da-pnl-grid"  >
+
+            <p:outputPanel  styleClass="rd2a-header" >
+                <p:outputLabel value="Procedimiento aplicado" />
+            </p:outputPanel> 
+            <p:spacer rendered="#{area}" height="15px" />
+            <p:outputLabel rendered="#{area}" styleClass="r2da-lbl" value="Área" />
+            <p:selectOneMenu rendered="#{area}" id="slc-area" value="#{uiBean.consent.area}"
+                             converter="objectConverter"
+                             styleClass="rd2a-slc-on-menu">
+                <f:selectItem noSelectionOption="true"  itemLabel="Seleccione un área"/>
+                <f:selectItems value="#{uiBean.areas}" var="vararea"
+                               itemLabel="#{vararea.name}"
+                               itemValue="#{vararea}" />
+                <p:ajax event="change" process="@this procedimiento" listener="#{uiBean.findAllProcess(uiBean.consent.area)}" update="procedimiento"/>
+            </p:selectOneMenu>
+            <p:spacer height="15px" />
+            <p:selectManyCheckbox styleClass="r2d-one-radio" id="procedimiento" converter="objectConverter"
+                                  value="#{uiBean.consent.processes}" style="width: 100%;"
+                                  layout="responsive" columns="2"   >
+                <f:selectItems  value="#{uiBean.processes}"
+                                var="procedure" itemLabel="#{procedure.description}"
+                                itemValue="#{procedure}"/>
+                <p:ajax event="change" process="@this @(.grp-otro)"   update="@this @(.grp-otro)" 
+                        listener="#{uiBean.addDissent()}"/>
+            </p:selectManyCheckbox>
+
+            <p:spacer height="15px" />
+            <p:outputPanel styleClass="grp-otro" >
+                <p:outputPanel rendered="#{procedimiento and uiBean.consent.processes.contains(uiBean.anotherProcess)}" style="font-size: 15px">
+                    <p:outputLabel styleClass="r2da-lbl" value="¿Otro?, cual:"/>
+                    <p:inputText  id="input-otro" styleClass="form-control"  onkeypress="if (event.keyCode === 13) {
+                                             siguiente('frmFormulario', 'input-otro');
+                                         }"
+                                  value="#{uiBean.consent.anotherProcesses}" >
+                        <p:ajax event="blur" process="@this" />
+                    </p:inputText>
+                </p:outputPanel>
+                <p:outputPanel id="input-otro-area" rendered="#{area and uiBean.consent.processes.contains(uiBean.anotherProcess)}" style="font-size: 15px">
+                    <p:outputLabel styleClass="r2da-lbl" value="¿Otro?, cual:"/>
+                    <p:chips styleClass="r2d-chips" value="#{uiBean.consent.area.process}"
+                             style="width:100%">
+                        <p:ajax event="blur" process="@this" oncomplete="adicionarChips()"/>
+                    </p:chips>
+                </p:outputPanel>
+            </p:outputPanel>
+            <p:outputLabel rendered="#{desentimiento}" styleClass="r2da-lbl" value="Disiente de algún procedimiento:" />
+            <p:selectOneButton rendered="#{desentimiento}" id="rbtn-si-no-desentimiento" style="margin-bottom: 10px;" 
+                               styleClass="btn-one-button" value="#{uiBean.consent.disagree}"  >
+                <f:selectItem   itemLabel="SI" itemValue="true"  />
+                <f:selectItem   itemLabel="NO" itemValue="false" />
+                <p:ajax event="change" process="@this" update="@this pnl-desentimiento"   />
+            </p:selectOneButton>
+            <p:outputPanel id="pnl-desentimiento">
+                <p:spacer rendered="#{desentimiento and uiBean.consent.disagree}" height="15px" />
+                <p:selectManyCheckbox rendered="#{desentimiento and uiBean.consent.disagree}" styleClass="r2d-one-radio"
+                                      id="desentimientos" converter="objectConverter"
+                                      value="#{uiBean.consent.dissents}" style="width: 100%;"
+                                      layout="responsive" columns="2"   >
+                    <f:selectItems  value="#{uiBean.dissents}"
+                                    var="desenti" itemLabel="#{desenti.description}"
+                                    itemValue="#{desenti}"/>
+                </p:selectManyCheckbox>
+                <p:spacer height="15px" />
+            </p:outputPanel>
+        </p:panelGrid>
+    </h:body>
+</html>

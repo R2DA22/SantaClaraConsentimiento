@@ -1,0 +1,30 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core"
+      >
+    <h:body>
+        <p:panelGrid  columns="1" layout="grid" styleClass="ui-panelgrid-blank ui-fluid r2da-pnl-grid"  >
+            <p:spacer height="15px" rendered="#{riesgos}"/>
+            <p:outputLabel rendered="#{riesgos}" styleClass="r2da-lbl" value="Se explicó la naturaleza,el objetivo, riesgos y beneficios:" />
+            <p:selectOneButton rendered="#{riesgos}" id="rbtn-si-no-1" style="margin-bottom: 10px;" styleClass="btn-one-button" 
+                               value="#{uiBean.consent.riskBenefit}"  >
+                <f:selectItem   itemLabel="SI" itemValue="true"  />
+                <f:selectItem   itemLabel="NO" itemValue="false" />
+                <p:ajax event="change" process="@this" update="@this"   />
+            </p:selectOneButton>
+            <p:spacer height="15px"  rendered="#{tratamiento_datos}"/>
+
+            <p:outputLabel rendered="#{tratamiento_datos}" styleClass="r2da-lbl" value="Se autoriza el tratamiento de datos personales:" />
+            <p:selectOneButton rendered="#{tratamiento_datos}" id="rbtn-si-no-2" style="margin-bottom: 10px;" 
+                               styleClass="btn-one-button" value="#{uiBean.consent.dataTreatment}"  >
+                <f:selectItem   itemLabel="SI" itemValue="true"  />
+                <f:selectItem   itemLabel="NO" itemValue="false" />
+                <p:ajax event="change" process="@this" update="@this"   />
+            </p:selectOneButton>
+            <p:spacer height="15px" rendered="#{tratamiento_datos}"/>
+        </p:panelGrid>
+    </h:body>
+</html>
