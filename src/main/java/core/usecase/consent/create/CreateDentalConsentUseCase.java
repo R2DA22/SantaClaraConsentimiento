@@ -37,7 +37,6 @@ public class CreateDentalConsentUseCase implements CreateDentalConsentUseCaseInt
             }
         }
         repository.createConsentArea(areas, consent.getId());
-        repository.createConsentDissents(consent.getDissents(), consent.getId());
     }
 
     private List<Process> processProcesses(List<String> procList, Area area) throws Exception {
@@ -51,7 +50,6 @@ public class CreateDentalConsentUseCase implements CreateDentalConsentUseCaseInt
                     process = new Process();
                     process.setArea(area);
                     process.setDescription(nameProcess.toLowerCase().replaceAll("^\\w", nameProcess.toUpperCase().substring(0, 1)));
-                    processRepository.create(process);
                 }
                 processList.add(process);
             }
