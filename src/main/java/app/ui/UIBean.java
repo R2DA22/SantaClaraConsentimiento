@@ -368,6 +368,7 @@ public class UIBean implements Serializable {
         }
         switch (option) {
             case 1:
+                findAllProfessional();
                 findAllProcess(new Area(0));
                 consent = new ProcessConsent(environment.getConfiguration(), processes);
                 break;
@@ -385,6 +386,7 @@ public class UIBean implements Serializable {
                 consent = new DentalConsent(environment.getConfiguration(), areas);
                 break;
             case 5:
+                findAllProfessional();
                 consent = new DentalCovidConsent(environment.getConfiguration());
                 break;
             case 6:
@@ -392,6 +394,7 @@ public class UIBean implements Serializable {
                 findAllSpeciality();
                 break;
             case 7:
+                findAllProfessional();
                 consent = new ConsentVIH(environment.getConfiguration());
                 break;
             default:

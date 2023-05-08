@@ -245,10 +245,9 @@ function validarGuardar() {
     }
     const acudiente = document.getElementById(nameForm + ':nombre-acudiente');
     if (campos["admision"]
-        && campos["registro"]
         && (campos["documento-acudiente"] || !acudiente) && campos["documento-paciente"]
         && (campos["nombre-acudiente"] || !acudiente)
-        && campos["nombre-paciente"] && campos["nombre-profesional"] && firma.value !== '') {
+        && campos["nombre-paciente"]  && firma.value !== '') {
         saveConsent();
     } else {
         inputs.forEach((input) => {
@@ -280,7 +279,7 @@ function validarGuardarFormCovid() {
         && (campos["nombre-acudiente"] || !acudiente)
         && (campos["sintomas-paciente"] || !sintomas)
         && (campos["viajes-paciente"] || !viajes)
-        && campos["nombre-paciente"] && campos["nombre-profesional"] && firma.value !== '') {
+        && campos["nombre-paciente"]  && firma.value !== '') {
         saveConsent();
     } else {
         inputs.forEach((input) => {
@@ -338,8 +337,6 @@ function validarGuardarFormOdontologiaCovid() {
     const acudiente = document.getElementById(nameForm + ':nombre-acudiente');
     if (campos["edad-paciente"]
         && campos["registro"]
-        && campos["nombre-profesional"]
-        && campos["documento-profesional"]
         && (campos["documento-acudiente"] || !acudiente) && campos["documento-paciente"]
         && (campos["nombre-acudiente"] || !acudiente)
         && campos["nombre-paciente"] && firma.value !== ''
