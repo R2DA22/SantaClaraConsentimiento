@@ -21,6 +21,7 @@ import core.domain.professional.Professional;
 import core.domain.patient.*;
 import core.domain.process.Process;
 import core.domain.professional.ProfessionalForm;
+import core.domain.professional.ProfessionalList;
 import core.domain.speciality.Speciality;
 import core.domain.vaccine.Vaccine;
 import infrastructure.controllers.Controller;
@@ -60,6 +61,7 @@ public class UIBean implements Serializable {
     private Patient patient;
     private boolean isGuardian;
     private List<DocumentType> listDocumentTypes;
+    private List<Professional> professionalList;
     private Environment environment;
     private ConsentInterface consent;
     private Controller controller;
@@ -89,6 +91,7 @@ public class UIBean implements Serializable {
             environment = new Environment();
             controller = environment.getController();
             getAllDocumentsType();
+            findAllProfessional();
             this.urlFile = ((Configuration) controller.dispatchQuery(new Configuration(PATH_PDF))).getPathPdfFile();
             anotherProcess = new Process(Integer.parseInt(Constantes.ID_OTRO_PROCEDIMIENTO));
         } catch (Exception ex) {
@@ -101,6 +104,15 @@ public class UIBean implements Serializable {
         try {
             ListDocumentType result = (ListDocumentType) controller.dispatchQuery(new DocumentType());
             listDocumentTypes = result.getDocumentTypes();
+        } catch (Exception e) {
+            Logger.getLogger(UIBean.class.getName()).log(Level.SEVERE, null, e);
+        }
+    }
+
+    public void findAllProfessional() {
+        try {
+            ProfessionalList result = (ProfessionalList) controller.dispatchQuery(new ProfessionalList());
+            professionalList = result.getProfessionals();
         } catch (Exception e) {
             Logger.getLogger(UIBean.class.getName()).log(Level.SEVERE, null, e);
         }
@@ -148,14 +160,22 @@ public class UIBean implements Serializable {
         }
         createPatient();
         createConsent();
-
         Signature signatureConsent = new Signature(consent.getPathSignature(), consent.getSignature());
         signatureConsent.create();
-
+        Signature signatureProfessional=null;
+        if (consent.getProfessional() != null
+                && (consent.getProfessional().getSignature()!= null
+                && !consent.getProfessional().getSignature().isEmpty())) {
+            signatureProfessional = new Signature(consent.getPathSignatureProfessional(), consent.getProfessional().getSignature());
+            signatureProfessional.create();
+        }
         String html = consent.getFormat();
         PdfFile.createPDF(this.urlFile + consent.getPatient().getDocumentNumber() + "_" + consent.getDate("dd_MM_yyyy_HH_mm") + ".pdf",
                 html);
-
+        signatureConsent.delete();
+        if (signatureProfessional!=null){
+            signatureProfessional.delete();
+        }
         this.AlertType = "success";
         RequestContext.getCurrentInstance().update("@(.formSoporte)");
         RequestContext.getCurrentInstance().execute("PF('dlgview-pdf').show()");
@@ -362,6 +382,7 @@ public class UIBean implements Serializable {
                 break;
             case 4:
                 findAllAreas();
+                findAllProfessional();
                 consent = new DentalConsent(environment.getConfiguration(), areas);
                 findAllProcess(null);
                 break;
@@ -559,5 +580,9 @@ public class UIBean implements Serializable {
 
     public void setConsent(ConsentInterface consent) {
         this.consent = consent;
+    }
+
+    public List<Professional> getProfessionalList() {
+        return professionalList;
     }
 }

@@ -21,6 +21,16 @@
                                    itemValue="#{tipodoc}" />
                     <p:ajax event="change" process="@this" oncomplete="setFoco('frmFormulario', 'documento-profesional');" />
                 </p:selectOneMenu>
+                <p:outputLabel styleClass="r2da-lbl" value="Profesional" rendered="#{profesional}" />
+                <p:selectOneMenu rendered="#{profesional}" id="slc-nombre-profesional" value="#{uiBean.consent.professional}"
+                                 converter="objectConverter"
+                                 styleClass="rd2a-slc-on-menu"  >
+                    <f:selectItems value="#{uiBean.professionalList}" var="profe"
+                                   itemLabel="#{profe.name}"
+                                   itemValue="#{profe}" />
+                    <p:ajax event="change" process="@this"
+                            oncomplete="setFoco('frmFormulario', 'documento-profesional');" />
+                </p:selectOneMenu>
                 <p:spacer height="15px" />
                 <p:outputPanel styleClass="formulario__grupo"  id="grupo-documento-profesional" rendered="#{documento}" >
 
@@ -35,16 +45,16 @@
                     </p:inputText>
                     <p class="formulario__input-error">El documento solo llevar máximo 15 digitos.</p>
                 </p:outputPanel>
-                <p:outputPanel styleClass="formulario__grupo"  id="grupo-nombre-profesional" rendered="#{nombre==null?'true':nombre}" >
+                <p:outputPanel styleClass="formulario__grupo"  id="grupo-nombre-profesional" rendered="#{nombre}" >
                     <p:outputLabel styleClass="r2da-lbl" value="Nombre"/>
-                    <p:inputText  id="nombre-profesional"  
+                    <p:inputText  id="nombre-profesional"
                                   onkeypress="
                                           if (event.keyCode === 13) {
                                               siguiente('frmFormulario', 'nombre-profesional');
                                           }
                                   "
                                   styleClass="form-control" value="#{uiBean.consent.professional.name}" >
-                        <p:ajax event="blur" process="@this" />
+                        <p:ajax event="blur" process="@this"  />
                     </p:inputText>
                     <div id="prueba"/>
                     <p class="formulario__input-error">El nombre no puede llevar números o caracteres especiales.</p>

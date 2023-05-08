@@ -18,6 +18,7 @@ import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.Month;
 import java.time.format.TextStyle;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -100,9 +101,9 @@ public abstract class ConsentInterface implements Command {
     private List<Sickness> sicknessList;
 
     public ConsentInterface(Configuration configuration) {
-        this.APPLICATION_SERVER=configuration.getApplicationPath();
-        this.PATH_IMAGES_APP=APPLICATION_SERVER+configuration.getImagesPath();
-        this.PATH_CSS_APP=APPLICATION_SERVER+configuration.getCssPath();
+        this.APPLICATION_SERVER = configuration.getApplicationPath();
+        this.PATH_IMAGES_APP = APPLICATION_SERVER + configuration.getImagesPath();
+        this.PATH_CSS_APP = APPLICATION_SERVER + configuration.getCssPath();
         this.patient = new Patient();
         professional = new Professional();
         this.signature = "";
@@ -129,6 +130,10 @@ public abstract class ConsentInterface implements Command {
         return this.getPatient().getDocumentType().getInitials() + this.getPatient().getDocumentNumber();
     }
 
+    public String getSignatureProfessional() {
+        return this.getProfessional().getDocumentType().getInitials() + this.getProfessional().getDocumentNumber();
+    }
+
     public String getSignature() {
         return signature;
     }
@@ -139,6 +144,10 @@ public abstract class ConsentInterface implements Command {
 
     public String getPathSignature() {
         return PATH_IMAGES_APP + NAME_SIGNATURE + "-" + this.getSignatureConsent() + "." + IMAGE_FORMAT;
+    }
+
+    public String getPathSignatureProfessional() {
+        return PATH_IMAGES_APP + NAME_SIGNATURE + "-" + this.getSignatureProfessional() + "." + IMAGE_FORMAT;
     }
 
     public boolean isGuardian() {
@@ -188,7 +197,7 @@ public abstract class ConsentInterface implements Command {
     }
 
     public String getDateFormat(String type, Date date) {
-        if (date == null){
+        if (date == null) {
             return " _ ";
         }
         SimpleDateFormat format = new SimpleDateFormat(type);
@@ -357,6 +366,9 @@ public abstract class ConsentInterface implements Command {
     }
 
     public List<Process> getDissents() {
+        if (dissents == null) {
+            return new ArrayList<>();
+        }
         return dissents;
     }
 

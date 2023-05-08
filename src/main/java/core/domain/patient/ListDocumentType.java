@@ -13,8 +13,4 @@ public class ListDocumentType {
     public List<DocumentType> getDocumentTypes() {
         return documentTypes;
     }
-
-    public void setDocumentTypes(List<DocumentType> documentTypes) {
-        this.documentTypes = documentTypes;
-    }
 }

@@ -105,4 +105,9 @@ public class Signature {
         ImageIO.write(signature, Constantes.IMAGE_FORMAT, output);
         return output.toByteArray(); 
     }
+
+    public void delete(){
+        File file = new File(this.pathDestiny);
+        file.delete();
+    }
 }

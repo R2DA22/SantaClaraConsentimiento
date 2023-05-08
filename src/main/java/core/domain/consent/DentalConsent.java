@@ -392,8 +392,10 @@ public class DentalConsent extends ConsentInterface implements Command {
         String areaTable=areasTableBuilder(1);
         if (this.isGuardian()) {
             html = FORMAT_DOCUMENT_WITH_GUARDIAN.replace("@docSignature@", this.getSignatureConsent());
+            html = html.replace("@docSignatureProfessional@", this.getSignatureProfessional());
         } else {
             html = FORMAT_DOCUMENT_WITHOUT_GUARDIAN.replace("@docSignature@", this.getSignatureConsent());
+            html = html.replace("@docSignatureProfessional@", this.getSignatureProfessional());
         }
         html = html.replace("@LstProcedimientos@", areaTable);
         html = html.replace("@Fecha@", this.getDate("dd/MM/yyyy"));

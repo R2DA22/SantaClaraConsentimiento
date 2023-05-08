@@ -12,6 +12,7 @@ import core.domain.patient.Guardian;
 import core.domain.patient.Patient;
 import core.domain.process.Process;
 import core.domain.professional.Professional;
+import core.domain.professional.ProfessionalList;
 import core.domain.speciality.Speciality;
 import core.domain.vaccine.Vaccine;
 import core.usecase.area.find.FindAllAreaUseCase;
@@ -30,6 +31,7 @@ import core.usecase.patient.create.CreatePatientUseCase;
 import core.usecase.process.create.CreateProcessUseCase;
 import core.usecase.process.find.FindAllProcessByAreaUseCase;
 import core.usecase.professional.create.CreateProfessionalUseCase;
+import core.usecase.professional.find.FindAllProfessionalUseCase;
 import core.usecase.professional.find.FindProfessionalUseCase;
 import core.usecase.speciality.find.FindSpecialityUsesCase;
 import core.usecase.vaccine.find.FindAllVaccineUseCase;
@@ -52,6 +54,7 @@ import infrastructure.handlers.patient.FindPatientHandler;
 import infrastructure.handlers.process.CreateProcessHandler;
 import infrastructure.handlers.process.FindAllProcessHandler;
 import infrastructure.handlers.professional.CreateProfessionalHandler;
+import infrastructure.handlers.professional.FindAllProfessionalHandler;
 import infrastructure.handlers.professional.FindProfessionalHandler;
 import infrastructure.handlers.speciality.FindAllSpecialityHandler;
 import infrastructure.handlers.vaccine.FindAllVaccineHandler;
@@ -109,6 +112,7 @@ public class Environment {
         FindSpecialityUsesCase findSpecialityUsesCase = new FindSpecialityUsesCase(specialityRepository);
         FindAllVaccineUseCase findAllVaccineUseCase = new FindAllVaccineUseCase(vaccineRepository);
         FindProfessionalUseCase findProfessionalUseCase = new FindProfessionalUseCase(professionalRepository);
+        FindAllProfessionalUseCase findAllProfessionalUseCase = new FindAllProfessionalUseCase(professionalRepository);
         FindAllProcessByAreaUseCase findAllProcessByAreaUseCase = new FindAllProcessByAreaUseCase(processRepository);
         FindAllAreaUseCase findAllAreaUseCase = new FindAllAreaUseCase(areaRepository);
 
@@ -141,6 +145,7 @@ public class Environment {
         FindAllSpecialityHandler findAllSpecialityHandler = new FindAllSpecialityHandler(findSpecialityUsesCase);
         FindAllVaccineHandler findAllVaccineHandler = new FindAllVaccineHandler(findAllVaccineUseCase);
         FindProfessionalHandler findProfessionalHandler = new FindProfessionalHandler(findProfessionalUseCase);
+        FindAllProfessionalHandler findAllProfessionalHandler = new FindAllProfessionalHandler(findAllProfessionalUseCase);
         FindAllAreaHandler findAllAreaHandler = new FindAllAreaHandler(findAllAreaUseCase);
         FindAllProcessHandler findAllProcessHandler = new FindAllProcessHandler(findAllProcessByAreaUseCase);
 
@@ -167,6 +172,7 @@ public class Environment {
         queryBus.register(IdConsent.class.getName(), findNextIdHandler);
         queryBus.register(DocumentType.class.getName(), findAllTypeDocumentHandler);
         queryBus.register(core.domain.configuration.Configuration.class.getName(), findConfigurationHandler);
+        queryBus.register(ProfessionalList.class.getName(), findAllProfessionalHandler);
 
         controller = new Controller(commandBus, queryBus);
     }

@@ -1,12 +1,16 @@
 package infrastructure.repository.professional;
 
 import core.domain.patient.DocumentType;
+import core.domain.patient.ListDocumentType;
 import core.domain.patient.Patient;
 import core.domain.professional.Professional;
+import core.domain.professional.ProfessionalList;
 import core.domain.speciality.Speciality;
 import infrastructure.repository.professional.MapperInterface;
 
 import java.sql.ResultSet;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ProfessionalMapper implements MapperInterface {
 
@@ -31,5 +35,23 @@ public class ProfessionalMapper implements MapperInterface {
             return professional;
         }
         return null;
+    }
+
+    @Override
+    public ProfessionalList toDomainList(ResultSet resultSet)  {
+        List<Professional> list=new ArrayList<>();
+        try {
+            while (resultSet.next()) {
+                Professional professional = new Professional();
+                professional.setRegistryNumber(resultSet.getInt("nro_registro"));
+                professional.setName(resultSet.getString("nombre"));
+                professional.setDocumentNumber(resultSet.getString("documento"));
+                professional.setSignature(resultSet.getString("firma"));
+                list.add(professional);
+            }
+        } catch ( Exception e){
+
+        }
+        return new ProfessionalList(list);
     }
 }

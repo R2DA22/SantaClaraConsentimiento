@@ -260,6 +260,19 @@ public class Postgresql extends DataBaseManager implements ClientDB {
     }
 
     @Override
+    public ResultSet findAllProfessional() throws Exception {
+        try {
+            this.openConnection();
+            String sql = "SELECT nombre, documento, nro_registro, firma FROM profesional "
+                    + " WHERE estado";
+            return this.execute(sql);
+        } finally {
+            this.closeConnection();
+        }
+    }
+
+
+    @Override
     public void createConsentEmergency(EmergencyConsent consent) throws Exception {
         try {
             this.openConnection();

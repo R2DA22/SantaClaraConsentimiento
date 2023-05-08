@@ -1,6 +1,9 @@
 package core.usecase.professional;
 
+import core.domain.patient.ListDocumentType;
 import core.domain.professional.Professional;
+import core.domain.professional.ProfessionalList;
+import java.sql.ResultSet;
 
 public interface ProfessionalRepositoryInterface {
 
@@ -8,4 +11,6 @@ public interface ProfessionalRepositoryInterface {
     void update(Professional professional) throws Exception;
 
     Professional find(Integer idType, String id) throws Exception;
+
+    ProfessionalList findAll() throws Exception;
 }

@@ -18,7 +18,6 @@ import java.util.List;
 
 public interface ClientDB {
 
-
     ResultSet getAllDocumentTypes() throws Exception;
 
     ResultSet findPatient(Integer idType, String id) throws Exception;
@@ -54,6 +53,7 @@ public interface ClientDB {
     void updateProfessional(Professional professional) throws Exception;
 
     ResultSet findProfessional(Integer idType, String id) throws Exception;
+    ResultSet findAllProfessional() throws Exception;
 
     ResultSet findProcessByName(String name) throws Exception;
 

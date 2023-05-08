@@ -9,6 +9,7 @@ import core.domain.bus.command.Command;
 import core.domain.bus.query.Query;
 import core.domain.speciality.Speciality;
 import core.domain.patient.Person;
+import java.util.Objects;
 
 /**
  *
@@ -38,7 +39,22 @@ public class Professional extends Person implements Command, Query {
     public void setSpecialty(Speciality specialty) {
         this.specialty = specialty;
     }
-    
-    
-    
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (!(o instanceof Professional)) {
+            return false;
+        }
+        Professional that = (Professional) o;
+        return Objects.equals(getRegistryNumber(), that.getRegistryNumber()) &&
+                Objects.equals(getSpecialty(), that.getSpecialty());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(super.hashCode(), getRegistryNumber(), getSpecialty());
+    }
 }

@@ -5,6 +5,7 @@
  */
 package app.ui.converters;
 
+import core.domain.professional.Professional;
 import javax.faces.application.FacesMessage;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
@@ -49,6 +50,10 @@ public class ObjectConverter implements Converter {
                     DocumentType object = (DocumentType) objeto;
                     return object;
                 }
+                if (objeto instanceof Professional) {
+                    Professional object = (Professional) objeto;
+                    return object;
+                }
                 return null;
             } catch (Exception e) {
                 throw new ConverterException(new FacesMessage(FacesMessage.SEVERITY_ERROR, "Conversion Error", "Not a valid object."));
@@ -85,6 +90,12 @@ public class ObjectConverter implements Converter {
                 DocumentType objeto = (DocumentType) object;
                 fc.getExternalContext().getApplicationMap().put(objeto.toString(), object);
                 return objeto.toString();
+            }
+            if (object instanceof Professional) {
+                Professional objeto = (Professional) object;
+                fc.getExternalContext().getApplicationMap().put(object.toString(), object);
+                return objeto.toString();
+
             }
         }
         return null;

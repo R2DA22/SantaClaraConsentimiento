@@ -366,10 +366,7 @@ function validarGuardarFormOdontologia() {
         document.querySelector(`#${nameForm}\\:grupo-firma .formulario__input-error`).classList.add('formulario__input-error-activo');
     }
     const acudiente = document.getElementById(nameForm + ':nombre-acudiente');
-    if (campos["registro"]
-        && campos["nombre-profesional"]
-        && campos["documento-profesional"]
-        && (campos["documento-acudiente"] || !acudiente) && campos["documento-paciente"]
+    if ((campos["documento-acudiente"] || !acudiente) && campos["documento-paciente"]
         && (campos["nombre-acudiente"] || !acudiente)
         && campos["nombre-paciente"] && firma.value !== ''
     ) {

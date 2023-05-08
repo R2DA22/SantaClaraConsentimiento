@@ -1,6 +1,8 @@
 package infrastructure.repository.professional;
 
+import core.domain.patient.ListDocumentType;
 import core.domain.professional.Professional;
+import core.domain.professional.ProfessionalList;
 import core.usecase.professional.ProfessionalRepositoryInterface;
 import infrastructure.repository.ClientDB;
 
@@ -28,7 +30,15 @@ public class ProfessionalRepository implements ProfessionalRepositoryInterface {
 
     @Override
     public Professional find(Integer idType, String id) throws Exception {
-        ResultSet resultSet= dataBase.findProfessional(idType,id);
+        ResultSet resultSet = dataBase.findProfessional(idType, id);
         return mapper.toDomain(resultSet);
+    }
+
+    @Override
+    public ProfessionalList findAll() throws Exception {
+        ResultSet resultSet = dataBase.findAllProfessional();
+        ProfessionalList result = mapper.toDomainList(resultSet);
+        return result;
+
     }
 }
