@@ -25,17 +25,9 @@ public class CreateDentalConsentUseCase implements CreateDentalConsentUseCaseInt
     @Override
     public void execute(DentalConsent consent) throws Exception {
         repository.createDentalConsent(consent);
-        repository.createConsentProcess(consent.getProcesses(), consent.getId());
         List<Area> areas = new ArrayList<>();
         areas.add(consent.getArea());
-        consent.getProcesses().addAll(processProcesses(consent.getArea().getProcess(), consent.getArea()));
-        for (Process dissent : consent.getDissents()) {
-            for (Process process : consent.getProcesses()) {
-                if (process.getDescription().equals(dissent.getDescription())) {
-                    dissent.setIdProcess(process.getIdProcess());
-                }
-            }
-        }
+        consent.setProcesses(processProcesses(consent.getArea().getProcess(), consent.getArea()));
         repository.createConsentArea(areas, consent.getId());
     }
 
@@ -45,12 +37,9 @@ public class CreateDentalConsentUseCase implements CreateDentalConsentUseCaseInt
         List<Process> processList = new ArrayList();
         try {
             for (String nameProcess : procList) {
-                process = processRepository.findByName(nameProcess);
-                if (process == null) {
-                    process = new Process();
-                    process.setArea(area);
-                    process.setDescription(nameProcess.toLowerCase().replaceAll("^\\w", nameProcess.toUpperCase().substring(0, 1)));
-                }
+                process = new Process();
+                process.setArea(area);
+                process.setDescription(nameProcess.toLowerCase().replaceAll("^\\w", nameProcess.toUpperCase().substring(0, 1)));
                 processList.add(process);
             }
         } catch (Exception e) {

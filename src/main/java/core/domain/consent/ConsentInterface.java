@@ -377,6 +377,9 @@ public abstract class ConsentInterface implements Command {
     }
 
     public List<Process> getProcesses() {
+        if (processes==null){
+            return new ArrayList<>();
+        }
         return processes;
     }
 

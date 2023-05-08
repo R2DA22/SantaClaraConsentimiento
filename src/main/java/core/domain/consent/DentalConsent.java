@@ -15,7 +15,7 @@ public class DentalConsent extends ConsentInterface implements Command {
     private List<Area> areasList;
 
 
-     private String FORMAT_DOCUMENT_WITHOUT_GUARDIAN = "<html>\n"
+    private String FORMAT_DOCUMENT_WITHOUT_GUARDIAN = "<html>\n"
             + "            <head>\n"
             + "            <title>SBCPM-F-001.V3 Consentimiento Informado de Proc.</title>\n"
             + "            <meta charset=\"utf-8\">\n"
@@ -389,7 +389,7 @@ public class DentalConsent extends ConsentInterface implements Command {
     @Override
     public String getFormat() {
         String html;
-        String areaTable=areasTableBuilder(1);
+        String areaTable = areasTableBuilder(1);
         if (this.isGuardian()) {
             html = FORMAT_DOCUMENT_WITH_GUARDIAN.replace("@docSignature@", this.getSignatureConsent());
             html = html.replace("@docSignatureProfessional@", this.getSignatureProfessional());
@@ -403,7 +403,8 @@ public class DentalConsent extends ConsentInterface implements Command {
         html = html.replace("@Mes@", this.getMonth());
         html = html.replace("@Anio@", this.getDate("yyyy"));
         html = html.replace("@TipoDoc@",
-                (isGuardian() ? this.getGuardianData().getDocumentType().getInitials() : this.getPatient().getDocumentType().getInitials()));
+                (isGuardian() ? this.getGuardianData().getDocumentType().getInitials() :
+                        this.getPatient().getDocumentType().getInitials()));
         html = html.replace("@NroDocumento@",
                 (isGuardian() ? this.getGuardianData().getDocumentNumber() : this.getPatient().getDocumentNumber()));
         html = html.replace("@NroDocumento2@", (isGuardian() ? this.getPatient().getDocumentNumber() : ""));
@@ -461,10 +462,8 @@ public class DentalConsent extends ConsentInterface implements Command {
                 if (areasList.get(index).equals(this.getArea())) {
                     boolean firstProcedure = true;
                     for (Process procedure : this.getProcesses()) {
-                        if (procedure.getIdProcess() != Integer.parseInt(Constantes.ID_OTRO_PROCEDIMIENTO)) {
-                            tableHtml.append(firstProcedure ? procedure.getDescription() : " - " + procedure.getDescription());
-                            firstProcedure = false;
-                        }
+                        tableHtml.append(firstProcedure ? procedure.getDescription() : " - " + procedure.getDescription());
+                        firstProcedure = false;
                     }
                 }
                 tableHtml.append("</td>\n");

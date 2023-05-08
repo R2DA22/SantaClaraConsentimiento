@@ -20,17 +20,17 @@
                 <f:selectItems value="#{uiBean.areas}" var="vararea"
                                itemLabel="#{vararea.name}"
                                itemValue="#{vararea}" />
-                <p:ajax event="change" process="@this procedimiento" listener="#{uiBean.findAllProcess(uiBean.consent.area)}" update="procedimiento"/>
+                <p:ajax event="change" process="@this"/>
             </p:selectOneMenu>
             <p:spacer height="15px" />
-            <p:selectManyCheckbox styleClass="r2d-one-radio" id="procedimiento" converter="objectConverter"
+            <p:selectManyCheckbox rendered="#{procedimiento}"
+                                  styleClass="r2d-one-radio" id="procedimiento" converter="objectConverter"
                                   value="#{uiBean.consent.processes}" style="width: 100%;"
                                   layout="responsive" columns="2"   >
                 <f:selectItems  value="#{uiBean.processes}"
                                 var="procedure" itemLabel="#{procedure.description}"
                                 itemValue="#{procedure}"/>
-                <p:ajax event="change" process="@this @(.grp-otro)"   update="@this @(.grp-otro)" 
-                        listener="#{uiBean.addDissent()}"/>
+                <p:ajax event="change" process="@this @(.grp-otro)"   update="@this @(.grp-otro)"/>
             </p:selectManyCheckbox>
 
             <p:spacer height="15px" />
@@ -44,8 +44,8 @@
                         <p:ajax event="blur" process="@this" />
                     </p:inputText>
                 </p:outputPanel>
-                <p:outputPanel id="input-otro-area" rendered="#{area and uiBean.consent.processes.contains(uiBean.anotherProcess)}" style="font-size: 15px">
-                    <p:outputLabel styleClass="r2da-lbl" value="¿Otro?, cual:"/>
+                <p:outputPanel id="input-otro-area" rendered="#{area}" style="font-size: 15px">
+                    <p:outputLabel styleClass="r2da-lbl" value="Detalle del procedimiento:"/>
                     <p:chips styleClass="r2d-chips" value="#{uiBean.consent.area.process}"
                              style="width:100%">
                         <p:ajax event="blur" process="@this" oncomplete="adicionarChips()"/>

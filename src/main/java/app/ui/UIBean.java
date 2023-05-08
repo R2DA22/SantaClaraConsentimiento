@@ -383,7 +383,6 @@ public class UIBean implements Serializable {
                 findAllAreas();
                 findAllProfessional();
                 consent = new DentalConsent(environment.getConfiguration(), areas);
-                findAllProcess(null);
                 break;
             case 5:
                 consent = new DentalCovidConsent(environment.getConfiguration());
@@ -403,21 +402,10 @@ public class UIBean implements Serializable {
     }
 
 
-    public void addDissent() {
-        getDissents().clear();
-        List<Process> list = new ArrayList<>();
-        for (Process process : consent.getProcesses()) {
-            if (process.getIdProcess() != Integer.parseInt(Constantes.ID_OTRO_PROCEDIMIENTO)) {
-                list.add(process);
-            }
-        }
-        getDissents().addAll(list);
-    }
-
     public void addItems() {
         getDissents().clear();
         deleteDuplicatesChips();
-        int counterId = consent.getProcesses().size();
+        int counterId = consent.getArea().getProcess().size();
         List<Process> list = new ArrayList<>();
         for (String process : consent.getArea().getProcess()) {
             Process procedure = new Process(counterId);
@@ -426,7 +414,6 @@ public class UIBean implements Serializable {
             list.add(procedure);
             counterId++;
         }
-        addDissent();
         getDissents().addAll(list);
     }
 
