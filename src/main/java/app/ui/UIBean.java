@@ -91,7 +91,6 @@ public class UIBean implements Serializable {
             environment = new Environment();
             controller = environment.getController();
             getAllDocumentsType();
-            findAllProfessional();
             this.urlFile = ((Configuration) controller.dispatchQuery(new Configuration(PATH_PDF))).getPathPdfFile();
             anotherProcess = new Process(Integer.parseInt(Constantes.ID_OTRO_PROCEDIMIENTO));
         } catch (Exception ex) {
