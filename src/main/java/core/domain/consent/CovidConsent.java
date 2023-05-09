@@ -74,7 +74,7 @@ public class CovidConsent extends ConsentInterface implements Command {
             + "                                         <td colspan=\"2\">VIAJES REALIZADOS: @viajes@</td>\n"
             + "                                     </tr>\n"
             + "                                     <tr>\n"
-            + "                                         <td rowspan=\"2\">¿ESTA USTEN VACUNADO?: SI @vacunadoSI@ NO@vacunadoNO@</td>\n"
+            + "                                         <td rowspan=\"2\">¿ESTA USTED VACUNADO?: SI @vacunadoSI@ NO@vacunadoNO@</td>\n"
             + "                                         <td rowspan=\"2\">¿CUANTAS DOSIS?: @dosis@</td>\n"
             + "                                         <td rowspan=\"2\">NOMBRE VACUNA: @nombreVacuna@</td>\n"
             + "                                         <td rowspan=\"2\">FECHA VACUNA(DD/MM/AAAA): @fechaVacuna@</td>\n"

@@ -17,7 +17,7 @@ const expresiones = {
     digito: /^\d+$/,
     telefono: /^3([0-9]){9}$/,
     email: /^[a-z0-9!#$%&'*+\/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+\/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$/,
-    date:/^\d\d-\d\d-\d\d\d\d/
+    date: /^\d\d-\d\d-\d\d\d\d/
 };
 const campos = {
     "nombre-acudiente": false,
@@ -247,7 +247,7 @@ function validarGuardar() {
     if (campos["admision"]
         && (campos["documento-acudiente"] || !acudiente) && campos["documento-paciente"]
         && (campos["nombre-acudiente"] || !acudiente)
-        && campos["nombre-paciente"]  && firma.value !== '') {
+        && campos["nombre-paciente"] && firma.value !== '') {
         saveConsent();
     } else {
         inputs.forEach((input) => {
@@ -279,7 +279,7 @@ function validarGuardarFormCovid() {
         && (campos["nombre-acudiente"] || !acudiente)
         && (campos["sintomas-paciente"] || !sintomas)
         && (campos["viajes-paciente"] || !viajes)
-        && campos["nombre-paciente"]  && firma.value !== '') {
+        && campos["nombre-paciente"] && firma.value !== '') {
         saveConsent();
     } else {
         inputs.forEach((input) => {
@@ -315,7 +315,6 @@ function validarGuardarFormUrgencias() {
 
 function validarGuardarFormOdontologiaCovid() {
     const firma = document.getElementById(nameForm + ':firma_value');
-//    const firmaProfesional = document.getElementById(nameForm + ':firma-profesional_value');
     if (firma.value !== '') {
         document.getElementById(`${nameForm}:grupo-firma`).classList.remove(formGrupoIncorrecto);
         document.getElementById(`${nameForm}:grupo-firma`).classList.add(formGrupoCorrecto);
@@ -325,22 +324,11 @@ function validarGuardarFormOdontologiaCovid() {
         document.getElementById(`${nameForm}:grupo-firma`).classList.remove(formGrupoCorrecto);
         document.querySelector(`#${nameForm}\\:grupo-firma .formulario__input-error`).classList.add('formulario__input-error-activo');
     }
-//    if (firmaProfesional.value !== '') {
-//        document.getElementById(`${nameForm}:grupo-firma-profesional`).classList.remove(formGrupoIncorrecto);
-//        document.getElementById(`${nameForm}:grupo-firma-profesional`).classList.add(formGrupoCorrecto);
-//        document.querySelector(`#${nameForm}\\:grupo-firma-profesional .formulario__input-error`).classList.remove('formulario__input-error-activo');
-//    } else {
-//        document.getElementById(`${nameForm}:grupo-firma-profesional`).classList.add(formGrupoIncorrecto);
-//        document.getElementById(`${nameForm}:grupo-firma-profesional`).classList.remove(formGrupoCorrecto);
-//        document.querySelector(`#${nameForm}\\:grupo-firma-profesional .formulario__input-error`).classList.add('formulario__input-error-activo');
-//    }
     const acudiente = document.getElementById(nameForm + ':nombre-acudiente');
     if (campos["edad-paciente"]
-        && campos["registro"]
         && (campos["documento-acudiente"] || !acudiente) && campos["documento-paciente"]
         && (campos["nombre-acudiente"] || !acudiente)
         && campos["nombre-paciente"] && firma.value !== ''
-//            && firmaProfesional.value !== ''
     ) {
         saveConsent();
     } else {
@@ -422,7 +410,7 @@ function validarGuardarVIH() {
         && (campos["another-transmission"] || !transmission)
         && campos["positive-result-reaction"] && (campos["another-mood"] || !mood) && campos["test-reason"]
         && campos["city-patient"] && campos["born-date-patient"]
-        && campos["edad-paciente"]&& campos["telefono-paciente"]&& campos["ocupacion-paciente"]
+        && campos["edad-paciente"] && campos["telefono-paciente"] && campos["ocupacion-paciente"]
     ) {
         saveConsent();
     } else {

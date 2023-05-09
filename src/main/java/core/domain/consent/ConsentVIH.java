@@ -11,7 +11,7 @@ public class ConsentVIH extends ConsentInterface implements Command {
 
     private static final String TYPE = "VIH";
     private static final String URL = "consentimiento_VIH.xhtml?faces-redirect=true";
-     private String FORMAT_DOCUMENT_WITHOUT_GUARDIAN = "<html>\n"
+    private String FORMAT_DOCUMENT_WITHOUT_GUARDIAN = "<html>\n"
             + "<head>\n"
             + "<title>SBCPM-F-001.V3 Consentimiento Informado de Proc.</title>\n"
             + "<meta charset=\"utf-8\">\n"

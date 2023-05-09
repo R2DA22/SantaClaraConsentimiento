@@ -25,30 +25,5 @@ public class CreateDentalConsentUseCase implements CreateDentalConsentUseCaseInt
     @Override
     public void execute(DentalConsent consent) throws Exception {
         repository.createDentalConsent(consent);
-        List<Area> areas = new ArrayList<>();
-        areas.add(consent.getArea());
-        consent.setProcesses(processProcesses(consent.getArea().getProcess(), consent.getArea()));
-        repository.createConsentArea(areas, consent.getId());
-    }
-
-    private List<Process> processProcesses(List<String> procList, Area area) throws Exception {
-        Consulta consulta = null;
-        Process process;
-        List<Process> processList = new ArrayList();
-        try {
-            for (String nameProcess : procList) {
-                process = new Process();
-                process.setArea(area);
-                process.setDescription(nameProcess.toLowerCase().replaceAll("^\\w", nameProcess.toUpperCase().substring(0, 1)));
-                processList.add(process);
-            }
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        } finally {
-            if (consulta != null) {
-                consulta.desconectar();
-            }
-        }
-        return processList;
     }
 }

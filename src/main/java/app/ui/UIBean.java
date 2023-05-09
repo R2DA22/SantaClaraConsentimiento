@@ -7,6 +7,7 @@
 package app.ui;
 
 import app.config.Environment;
+import core.domain.Consulta;
 import core.domain.area.Area;
 import core.domain.configuration.Configuration;
 import core.domain.consent.ConsentInterface;
@@ -120,12 +121,7 @@ public class UIBean implements Serializable {
     public void findPatient() {
         try {
             if (consent.getPatient() != null && !consent.getPatient().isEmptyPerson()) {
-                Patient patientDomain = (Patient) controller.dispatchQuery(consent.getPatient());
-                if (patientDomain != null) {
-                    consent.getPatient().setName(patientDomain.getName());
-                } else {
-                    consent.getPatient().setName("");
-                }
+                consent.setPatient((Patient) controller.dispatchQuery(consent.getPatient()));
             }
         } catch (Exception ex) {
             Logger.getLogger(UIBean.class.getName()).log(Level.SEVERE, null, ex);
@@ -158,26 +154,29 @@ public class UIBean implements Serializable {
             createGuardian();
         }
         createPatient();
-        createConsent();
-        Signature signatureConsent = new Signature(consent.getPathSignature(), consent.getSignature());
-        signatureConsent.create();
-        Signature signatureProfessional=null;
+        Signature patientSignature = createSignature(consent.getPathSignature(), consent.getSignature());
+        Signature professionalSignature = null;
         if (consent.getProfessional() != null
-                && (consent.getProfessional().getSignature()!= null
+                && (consent.getProfessional().getSignature() != null
                 && !consent.getProfessional().getSignature().isEmpty())) {
-            signatureProfessional = new Signature(consent.getPathSignatureProfessional(), consent.getProfessional().getSignature());
-            signatureProfessional.create();
+            professionalSignature = createSignature(consent.getPathSignatureProfessional(), consent.getProfessional().getSignature());
         }
         String html = consent.getFormat();
-        PdfFile.createPDF(this.urlFile + consent.getPatient().getDocumentNumber() + "_" + consent.getDate("dd_MM_yyyy_HH_mm") + ".pdf",
-                html);
-        signatureConsent.delete();
-        if (signatureProfessional!=null){
-            signatureProfessional.delete();
+        String pathPdf = this.urlFile + consent.getPatient().getDocumentNumber() + "_" + consent.getDate("dd_MM_yyyy_HH_mm") + ".pdf";
+        PdfFile.createPDF(pathPdf, html);
+        patientSignature.delete();
+        if (professionalSignature != null) {
+            professionalSignature.delete();
         }
         this.AlertType = "success";
         RequestContext.getCurrentInstance().update("@(.formSoporte)");
         RequestContext.getCurrentInstance().execute("PF('dlgview-pdf').show()");
+    }
+
+    private Signature createSignature(String path, String json) {
+        Signature signature = new Signature(path, json);
+        signature.create();
+        return signature;
     }
 
     public void createConsent() {
@@ -192,7 +191,6 @@ public class UIBean implements Serializable {
 
     public void createPatient() {
         try {
-
             controller.dispatchCommand(consent.getPatient());
         } catch (Exception e) {
             throw new RuntimeException(e);
@@ -408,7 +406,7 @@ public class UIBean implements Serializable {
     public void addItems() {
         getDissents().clear();
         deleteDuplicatesChips();
-        int counterId = consent.getArea().getProcess().size();
+        int counterId = 1;
         List<Process> list = new ArrayList<>();
         for (String process : consent.getArea().getProcess()) {
             Process procedure = new Process(counterId);
@@ -417,6 +415,7 @@ public class UIBean implements Serializable {
             list.add(procedure);
             counterId++;
         }
+        consent.setProcesses(list);
         getDissents().addAll(list);
     }
 
