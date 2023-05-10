@@ -14,6 +14,10 @@ public class CreateVIHUseCase implements CreateVIHUseCaseInterface {
 
     @Override
     public void execute(ConsentVIH consent) throws Exception {
-        repository.createVIHConsent(consent);
+        if (consent.isCreateConsent()) {
+            repository.createVIHConsent(consent);
+        }else{
+            repository.updateVIHConsent(consent.getId());
+        }
     }
 }

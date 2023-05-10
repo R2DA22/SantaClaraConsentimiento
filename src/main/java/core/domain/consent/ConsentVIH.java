@@ -9,7 +9,7 @@ import utilidades.Constantes;
 
 public class ConsentVIH extends ConsentInterface implements Command {
 
-    private static final String TYPE = "VIH";
+    public static final String TYPE = "VIH";
     private static final String URL = "consentimiento_VIH.xhtml?faces-redirect=true";
     private String FORMAT_DOCUMENT_WITHOUT_GUARDIAN = "<html>\n"
             + "<head>\n"

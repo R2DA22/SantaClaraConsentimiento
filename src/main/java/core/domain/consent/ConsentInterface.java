@@ -40,12 +40,7 @@ public abstract class ConsentInterface implements Command {
     public static final String REGEX_EMAIL =
             "^[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$";
     public static final String REGEX_DATE = "^\\d{2}-\\d{2}-\\d{4}$";
-    private static final String OS_NAME = "os.name";
-    private static final String WINDOWS = "win";
-    private static final String CLASS_EXT = ".class";
-    private static final String CLASSES = "classes";
-    private static final String WEB_INF = "WEB-INF";
-
+    public boolean createConsent;
     private Patient patient;
     private String signature;
     private boolean isGuardian;
@@ -612,5 +607,13 @@ public abstract class ConsentInterface implements Command {
 
     public void setTestReason(String testReason) {
         this.testReason = testReason;
+    }
+
+    public boolean isCreateConsent() {
+        return createConsent;
+    }
+
+    public void setCreateConsent(boolean createConsent) {
+        this.createConsent = createConsent;
     }
 }

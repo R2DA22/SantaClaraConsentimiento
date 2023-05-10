@@ -1,22 +1,19 @@
 package infrastructure.repository.consent;
 
-import core.domain.area.Area;
 import core.domain.consent.ConsentVIH;
-import core.domain.consent.CovidConsent;
-import core.domain.consent.DentalConsent;
-import core.domain.consent.DentalCovidConsent;
-import core.domain.consent.EmergencyConsent;
-import core.domain.consent.ProcessConsent;
-import core.domain.process.Process;
+import core.domain.consent.VIHData;
+import core.domain.sickness.SicknessList;
 import core.usecase.consent.ConsentRepositoryInterface;
 import infrastructure.repository.ClientDB;
-import java.util.List;
+import java.sql.ResultSet;
 
 
 public class ConsentRepository implements ConsentRepositoryInterface {
     private ClientDB db;
+    private ConsentMapperInterface mapper;
 
-    public ConsentRepository(ClientDB sql) {
+    public ConsentRepository(ClientDB sql,ConsentMapperInterface mapper ) {
+        this.mapper=mapper;
         this.db = sql;
     }
 
@@ -28,5 +25,22 @@ public class ConsentRepository implements ConsentRepositoryInterface {
     @Override
     public Integer findNextId() throws Exception {
         return db.findNextId();
+    }
+
+    @Override
+    public ConsentVIHDTO findVIHData(VIHData filter) throws Exception {
+        ResultSet resultSet=db.findVIHData(filter);
+        return mapper.toConsentVIH(resultSet);
+    }
+
+    @Override
+    public SicknessList findSicknessVIHData(int id) throws Exception {
+        ResultSet resultSet=db.findSicknessVIHData(id);
+        return mapper.toSicknessList(resultSet);
+    }
+
+    @Override
+    public void updateVIHConsent(int id) throws Exception {
+        db.updateVIHConsent(id);
     }
 }

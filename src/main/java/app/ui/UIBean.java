@@ -18,15 +18,18 @@ import core.domain.consent.DentalCovidConsent;
 import core.domain.consent.EmergencyConsent;
 import core.domain.consent.IdConsent;
 import core.domain.consent.ProcessConsent;
+import core.domain.consent.VIHData;
 import core.domain.professional.Professional;
 import core.domain.patient.*;
 import core.domain.process.Process;
 import core.domain.professional.ProfessionalForm;
 import core.domain.professional.ProfessionalList;
+import core.domain.sickness.Sickness;
 import core.domain.speciality.Speciality;
 import core.domain.vaccine.Vaccine;
 import infrastructure.controllers.Controller;
 
+import infrastructure.repository.consent.ConsentVIHDTO;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -128,6 +131,55 @@ public class UIBean implements Serializable {
         }
     }
 
+    public void searchPatientData() {
+        findPatient();
+        if (consent.getTypeConsent().equals(ConsentVIH.TYPE)) {
+            VIHData filter = new VIHData(consent.getPatient().getIdTypeDocument(), consent.getPatient().getDocumentNumber());
+            try {
+                ConsentVIHDTO consentVIHDTO = (ConsentVIHDTO) controller.dispatchQuery(filter);
+                consent.setId(consentVIHDTO.getId());
+                consent.setDataTreatment(consentVIHDTO.getDataTreatment());
+                consent.setRiskBenefit(consentVIHDTO.getRiskBenefit());
+                consent.setCatchment(consentVIHDTO.getCatchment());
+                consent.setFrequency(consentVIHDTO.getFrequency());
+                consent.setKnowledgeAboutHIV(consentVIHDTO.getKnowledgeAboutHIV());
+                consent.setKnowledgeAboutMST(consentVIHDTO.isKnowledgeAboutMST());
+                consent.setPrevention(consentVIHDTO.isPrevention());
+                consent.setUseCondom(consentVIHDTO.isUseCondom());
+                consent.setUseCondomReason(consentVIHDTO.getUseCondomReason());
+                consent.setNotUseCondomReason(consentVIHDTO.getNotUseCondomReason());
+                consent.setTypeOfSexualIntercourse(consentVIHDTO.isTypeOfSexualIntercourse());
+                consent.setProbableTransmissionMechanism(consentVIHDTO.getProbableTransmissionMechanism());
+                consent.setTransfusionSite(consentVIHDTO.getTransfusionSite());
+                consent.setAnotherTransmission(consentVIHDTO.getAnotherTransmission());
+                consent.setEvent(consentVIHDTO.getEvent());
+                consent.setPositiveResultReaction(consentVIHDTO.getPositiveResultReaction());
+                consent.setMood(consentVIHDTO.getMood());
+                consent.setAnotherMood(consentVIHDTO.getAnotherMood());
+                consent.setTest(consentVIHDTO.isTest());
+                consent.setTestReason(consentVIHDTO.getTestReason());
+                if (consentVIHDTO.getProfessional() != null) {
+                    consent.setProfessional(consentVIHDTO.getProfessional());
+                    consent.setCreateConsent(false);
+                    if (!consentVIHDTO.getSicknessList().isEmpty()) {
+                        for (Sickness sickness : consent.getSicknessList()) {
+                            for (Sickness sickDTO : consentVIHDTO.getSicknessList()) {
+                                if (sickDTO.getId() == sickness.getId()) {
+                                    sickness.setSick(true);
+                                    sickness.setSickDate(sickDTO.getSickDate());
+                                    sickness.setOrganDescription(sickDTO.getOrganDescription());
+                                    sickness.setInstitutionDX(sickDTO.getInstitutionDX());
+                                }
+                            }
+                        }
+                    }
+                }
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+        }
+    }
+
     public void findGuardian() {
         try {
             if (consent.getPatient() != null
@@ -182,8 +234,10 @@ public class UIBean implements Serializable {
 
     public void createConsent() {
         try {
-            int nextId = (int) controller.dispatchQuery(new IdConsent());
-            consent.setId(nextId);
+            if (consent.isCreateConsent()) {
+                int nextId = (int) controller.dispatchQuery(new IdConsent());
+                consent.setId(nextId);
+            }
             controller.dispatchCommand(consent);
         } catch (Exception e) {
             throw new RuntimeException(e);
@@ -330,7 +384,7 @@ public class UIBean implements Serializable {
             if (((HttpServletRequest) ec.getRequest()).getRequestURI().contains("registro_profesional")) {
                 return redirect(6);
             }
-            if (((HttpServletRequest) ec.getRequest()).getRequestURI().contains("consentimiento-VIH")) {
+            if (((HttpServletRequest) ec.getRequest()).getRequestURI().contains("consentimiento_VIH")) {
                 return redirect(7);
             }
         }
@@ -338,6 +392,9 @@ public class UIBean implements Serializable {
     }
 
     private void reBuildConsent() {
+        if (consent instanceof ProcessConsent) {
+            consent = new ProcessConsent(environment.getConfiguration(), processes);
+        }
         if (consent instanceof EmergencyConsent) {
             consent = new EmergencyConsent(environment.getConfiguration());
         }
@@ -352,6 +409,10 @@ public class UIBean implements Serializable {
         }
         if (consent instanceof ProfessionalForm) {
             consent = new ProfessionalForm(environment.getConfiguration());
+        }
+        if (consent instanceof ConsentVIH) {
+            consent = new ConsentVIH(environment.getConfiguration());
+            consent.setCreateConsent(true);
         }
     }
 
@@ -395,6 +456,7 @@ public class UIBean implements Serializable {
             case 7:
                 findAllProfessional();
                 consent = new ConsentVIH(environment.getConfiguration());
+                consent.setCreateConsent(true);
                 break;
             default:
                 return "index.xhtml?faces-redirect=true";

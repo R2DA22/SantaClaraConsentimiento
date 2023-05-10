@@ -3,6 +3,7 @@ package app.config;
 import core.domain.area.Area;
 import core.domain.consent.ConsentVIH;
 import core.domain.consent.IdConsent;
+import core.domain.consent.VIHData;
 import core.domain.patient.DocumentType;
 import core.domain.patient.Guardian;
 import core.domain.patient.Patient;
@@ -15,6 +16,7 @@ import core.usecase.area.find.FindAllAreaUseCase;
 import core.usecase.configurations.find.FindConfigurationUseCase;
 import core.usecase.consent.create.CreateVIHUseCase;
 import core.usecase.consent.find.FindNextIdConsentUseCase;
+import core.usecase.consent.find.FindVIHUseCase;
 import core.usecase.document.findAll.FindAllDocumentTypesUseCase;
 import core.usecase.guardian.create.CreateGuardianUseCase;
 import core.usecase.guardian.find.FindGuardianUseCase;
@@ -34,6 +36,7 @@ import infrastructure.handlers.area.FindAllAreaHandler;
 import infrastructure.handlers.configuration.FindConfigurationHandler;
 import infrastructure.handlers.consent.CreateVIHConsentHandler;
 import infrastructure.handlers.consent.FindNextIdHandler;
+import infrastructure.handlers.consent.FindVIHDataHandler;
 import infrastructure.handlers.document.FindAllTypeDocumentHandler;
 import infrastructure.handlers.guardian.CreateGuardianHandler;
 import infrastructure.handlers.guardian.FindGuardianHandler;
@@ -51,6 +54,7 @@ import infrastructure.repository.area.AreaMapper;
 import infrastructure.repository.area.AreaRepository;
 import infrastructure.repository.configuration.ConfigurationMapper;
 import infrastructure.repository.configuration.ConfigurationRepository;
+import infrastructure.repository.consent.ConsentMapper;
 import infrastructure.repository.consent.ConsentRepository;
 import infrastructure.repository.document.DocumentMapper;
 import infrastructure.repository.document.DocumentRepository;
@@ -82,7 +86,7 @@ public class Environment {
         DocumentRepository documentRepository = new DocumentRepository(db, new DocumentMapper());
         PatientRepository patientRepository = new PatientRepository(db, new PatientMapper());
         GuardianRepository guardianRepository = new GuardianRepository(db, new GuardianMapper());
-        ConsentRepository consentRepository = new ConsentRepository(db);
+        ConsentRepository consentRepository = new ConsentRepository(db, new ConsentMapper());
         ConfigurationRepository configurationRepository = new ConfigurationRepository(db, new ConfigurationMapper());
         SpecialityRepository specialityRepository = new SpecialityRepository(db, new SpecialityMapper());
         VaccineRepository vaccineRepository = new VaccineRepository(db, new VaccineMapper());
@@ -101,6 +105,7 @@ public class Environment {
         FindAllProfessionalUseCase findAllProfessionalUseCase = new FindAllProfessionalUseCase(professionalRepository);
         FindAllProcessByAreaUseCase findAllProcessByAreaUseCase = new FindAllProcessByAreaUseCase(processRepository);
         FindAllAreaUseCase findAllAreaUseCase = new FindAllAreaUseCase(areaRepository);
+        FindVIHUseCase findVIHUseCase = new FindVIHUseCase(consentRepository);
 
         CreateVIHUseCase createVIHUseCase = new CreateVIHUseCase(consentRepository);
         CreatePatientUseCase createPatientUseCase = new CreatePatientUseCase(patientRepository);
@@ -126,6 +131,7 @@ public class Environment {
         FindAllProfessionalHandler findAllProfessionalHandler = new FindAllProfessionalHandler(findAllProfessionalUseCase);
         FindAllAreaHandler findAllAreaHandler = new FindAllAreaHandler(findAllAreaUseCase);
         FindAllProcessHandler findAllProcessHandler = new FindAllProcessHandler(findAllProcessByAreaUseCase);
+        FindVIHDataHandler findVIHDataHandler = new FindVIHDataHandler(findVIHUseCase);
 
         CommandSyncBus commandBus = new CommandSyncBus();
         QuerySyncBus queryBus = new QuerySyncBus();
@@ -147,6 +153,7 @@ public class Environment {
         queryBus.register(DocumentType.class.getName(), findAllTypeDocumentHandler);
         queryBus.register(core.domain.configuration.Configuration.class.getName(), findConfigurationHandler);
         queryBus.register(ProfessionalList.class.getName(), findAllProfessionalHandler);
+        queryBus.register(VIHData.class.getName(), findVIHDataHandler);
 
         controller = new Controller(commandBus, queryBus);
     }

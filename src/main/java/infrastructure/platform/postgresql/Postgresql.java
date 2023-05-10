@@ -1,6 +1,7 @@
 package infrastructure.platform.postgresql;
 
 import core.domain.consent.ConsentVIH;
+import core.domain.consent.VIHData;
 import core.domain.professional.Professional;
 import core.domain.patient.Guardian;
 import core.domain.patient.Patient;
@@ -330,8 +331,11 @@ public class Postgresql extends DataBaseManager implements ClientDB {
     public ResultSet findAllProfessional() throws Exception {
         try {
             this.openConnection();
-            String sql = "SELECT nombre, documento, nro_registro, firma FROM profesional "
-                    + " WHERE estado";
+            String sql = "SELECT b.*,nombre, documento, nro_registro, firma,c.* \n" +
+                    "FROM profesional \n" +
+                    "inner join tipo_documento c using (id_tipo_documento)\n" +
+                    "inner join especialidad b using (id_especialidad)\n" +
+                    "WHERE estado";
             PreparedStatement ps = this.getConnection().prepareStatement(sql);
             return ps.executeQuery();
         } finally {
@@ -365,14 +369,66 @@ public class Postgresql extends DataBaseManager implements ClientDB {
         }
     }
 
+    @Override
+    public ResultSet findVIHData(VIHData filter) throws Exception {
+        try {
+            this.openConnection();
+            String sql = "select * from consentimiento a " +
+                    "inner join consentimiento_vih b using (id_consentimiento)" +
+                    "inner join profesional c " +
+                    "inner join tipo_documento d on (c.id_tipo_documento=d.id_tipo_documento) " +
+                    "inner join especialidad e on (c.id_especialidad=e.id_especialidad) " +
+                    "on (c.id_tipo_documento=id_tipo_documento_profesional " +
+                    "and c.documento=documento_profesional)" +
+                    "where a.documento=? and a.id_tipo_documento=? and b.estado='P'";
+            PreparedStatement ps = this.getConnection().prepareStatement(sql);
+            ps.setString(1, filter.getDocumentNumber());
+            ps.setInt(2, filter.getDocumentType());
+            return ps.executeQuery();
+        } finally {
+            this.closeConnection();
+        }
+    }
+
+    @Override
+    public ResultSet findSicknessVIHData(int id) throws Exception {
+        try {
+            this.openConnection();
+            String sql = "select * " +
+                    "from consentimiento_enfermedad " +
+                    "inner join enfermedad using (id_enfermedad)" +
+                    "where id_consentimiento=?";
+            PreparedStatement ps = this.getConnection().prepareStatement(sql);
+            ps.setInt(1, id);
+            return ps.executeQuery();
+        } finally {
+            this.closeConnection();
+        }
+    }
+
+    @Override
+    public void updateVIHConsent(int id) throws Exception {
+        try {
+            this.openConnection();
+            String sql = "UPDATE consentimiento_vih SET estado='F' "
+                    + "	WHERE id_consentimiento=?";
+            PreparedStatement ps = this.getConnection().prepareStatement(sql);
+            ps.setInt(1, id);
+            ps.executeUpdate();
+        } finally {
+            this.closeConnection();
+        }
+    }
+
     private void createVIHData(ConsentVIH consent) {
         try {
             String sql = "INSERT INTO public.consentimiento_vih(" +
                     "id_consentimiento, evento, captacion, conoce_vih, conoce_mst, " +
                     "conoce_prevencion, usa_condon, motivo, frecuencia, tipo_relacion_sexual, " +
                     "mecanismo_transmision, transfusion_site, reaccion_resultado, " +
-                    "estado_paciente, test_obligatorio, motivo_test, estado)" +
-                    "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+                    "estado_paciente, test_obligatorio, motivo_test, estado," +
+                    "id_tipo_documento_profesional, documento_profesional)" +
+                    "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
             PreparedStatement ps = this.getConnection().prepareStatement(sql);
             ps.setInt(1, consent.getId());
             ps.setString(2, consent.getEvent());
@@ -391,6 +447,8 @@ public class Postgresql extends DataBaseManager implements ClientDB {
             ps.setBoolean(15, consent.isTest());
             ps.setString(16, consent.getTestReason());
             ps.setString(17, "P");
+            ps.setInt(18, consent.getProfessional().getDocumentType().getId());
+            ps.setString(19, consent.getProfessional().getDocumentNumber());
             ps.executeUpdate();
         } catch (SQLException e) {
             throw new RuntimeException(e);

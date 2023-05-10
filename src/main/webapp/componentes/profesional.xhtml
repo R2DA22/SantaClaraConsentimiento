@@ -28,12 +28,10 @@
                     <f:selectItems value="#{uiBean.professionalList}" var="profe"
                                    itemLabel="#{profe.name}"
                                    itemValue="#{profe}" />
-                    <p:ajax event="change" process="@this"
-                            oncomplete="setFoco('frmFormulario', 'documento-profesional');" />
+                    <p:ajax event="change" process="@this" update="@this"/>
                 </p:selectOneMenu>
                 <p:spacer height="15px" />
                 <p:outputPanel styleClass="formulario__grupo"  id="grupo-documento-profesional" rendered="#{documento}" >
-
                     <p:outputLabel styleClass="r2da-lbl" value="Nro. documento" />
                     <p:inputText id="documento-profesional"
                                  onkeypress="if (event.keyCode === 13) {

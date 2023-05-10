@@ -7,6 +7,7 @@ import core.domain.consent.CovidConsent;
 import core.domain.consent.DentalConsent;
 import core.domain.consent.DentalCovidConsent;
 import core.domain.consent.ProcessConsent;
+import core.domain.consent.VIHData;
 import core.domain.professional.Professional;
 import core.domain.consent.EmergencyConsent;
 import core.domain.patient.Guardian;
@@ -56,4 +57,8 @@ public interface ClientDB {
 
     ResultSet findProcessByName(String name) throws Exception;
     void createVIHConsent(ConsentVIH consent) throws Exception;
+    ResultSet findVIHData(VIHData filter) throws Exception;
+    ResultSet findSicknessVIHData(int id) throws Exception;
+
+    void updateVIHConsent(int id) throws Exception;
 }

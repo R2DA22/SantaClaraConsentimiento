@@ -20,7 +20,7 @@
                 <f:selectItems value="#{uiBean.listDocumentTypes}" var="tipodoc"
                                itemLabel="#{tipodoc.description}"
                                itemValue="#{tipodoc}"/>
-                <p:ajax event="change" process="@this" oncomplete="setFoco('frmFormulario', 'documento-paciente');"/>
+                <p:ajax event="change" process="@this" update="@this" oncomplete="setFoco('frmFormulario', 'documento-paciente');"/>
             </p:selectOneMenu>
             <p:outputPanel styleClass="formulario__grupo" id="grupo-documento-paciente">
 
@@ -31,8 +31,8 @@
                                          }"
                              styleClass="form-control" value="#{uiBean.consent.patient.documentNumber}">
                     <p:ajax event="blur" process="@this"
-                            update="grupo-nombre-paciente,grupo-born-date-patient,grupo-edad-paciente,grupo-gender-patient,grupo-city-patient,grupo-address-patient,grupo-ocupacion-paciente,grupo-marital-status-patient,grupo-telefono-paciente,grupo-level-study-patient,grupo-another-level-patient,grupo-social-scheme-patient,grupo-email-paciente,grupo-eps-paciente,grupo-admision,grupo-usuario-de"
-                            listener="#{uiBean.findPatient()}" oncomplete="actualizarInputs()"/>
+                            update="pnl-paciente,pnl-profesional,@(.pnl-vih)"
+                            listener="#{uiBean.searchPatientData()}" oncomplete="actualizarInputs()"/>
                 </p:inputText>
                 <p class="formulario__input-error">El documento solo llevar máximo 15 digitos.</p>
 
