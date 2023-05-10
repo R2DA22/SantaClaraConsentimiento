@@ -1,7 +1,7 @@
 # Compiled class file
 *.class
 # target dir
-.target/
+target/
 #idea dir
 .idea/
 #DS_store file
