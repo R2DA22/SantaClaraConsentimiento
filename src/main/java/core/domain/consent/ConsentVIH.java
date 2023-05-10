@@ -195,11 +195,11 @@ public class ConsentVIH extends ConsentInterface implements Command {
         super(configuration);
         setTypeConsent(TYPE);
         List<Sickness> sickness = new ArrayList<>();
-        sickness.add(new Sickness("Tuberculosis"));
-        sickness.add(new Sickness("Toxoplasmosis"));
-        sickness.add(new Sickness("Candidiasis"));
-        sickness.add(new Sickness("Criptococosis"));
-        sickness.add(new Sickness("Otras"));
+        sickness.add(new Sickness(1, "Tuberculosis"));
+        sickness.add(new Sickness(2, "Toxoplasmosis"));
+        sickness.add(new Sickness(3, "Candidiasis"));
+        sickness.add(new Sickness(4, "Criptococosis"));
+        sickness.add(new Sickness(5, "Otras"));
         setSicknessList(sickness);
         setEvent("Asintomatico (VIH)");
         setKnowledgeAboutHIV("Si");

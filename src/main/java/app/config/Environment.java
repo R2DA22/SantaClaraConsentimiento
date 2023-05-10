@@ -1,12 +1,8 @@
 package app.config;
 
 import core.domain.area.Area;
-import core.domain.consent.CovidConsent;
-import core.domain.consent.DentalConsent;
-import core.domain.consent.DentalCovidConsent;
-import core.domain.consent.EmergencyConsent;
+import core.domain.consent.ConsentVIH;
 import core.domain.consent.IdConsent;
-import core.domain.consent.ProcessConsent;
 import core.domain.patient.DocumentType;
 import core.domain.patient.Guardian;
 import core.domain.patient.Patient;
@@ -17,11 +13,7 @@ import core.domain.speciality.Speciality;
 import core.domain.vaccine.Vaccine;
 import core.usecase.area.find.FindAllAreaUseCase;
 import core.usecase.configurations.find.FindConfigurationUseCase;
-import core.usecase.consent.create.CreateCovidConsentUseCase;
-import core.usecase.consent.create.CreateDentalConsentUseCase;
-import core.usecase.consent.create.CreateDentalCovidConsentUseCase;
-import core.usecase.consent.create.CreateEmergencyConsentUseCase;
-import core.usecase.consent.create.CreateProcessConsentUseCase;
+import core.usecase.consent.create.CreateVIHUseCase;
 import core.usecase.consent.find.FindNextIdConsentUseCase;
 import core.usecase.document.findAll.FindAllDocumentTypesUseCase;
 import core.usecase.guardian.create.CreateGuardianUseCase;
@@ -40,11 +32,7 @@ import infrastructure.bus.query.QuerySyncBus;
 import infrastructure.controllers.Controller;
 import infrastructure.handlers.area.FindAllAreaHandler;
 import infrastructure.handlers.configuration.FindConfigurationHandler;
-import infrastructure.handlers.consent.CreateCovidConsentHandler;
-import infrastructure.handlers.consent.CreateDentalConsentHandler;
-import infrastructure.handlers.consent.CreateDentalCovidConsentHandler;
-import infrastructure.handlers.consent.CreateEmergencyConsentHandler;
-import infrastructure.handlers.consent.CreateProcessConsentHandler;
+import infrastructure.handlers.consent.CreateVIHConsentHandler;
 import infrastructure.handlers.consent.FindNextIdHandler;
 import infrastructure.handlers.document.FindAllTypeDocumentHandler;
 import infrastructure.handlers.guardian.CreateGuardianHandler;
@@ -83,15 +71,13 @@ import java.util.Properties;
 
 public class Environment {
 
-    private final Postgresql db;
-    private String scope;
-    private Configuration configuration;
+    private final Configuration configuration;
     private final Controller controller;
 
     public Environment() throws Exception {
         configuration = Configuration.getInstance();
         Properties properties = configuration.getProperties();
-        db = new Postgresql(properties);
+        Postgresql db = new Postgresql(properties);
 
         DocumentRepository documentRepository = new DocumentRepository(db, new DocumentMapper());
         PatientRepository patientRepository = new PatientRepository(db, new PatientMapper());
@@ -116,22 +102,14 @@ public class Environment {
         FindAllProcessByAreaUseCase findAllProcessByAreaUseCase = new FindAllProcessByAreaUseCase(processRepository);
         FindAllAreaUseCase findAllAreaUseCase = new FindAllAreaUseCase(areaRepository);
 
-        CreateDentalConsentUseCase createDentalConsentUseCase = new CreateDentalConsentUseCase(consentRepository, processRepository);
-        CreateDentalCovidConsentUseCase createDentalCovidConsentUseCase = new CreateDentalCovidConsentUseCase(consentRepository);
-        CreateEmergencyConsentUseCase createEmergencyConsentUseCase = new CreateEmergencyConsentUseCase(consentRepository);
-        CreateCovidConsentUseCase createCovidConsentUseCase = new CreateCovidConsentUseCase(consentRepository);
-        CreateProcessConsentUseCase createProcessConsentUseCase = new CreateProcessConsentUseCase(consentRepository);
+        CreateVIHUseCase createVIHUseCase = new CreateVIHUseCase(consentRepository);
         CreatePatientUseCase createPatientUseCase = new CreatePatientUseCase(patientRepository);
         CreateGuardianUseCase createGuardianUseCase = new CreateGuardianUseCase(guardianRepository);
         CreateProfessionalUseCase createProfessionalUseCase = new CreateProfessionalUseCase(professionalRepository);
         CreateProcessUseCase createProcessUseCase = new CreateProcessUseCase(processRepository);
 
-        CreateDentalConsentHandler createDentalConsentHandler = new CreateDentalConsentHandler(createDentalConsentUseCase);
-        CreateDentalCovidConsentHandler createDentalCovidConsentHandler =
-                new CreateDentalCovidConsentHandler(createDentalCovidConsentUseCase);
-        CreateEmergencyConsentHandler createEmergencyConsentHandler = new CreateEmergencyConsentHandler(createEmergencyConsentUseCase);
-        CreateProcessConsentHandler createProcessConsentHandler = new CreateProcessConsentHandler(createProcessConsentUseCase);
-        CreateCovidConsentHandler createCovidConsentHandler = new CreateCovidConsentHandler(createCovidConsentUseCase);
+
+        CreateVIHConsentHandler createVIHConsentHandler = new CreateVIHConsentHandler(createVIHUseCase);
         CreatePatientHandler createPatientHandler = new CreatePatientHandler(createPatientUseCase);
         CreateGuardianHandler createGuardianHandler = new CreateGuardianHandler(createGuardianUseCase);
         CreateProcessHandler createProcessHandler = new CreateProcessHandler(createProcessUseCase);
@@ -152,15 +130,11 @@ public class Environment {
         CommandSyncBus commandBus = new CommandSyncBus();
         QuerySyncBus queryBus = new QuerySyncBus();
 
-        commandBus.register(DentalCovidConsent.class.getName(), createDentalCovidConsentHandler);
-        commandBus.register(DentalConsent.class.getName(), createDentalConsentHandler);
-        commandBus.register(EmergencyConsent.class.getName(), createEmergencyConsentHandler);
-        commandBus.register(CovidConsent.class.getName(), createCovidConsentHandler);
-        commandBus.register(ProcessConsent.class.getName(), createProcessConsentHandler);
         commandBus.register(Patient.class.getName(), createPatientHandler);
         commandBus.register(Guardian.class.getName(), createGuardianHandler);
         commandBus.register(Professional.class.getName(), createProfessionalHandler);
         commandBus.register(Process.class.getName(), createProcessHandler);
+        commandBus.register(ConsentVIH.class.getName(), createVIHConsentHandler);
 
         queryBus.register(Process.class.getName(), findAllProcessHandler);
         queryBus.register(Area.class.getName(), findAllAreaHandler);

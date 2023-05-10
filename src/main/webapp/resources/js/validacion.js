@@ -405,7 +405,7 @@ function validarGuardarVIH() {
     const mood = document.getElementById(nameForm + ':mood').value === 'true';
     const condom = document.getElementById(nameForm + ':condom').value === 'true';
     if (campos["documento-paciente"]
-        && campos["nombre-paciente"] && campos["nombre-profesional"] && firma.value !== ''
+        && campos["nombre-paciente"]  && firma.value !== ''
         && ((campos["use-condom-reason"] || !condom) || (campos["why-no-use-condom"] || condom))
         && (campos["another-transmission"] || !transmission)
         && campos["positive-result-reaction"] && (campos["another-mood"] || !mood) && campos["test-reason"]

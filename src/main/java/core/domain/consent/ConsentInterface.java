@@ -69,7 +69,6 @@ public abstract class ConsentInterface implements Command {
     private Area area;
     private Boolean disagree;
     private String anotherProcesses;
-    private List<Area> areas;
     private List<Process> dissents;
     private List<Process> processes;
 
@@ -86,7 +85,6 @@ public abstract class ConsentInterface implements Command {
     private String transfusionSite;
     private String anotherTransmission;
     private String event;
-    private Date interviewDate;
     private String positiveResultReaction;
     private String mood;
     private String anotherMood;
@@ -502,14 +500,6 @@ public abstract class ConsentInterface implements Command {
 
     public void setEvent(String event) {
         this.event = event;
-    }
-
-    public Date getInterviewDate() {
-        return interviewDate;
-    }
-
-    public void setInterviewDate(Date interviewDate) {
-        this.interviewDate = interviewDate;
     }
 
     public String getPositiveResultReaction() {

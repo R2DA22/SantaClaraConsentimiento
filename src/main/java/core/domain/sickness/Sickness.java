@@ -1,25 +1,28 @@
 package core.domain.sickness;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class Sickness {
 
+    private int id;
     private String name;
     private boolean isSick;
     private String organDescription;
     private String institutionDX;
     private Date sickDate;
 
-    public Sickness(String name) {
+    public Sickness(int id, String name) {
+        this.id = id;
         this.name = name;
     }
 
-    public Sickness(String name, boolean isSick, String organDescription, String institutionDX, Date sickDate) {
-        this.name = name;
-        this.isSick = isSick;
-        this.organDescription = organDescription;
-        this.institutionDX = institutionDX;
-        this.sickDate = sickDate;
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getName() {
@@ -41,7 +44,14 @@ public class Sickness {
     public Date getSickDate() {
         return sickDate;
     }
-
+    public String getSicknessDate(String formatType) {
+        SimpleDateFormat format = new SimpleDateFormat(formatType);
+        if (sickDate == null) {
+            return null;
+        } else {
+            return format.format(sickDate);
+        }
+    }
     public void setName(String name) {
         this.name = name;
     }

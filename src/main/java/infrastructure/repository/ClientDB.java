@@ -2,6 +2,7 @@ package infrastructure.repository;
 
 
 import core.domain.area.Area;
+import core.domain.consent.ConsentVIH;
 import core.domain.consent.CovidConsent;
 import core.domain.consent.DentalConsent;
 import core.domain.consent.DentalCovidConsent;
@@ -32,8 +33,6 @@ public interface ClientDB {
 
     void updateGuardian(Guardian guardian) throws Exception;
 
-    void createConsentEmergency(EmergencyConsent consent) throws Exception;
-
     Integer findNextId() throws Exception;
 
     ResultSet findConfiguration(String parameterName) throws Exception;
@@ -56,15 +55,5 @@ public interface ClientDB {
     ResultSet findAllProfessional() throws Exception;
 
     ResultSet findProcessByName(String name) throws Exception;
-
-    void createConsentProcess(ProcessConsent consent) throws Exception;
-    void createConsentProcedure(List<Process> processes, int consentId) throws Exception;
-    void createConsentArea(List<Area> areas, int consentId) throws Exception;
-    void createConsentDissent(List<Process> dissents, int consentId) throws Exception;
-
-    void createConsentCovid(CovidConsent consent) throws Exception;
-
-    void createDentalConsent(DentalConsent consent) throws Exception;
-
-    void createDentalCovidConsent(DentalCovidConsent consent) throws Exception;
+    void createVIHConsent(ConsentVIH consent) throws Exception;
 }

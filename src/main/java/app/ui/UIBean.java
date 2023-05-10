@@ -154,6 +154,7 @@ public class UIBean implements Serializable {
             createGuardian();
         }
         createPatient();
+        createConsent();
         Signature patientSignature = createSignature(consent.getPathSignature(), consent.getSignature());
         Signature professionalSignature = null;
         if (consent.getProfessional() != null

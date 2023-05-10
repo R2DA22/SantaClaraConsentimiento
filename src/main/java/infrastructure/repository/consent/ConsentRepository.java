@@ -1,6 +1,7 @@
 package infrastructure.repository.consent;
 
 import core.domain.area.Area;
+import core.domain.consent.ConsentVIH;
 import core.domain.consent.CovidConsent;
 import core.domain.consent.DentalConsent;
 import core.domain.consent.DentalCovidConsent;
@@ -19,48 +20,13 @@ public class ConsentRepository implements ConsentRepositoryInterface {
         this.db = sql;
     }
 
-    public void createEmergencyConsent(EmergencyConsent consent) throws Exception {
-        db.createConsentEmergency(consent);
-    }
-
     @Override
-    public void createProcessConsent(ProcessConsent consent) throws Exception {
-        db.createConsentProcess(consent);
-    }
-
- @Override
-    public void createDentalCovidConsent(DentalCovidConsent consent) throws Exception {
-        db.createDentalCovidConsent(consent);
-    }
-
-    @Override
-    public void createConsentProcess(List<Process> processes, int consentId) throws Exception {
-        db.createConsentProcedure(processes, consentId);
-    }
-
-    @Override
-    public void createConsentArea(List<Area> areas, int consentId) throws Exception {
-        db.createConsentArea(areas, consentId);
-    }
-
-    @Override
-    public void createConsentDissents(List<Process> dissents, int consentId) throws Exception {
-        db.createConsentDissent(dissents, consentId);
+    public void createVIHConsent(ConsentVIH consent) throws Exception {
+        db.createVIHConsent(consent);
     }
 
     @Override
     public Integer findNextId() throws Exception {
         return db.findNextId();
     }
-
-    @Override
-    public void createCovidConsent(CovidConsent consent) throws Exception {
-        db.createConsentCovid(consent);
-    }
-
-    @Override
-    public void createDentalConsent(DentalConsent consent) throws Exception {
-        db.createDentalConsent(consent);
-    }
-
 }

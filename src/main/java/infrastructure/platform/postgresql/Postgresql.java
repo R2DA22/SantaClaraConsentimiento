@@ -1,19 +1,17 @@
 package infrastructure.platform.postgresql;
 
-import core.domain.area.Area;
-import core.domain.consent.CovidConsent;
-import core.domain.consent.DentalConsent;
-import core.domain.consent.DentalCovidConsent;
-import core.domain.consent.ProcessConsent;
+import core.domain.consent.ConsentVIH;
 import core.domain.professional.Professional;
-import core.domain.consent.EmergencyConsent;
 import core.domain.patient.Guardian;
 import core.domain.patient.Patient;
 import core.domain.process.Process;
+import core.domain.sickness.Sickness;
 import infrastructure.repository.ClientDB;
 
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Types;
 import java.util.List;
 import java.util.Properties;
@@ -341,209 +339,84 @@ public class Postgresql extends DataBaseManager implements ClientDB {
         }
     }
 
-
     @Override
-    public void createConsentEmergency(EmergencyConsent consent) throws Exception {
+    public void createVIHConsent(ConsentVIH consent) throws Exception {
         try {
             this.openConnection();
-            String sql =
-                    "INSERT INTO public.consentimiento(riesgo_beneficio,tratamiento_datos,"
-                            + " id_consentimiento,tipo_formulario,id_tipo_documento, documento, "
-                            + "id_tipo_documento_acudiente, documento_acudiente,eps)"
-                            + "	VALUES (?,?,?,?,?,?,?,?,?)";
-            PreparedStatement ps = this.getConnection().prepareStatement(sql);
-            ps.setBoolean(1, false);
-            ps.setBoolean(2, false);
-            ps.setInt(3, consent.getId());
-            ps.setString(4, consent.getTypeConsent());
-            ps.setInt(5, consent.getPatient().getDocumentType().getId());
-            ps.setString(6, consent.getPatient().getDocumentNumber());
-            ps.setObject(7, (consent.isGuardian() ? consent.getIdTypeDocumentGuardian() : null), Types.INTEGER);
-            ps.setObject(8, (consent.isGuardian() ? consent.getDocumentGuardian() : null), Types.VARCHAR);
-            ps.setString(9, consent.getEPSPatient());
-            ps.executeUpdate();
-        } finally {
-            this.closeConnection();
-        }
-    }
-
-    @Override
-    public void createConsentProcess(ProcessConsent consent) throws Exception {
-        try {
-            this.openConnection();
-            String sql =
-                    "INSERT INTO public.consentimiento(riesgo_beneficio,tratamiento_datos,"
-                            + " id_consentimiento,tipo_formulario,id_tipo_documento, documento, "
-                            + "id_tipo_documento_acudiente, documento_acudiente,nro_admision,"
-                            + " nro_registro, otro_procedimiento)"
-                            + "	VALUES (?,?,?,?,?,?,?,?,?,?,?)";
-
+            this.begin();
+            String sql = "INSERT INTO consentimiento(riesgo_beneficio,tratamiento_datos,"
+                    + " id_consentimiento,id_tipo_documento, documento, "
+                    + "id_tipo_documento_acudiente, documento_acudiente)"
+                    + "	VALUES (?,?,?,?,?,?,?)";
             PreparedStatement ps = this.getConnection().prepareStatement(sql);
             ps.setBoolean(1, consent.getRiskBenefit());
             ps.setBoolean(2, consent.getDataTreatment());
             ps.setInt(3, consent.getId());
-            ps.setString(4, consent.getTypeConsent());
-            ps.setInt(5, consent.getPatient().getDocumentType().getId());
-            ps.setString(6, consent.getPatient().getDocumentNumber());
-            ps.setObject(7, (consent.isGuardian() ? consent.getIdTypeDocumentGuardian() : null), Types.INTEGER);
-            ps.setObject(8, (consent.isGuardian() ? consent.getDocumentGuardian() : null), Types.VARCHAR);
-            ps.setInt(9, consent.getProfessional().getRegistryNumber());
-            ps.setString(10, consent.getPatient().getAdmissionNumber());
-            ps.setString(11, consent.getAnotherProcesses());
+            ps.setInt(4, consent.getPatient().getDocumentType().getId());
+            ps.setString(5, consent.getPatient().getDocumentNumber());
+            ps.setObject(6, (consent.isGuardian() ? consent.getIdTypeDocumentGuardian() : null), Types.INTEGER);
+            ps.setObject(7, (consent.isGuardian() ? consent.getDocumentGuardian() : null), Types.VARCHAR);
             ps.executeUpdate();
+            createVIHData(consent);
+            createSickness(consent.getId(), consent.getSicknessList());
+            this.commit();
         } finally {
             this.closeConnection();
         }
     }
 
-
-    @Override
-    public void createConsentCovid(CovidConsent consent) throws Exception {
+    private void createVIHData(ConsentVIH consent) {
         try {
-            this.openConnection();
-            String sql =
-                    "INSERT INTO public.consentimiento(riesgo_beneficio,tratamiento_datos,"
-                            + " id_consentimiento,tipo_formulario,id_tipo_documento, documento, "
-                            + "id_tipo_documento_acudiente, documento_acudiente,"
-                            + "eps, telefono, email, edad, ocupacion, contacto_covid, trabajo_salud, sintomas," +
-                            " tiene_sintomas, fecha_inicio_covid, viajes_realizados, viajes, fecha_vacuna, id_vacuna," +
-                            " nro_dosis)	VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
-
+            String sql = "INSERT INTO public.consentimiento_vih(" +
+                    "id_consentimiento, evento, captacion, conoce_vih, conoce_mst, " +
+                    "conoce_prevencion, usa_condon, motivo, frecuencia, tipo_relacion_sexual, " +
+                    "mecanismo_transmision, transfusion_site, reaccion_resultado, " +
+                    "estado_paciente, test_obligatorio, motivo_test, estado)" +
+                    "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
             PreparedStatement ps = this.getConnection().prepareStatement(sql);
-            ps.setBoolean(1, consent.getRiskBenefit());
-            ps.setBoolean(2, consent.getDataTreatment());
-            ps.setInt(3, consent.getId());
-            ps.setString(4, consent.getTypeConsent());
-            ps.setInt(5, consent.getPatient().getDocumentType().getId());
-            ps.setString(6, consent.getPatient().getDocumentNumber());
-            ps.setObject(7, (consent.isGuardian() ? consent.getIdTypeDocumentGuardian() : null), Types.INTEGER);
-            ps.setObject(8, (consent.isGuardian() ? consent.getDocumentGuardian() : null), Types.VARCHAR);
-            ps.setString(9, consent.getEPSPatient());
-            ps.setString(10, consent.getPatient().getPhoneNumber());
-            ps.setString(11, consent.getPatient().getEmail());
-            ps.setInt(12, consent.getPatient().getAge());
-            ps.setString(13, consent.getPatient().getOccupation());
-            ps.setBoolean(14, consent.getHadContactCovid());
-            ps.setBoolean(15, consent.getHaveWorkInHealth());
-            ps.setObject(16, (consent.getHasSymptoms() ? consent.getDescriptionOfSymptoms() : null), Types.VARCHAR);
-            ps.setBoolean(17, consent.getHasSymptoms());
-            ps.setObject(18, (consent.getHasSymptoms() ? consent.getSymptomsStartDate("yyyy-MM-dd") : null), Types.VARCHAR);
-            ps.setObject(19, (consent.getHadTrips() ? consent.getTripsMade() : null), Types.VARCHAR);
-            ps.setBoolean(20, consent.getHadTrips());
-            ps.setObject(21, (consent.getVaccinated() ? consent.getDateVaccine("yyyy-MM-dd") : null), Types.DATE);
-            ps.setObject(22, (consent.getVaccinated() ? consent.getVaccine().getId() : null), Types.INTEGER);
-            ps.setObject(23, (consent.getVaccinated() ? consent.getDoseNumber() : null), Types.INTEGER);
+            ps.setInt(1, consent.getId());
+            ps.setString(2, consent.getEvent());
+            ps.setString(3, consent.getCatchment());
+            ps.setString(4, consent.getKnowledgeAboutHIV());
+            ps.setBoolean(5, consent.isKnowledgeAboutMST());
+            ps.setBoolean(6, consent.isPrevention());
+            ps.setBoolean(7, consent.isUseCondom());
+            ps.setString(8, (consent.isUseCondom() ? consent.getUseCondomReason() : consent.getNotUseCondomReason()));
+            ps.setString(9, consent.getFrequency());
+            ps.setBoolean(10, consent.isTypeOfSexualIntercourse());
+            ps.setString(11, consent.getProbableTransmissionMechanism());
+            ps.setString(12, consent.getTransfusionSite());
+            ps.setString(13, consent.getPositiveResultReaction());
+            ps.setString(14, consent.getMood());
+            ps.setBoolean(15, consent.isTest());
+            ps.setString(16, consent.getTestReason());
+            ps.setString(17, "P");
             ps.executeUpdate();
-        } finally {
-            this.closeConnection();
-        }
-
-    }
-
-    @Override
-    public void createDentalConsent(DentalConsent consent) throws Exception {
-        try {
-            this.openConnection();
-            String sql =
-                    "INSERT INTO public.consentimiento(riesgo_beneficio,tratamiento_datos,"
-                            + " id_consentimiento,tipo_formulario,id_tipo_documento, documento, "
-                            + "id_tipo_documento_acudiente, documento_acudiente,"
-                            + "nro_registro"
-                            + " ) VALUES (?,?,?,?,?,?,?,?,?)";
-            PreparedStatement ps = this.getConnection().prepareStatement(sql);
-            ps.setBoolean(1, consent.getRiskBenefit());
-            ps.setBoolean(2, consent.getDataTreatment());
-            ps.setInt(3, consent.getId());
-            ps.setString(4, consent.getTypeConsent());
-            ps.setInt(5, consent.getPatient().getDocumentType().getId());
-            ps.setString(6, consent.getPatient().getDocumentNumber());
-            ps.setObject(7, (consent.isGuardian() ? consent.getIdTypeDocumentGuardian() : null), Types.INTEGER);
-            ps.setObject(8, (consent.isGuardian() ? consent.getDocumentGuardian() : null), Types.VARCHAR);
-            ps.setInt(9, consent.getProfessional().getRegistryNumber());
-            ps.executeUpdate();
-        } finally {
-            this.closeConnection();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
     }
 
-    @Override
-    public void createDentalCovidConsent(DentalCovidConsent consent) throws Exception {
+    private void createSickness(int id, List<Sickness> sicknessList) {
         try {
-            this.openConnection();
-            String sql = "INSERT INTO public.consentimiento(riesgo_beneficio,tratamiento_datos,"
-                    + " id_consentimiento,tipo_formulario,id_tipo_documento, documento, "
-                    + "id_tipo_documento_acudiente, documento_acudiente,"
-                    + "eps, contacto_covid," +
-                    " tiene_sintomas, viajes)"
-                    + "	VALUES (?,?,?,?,?,?,?,?,?,?,?,?)";
-            PreparedStatement ps = this.getConnection().prepareStatement(sql);
-            ps.setBoolean(1, consent.getRiskBenefit());
-            ps.setBoolean(2, consent.getDataTreatment());
-            ps.setInt(3, consent.getId());
-            ps.setString(4, consent.getTypeConsent());
-            ps.setInt(5, consent.getPatient().getDocumentType().getId());
-            ps.setString(6, consent.getPatient().getDocumentNumber());
-            ps.setObject(7, (consent.isGuardian() ? consent.getIdTypeDocumentGuardian() : null), Types.INTEGER);
-            ps.setObject(8, (consent.isGuardian() ? consent.getDocumentGuardian() : null), Types.VARCHAR);
-            ps.setInt(9, consent.getPatient().getAge());
-            ps.setBoolean(10, consent.getHadContactCovid());
-            ps.setBoolean(11, consent.getHasSymptoms());
-            ps.setBoolean(12, consent.getHadTrips());
-            ps.executeUpdate();
-        } finally {
-            this.closeConnection();
-        }
-    }
+            for (Sickness sickness : sicknessList) {
+                if (sickness.isSick()) {
+                    String sql = "INSERT INTO consentimiento_enfermedad(id_consentimiento, id_enfermedad," +
+                            "organo_compr,institucion_dx,fecha)"
+                            + "	VALUES (?,?,?,?,?)";
+                    PreparedStatement ps = this.getConnection().prepareStatement(sql);
+                    ps.setInt(1, id);
+                    ps.setInt(2, sickness.getId());
+                    ps.setString(3, sickness.getOrganDescription());
+                    ps.setString(4, sickness.getInstitutionDX());
+                    ps.setObject(5, sickness.getSickDate(), Types.DATE);
 
-    @Override
-    public void createConsentProcedure(List<Process> processes, int consentId) throws Exception {
-        try {
-            this.openConnection();
-            for (Process procedure : processes) {
-                String sql = "Insert into public.consentimiento_procedimiento(id_consentimiento,id_procedimiento) " +
-                        "values (?,?)";
-                PreparedStatement ps = this.getConnection().prepareStatement(sql);
-                ps.setInt(1, consentId);
-                ps.setInt(2, procedure.getIdProcess());
-                ps.executeUpdate();
+                    ps.executeUpdate();
+                }
             }
-        } finally {
-            this.closeConnection();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
     }
-
-    @Override
-    public void createConsentArea(List<Area> areas, int consentId) throws Exception {
-        try {
-            this.openConnection();
-            for (Area area : areas) {
-                String sql = "Insert into public.consentimiento_area(id_consentimiento,id_area) " +
-                        "values (?,?)";
-                PreparedStatement ps = this.getConnection().prepareStatement(sql);
-                ps.setInt(1, consentId);
-                ps.setInt(2, area.getId());
-                ps.executeUpdate();
-            }
-        } finally {
-            this.closeConnection();
-        }
-    }
-
-    @Override
-    public void createConsentDissent(List<Process> dissents, int consentId) throws Exception {
-        try {
-            this.openConnection();
-            for (Process dissent : dissents) {
-                String sql = "Insert into public.consentimiento_desentimiento(id_consentimiento,id_procedimiento) " +
-                        "values (?,?)";
-                PreparedStatement ps = this.getConnection().prepareStatement(sql);
-                ps.setInt(1, consentId);
-                ps.setInt(2, dissent.getIdProcess());
-            }
-        } finally {
-            this.closeConnection();
-        }
-    }
-
-
 }
+
