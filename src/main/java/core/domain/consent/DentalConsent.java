@@ -5,7 +5,6 @@ import core.domain.area.Area;
 import core.domain.bus.command.Command;
 import core.domain.process.Process;
 import java.util.List;
-import utilidades.Constantes;
 
 public class DentalConsent extends ConsentInterface implements Command {
 
@@ -92,7 +91,7 @@ public class DentalConsent extends ConsentInterface implements Command {
             + "                                        <div>\n"
             + "                                            <span class=\"position-firma\">\n"
             + "                                                <img class=\"img-firma\" src=\"" + PATH_IMAGES_APP + NAME_SIGNATURE +
-            "-@docSignature@." + Constantes.IMAGE_FORMAT + "\" width=\"130\" />\n"
+            "-@docSignature@." + IMAGE_FORMAT + "\" width=\"130\" />\n"
             +
             "                                                <div class=\"subrayado\">______________________________</div>                                 \n"
             + "                                            </span>\n"
@@ -107,7 +106,7 @@ public class DentalConsent extends ConsentInterface implements Command {
             + "                                        <div>\n"
             + "                                            <span class=\"position-firma\">\n"
             + "                                                <img class=\"img-firma\" src=\"" + PATH_IMAGES_APP + NAME_SIGNATURE +
-            "-@docSignatureProfessional@." + Constantes.IMAGE_FORMAT + "\" width=\"130\" />\n"
+            "-@docSignatureProfessional@." + IMAGE_FORMAT + "\" width=\"130\" />\n"
             + "                                                <div class=\"subrayado\">______________________________</div>\n"
             //            + "                                                <div class=\"subrayado3\"><u><i>@NroRegistro@</i></u></div>\n"
             + "                                            </span>\n"
@@ -146,7 +145,7 @@ public class DentalConsent extends ConsentInterface implements Command {
             + "                                        <div>\n"
             + "                                            <span class=\"position-firma\">\n"
             + "                                                <img style=\"display:@displayFirma@\" class=\"img-firma\" src=\"" +
-            PATH_IMAGES_APP + NAME_SIGNATURE + "-@docSignature@." + Constantes.IMAGE_FORMAT + "\" width=\"130\" />\n"
+            PATH_IMAGES_APP + NAME_SIGNATURE + "-@docSignature@." + IMAGE_FORMAT + "\" width=\"130\" />\n"
             +
             "                                                <div class=\"subrayado\">______________________________</div>                                 \n"
             + "                                            </span>\n"
@@ -162,7 +161,7 @@ public class DentalConsent extends ConsentInterface implements Command {
             + "                                        <div>\n"
             + "                                            <span class=\"position-firma\">\n"
             + "                                                <img style=\"display:@displayFirma@\" class=\"img-firma\" src=\"" +
-            PATH_IMAGES_APP + NAME_SIGNATURE + "-@docSignatureProfessional@." + Constantes.IMAGE_FORMAT + "\" width=\"130\" />\n"
+            PATH_IMAGES_APP + NAME_SIGNATURE + "-@docSignatureProfessional@." + IMAGE_FORMAT + "\" width=\"130\" />\n"
             + "                                                <div class=\"subrayado\">______________________________</div>\n"
             + "                                            </span>\n"
             + "                                        </div>             \n"
@@ -252,7 +251,7 @@ public class DentalConsent extends ConsentInterface implements Command {
             + "                                        <div>\n"
             + "                                            <span class=\"position-firma\">\n"
             + "                                                <img class=\"img-firma\" src=\"" + PATH_IMAGES_APP + NAME_SIGNATURE +
-            "-@docSignature@." + Constantes.IMAGE_FORMAT + "\" width=\"130\" />\n"
+            "-@docSignature@." + IMAGE_FORMAT + "\" width=\"130\" />\n"
             +
             "                                                <div class=\"subrayado\">______________________________</div>                                 \n"
             + "                                            </span>\n"
@@ -267,7 +266,7 @@ public class DentalConsent extends ConsentInterface implements Command {
             + "                                        <div>\n"
             + "                                            <span class=\"position-firma\">\n"
             + "                                                <img class=\"img-firma\" src=\"" + PATH_IMAGES_APP + NAME_SIGNATURE +
-            "-@docSignatureProfessional@." + Constantes.IMAGE_FORMAT + "\" width=\"130\" />\n"
+            "-@docSignatureProfessional@." + IMAGE_FORMAT + "\" width=\"130\" />\n"
             + "                                                <div class=\"subrayado\">______________________________</div>\n"
             //            + "                                                <div class=\"subrayado3\"><u><i>@NroRegistro@</i></u></div>\n"
             + "                                            </span>\n"
@@ -306,7 +305,7 @@ public class DentalConsent extends ConsentInterface implements Command {
             + "                                        <div>\n"
             + "                                            <span class=\"position-firma\">\n"
             + "                                                <img style=\"display:@displayFirma@\" class=\"img-firma\" src=\"" +
-            PATH_IMAGES_APP + NAME_SIGNATURE + "-@docSignature@." + Constantes.IMAGE_FORMAT + "\" width=\"130\" />\n"
+            PATH_IMAGES_APP + NAME_SIGNATURE + "-@docSignature@." + IMAGE_FORMAT + "\" width=\"130\" />\n"
             +
             "                                                <div class=\"subrayado\">______________________________</div>                                 \n"
             + "                                            </span>\n"
@@ -322,7 +321,7 @@ public class DentalConsent extends ConsentInterface implements Command {
             + "                                        <div>\n"
             + "                                            <span class=\"position-firma\">\n"
             + "                                                <img style=\"display:@displayFirma@\" class=\"img-firma\" src=\"" +
-            PATH_IMAGES_APP + NAME_SIGNATURE + "-@docSignatureProfessional@." + Constantes.IMAGE_FORMAT + "\" width=\"130\" />\n"
+            PATH_IMAGES_APP + NAME_SIGNATURE + "-@docSignatureProfessional@." + IMAGE_FORMAT + "\" width=\"130\" />\n"
             + "                                                <div class=\"subrayado\">______________________________</div>\n"
             + "                                            </span>\n"
             + "                                        </div>             \n"
@@ -346,14 +345,14 @@ public class DentalConsent extends ConsentInterface implements Command {
         if (this.getPatient() != null
                 && this.getPatient().getDocumentNumber() != null
                 && this.getPatient().getDocumentNumber().equals("")
-                && !this.getPatient().getDocumentNumber().matches(Constantes.REGEX_DOCUMENTO)) {
+                && !this.getPatient().getDocumentNumber().matches(REGEX_DOCUMENT)) {
             return "Ingrese un nro de documento válido para el paciente";
 
         }
         if (this.getPatient() != null
                 && this.getPatient().getName() != null
                 && this.getPatient().getName().equals("")
-                && !this.getPatient().getName().matches(Constantes.REGEX_NOMBRE)) {
+                && !this.getPatient().getName().matches(REGEX_NAME)) {
             return "Ingrese un nombre válido para el paciente";
 
         }
@@ -361,7 +360,7 @@ public class DentalConsent extends ConsentInterface implements Command {
                 && this.getPatient().getGuardian() != null
                 && this.getPatient().getGuardian().getDocumentNumber() != null
                 && this.getPatient().getGuardian().getDocumentNumber().equals("")
-                && !this.getPatient().getGuardian().getDocumentNumber().matches(Constantes.REGEX_DOCUMENTO)) {
+                && !this.getPatient().getGuardian().getDocumentNumber().matches(REGEX_DOCUMENT)) {
             return "Ingrese un nro de documento válido para el acudiente";
 
         }
@@ -369,13 +368,13 @@ public class DentalConsent extends ConsentInterface implements Command {
                 && this.getPatient().getGuardian() != null
                 && this.getPatient().getGuardian().getName() != null
                 && this.getPatient().getGuardian().getName().equals("")
-                && !this.getPatient().getGuardian().getName().matches(Constantes.REGEX_NOMBRE)) {
+                && !this.getPatient().getGuardian().getName().matches(REGEX_NAME)) {
             return "Ingrese un nombre válido para el acudiente";
 
         }
 
         if (this.getProfessional().getRegistryNumber() != null
-                && !this.getProfessional().getRegistryNumber().toString().matches(Constantes.REGEX_DIGITO)) {
+                && !this.getProfessional().getRegistryNumber().toString().matches(REGEX_DIGIT)) {
             return "Ingrese un valor válido para la Nro de registro";
 
         }

@@ -32,7 +32,7 @@ public abstract class ConsentInterface implements Command {
     public static final String NAME_SIGNATURE = "firma";
     public static final String NAME_LOGO = "logo.png";
     public static final String STYLES = "formulario_sbcpm.css";
-
+    public static final String ID_OTRO_PROCEDIMIENTO = "18";
     public static final String REGEX_DOCUMENT = "^([A-Z]{2})?\\d{6,15}([-\\s]\\d{1})?$";
     public static final String REGEX_NAME = "^[a-zA-ZÀ-ÿ\\s]{1,40}$";
     public static final String REGEX_DIGIT = "^\\d+$";

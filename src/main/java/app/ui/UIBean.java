@@ -49,7 +49,6 @@ import javax.servlet.http.HttpServletRequest;
 import org.primefaces.context.RequestContext;
 import org.primefaces.model.DefaultStreamedContent;
 import org.primefaces.model.StreamedContent;
-import utilidades.Constantes;
 import utilidades.PdfFile;
 import core.domain.signature.Signature;
 
@@ -61,6 +60,7 @@ import core.domain.signature.Signature;
 public class UIBean implements Serializable {
     private final static String WARNING = "warning";
     private final static String PATH_PDF = "PATH_SAVE_PDF_FILES";
+    private final String ID_OTRO_PROCEDIMIENTO = "18";
 
     private Patient patient;
     private boolean isGuardian;
@@ -96,7 +96,7 @@ public class UIBean implements Serializable {
             controller = environment.getController();
             getAllDocumentsType();
             this.urlFile = ((Configuration) controller.dispatchQuery(new Configuration(PATH_PDF))).getPathPdfFile();
-            anotherProcess = new Process(Integer.parseInt(Constantes.ID_OTRO_PROCEDIMIENTO));
+            anotherProcess = new Process(Integer.parseInt(ID_OTRO_PROCEDIMIENTO));
         } catch (Exception ex) {
             Logger.getLogger(UIBean.class.getName()).log(Level.SEVERE, null, ex);
         }

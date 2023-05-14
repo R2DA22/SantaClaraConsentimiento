@@ -3,7 +3,6 @@ package core.domain.consent;
 import app.config.Configuration;
 import core.domain.bus.command.Command;
 import core.domain.process.Process;
-import utilidades.Constantes;
 
 import java.util.List;
 
@@ -93,7 +92,7 @@ public class ProcessConsent extends ConsentInterface implements Command {
             + "												<div>\n"
             + "													<span class=\"position-firma\">\n"
             + "														<div class=\"subrayado2\"> de <u><i>@Mes@</i></u> de <u><i>@Anio@</i></u></div>\n"
-            + "														<img class=\"img-firma\" src=\"" + PATH_IMAGES_APP + NAME_SIGNATURE + "-@docSignature@." + Constantes.IMAGE_FORMAT + "\"   />\n"
+            + "														<img class=\"img-firma\" src=\"" + PATH_IMAGES_APP + NAME_SIGNATURE + "-@docSignature@." + IMAGE_FORMAT + "\"   />\n"
             + "														<div class=\"subrayado\">______________________________</div>\n"
             + "													</span>\n"
             + "												</div>\n"
@@ -136,7 +135,7 @@ public class ProcessConsent extends ConsentInterface implements Command {
             return "No ha indicado ningun procedimiento";
 
         }
-        if (this.getProcesses().contains(new Process(Integer.parseInt(Constantes.ID_OTRO_PROCEDIMIENTO)))
+        if (this.getProcesses().contains(new Process(Integer.parseInt(ID_OTRO_PROCEDIMIENTO)))
                 && (this.getAnotherProcesses() == null
                 || this.getAnotherProcesses().equals(""))) {
             return "Ingrese el nombre del procedimiento realizado";
@@ -179,17 +178,17 @@ public class ProcessConsent extends ConsentInterface implements Command {
 
         }
         if (this.getProfessional() != null
-                && !this.getProfessional().getName().matches(Constantes.REGEX_NOMBRE)) {
+                && !this.getProfessional().getName().matches(REGEX_NAME)) {
             return "Ingrese un nombre válido para el profesional que realiza el procedimiento";
 
         }
         if (this.getProfessional().getRegistryNumber() != null
-                && !this.getProfessional().getRegistryNumber().toString().matches(Constantes.REGEX_DIGITO)) {
+                && !this.getProfessional().getRegistryNumber().toString().matches(REGEX_DIGIT)) {
             return "Ingrese un valor númerico correcto en  Nro. registro";
 
         }
         if (this.getPatient().getAdmissionNumber() != null
-                && !this.getPatient().getAdmissionNumber().matches(Constantes.REGEX_DIGITO)) {
+                && !this.getPatient().getAdmissionNumber().matches(REGEX_DIGIT)) {
             return "Ingrese un valor númerico correcto en  Nro. admisión";
 
         }

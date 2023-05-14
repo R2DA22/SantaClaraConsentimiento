@@ -2,7 +2,6 @@ package core.domain.consent;
 
 import app.config.Configuration;
 import core.domain.bus.command.Command;
-import utilidades.Constantes;
 
 public class DentalCovidConsent extends ConsentInterface implements Command {
 
@@ -105,7 +104,7 @@ public class DentalCovidConsent extends ConsentInterface implements Command {
             + "                                                         <div>\n"
             + "                                                             <span class=\"position-firma\">\n"
             + "                                                                 <img class=\"img-firma\" src=\"" + PATH_IMAGES_APP +
-            NAME_SIGNATURE + "-@docSignature@." + Constantes.IMAGE_FORMAT + "\" width=\"130\" />\n"
+            NAME_SIGNATURE + "-@docSignature@." + IMAGE_FORMAT + "\" width=\"130\" />\n"
             +
             "                                                                 <div class=\"subrayado\">______________________________</div>\n"
             //            + "                                                                 <div class=\"subrayado3\"><u><i>@TipoDoc@ @NroDocumento@</i></u></div>\n"
@@ -124,7 +123,7 @@ public class DentalCovidConsent extends ConsentInterface implements Command {
             + "                                                         <div>\n"
             + "                                                             <span class=\"position-firma\">\n"
             + "                                                                 <img class=\"img-firma-profesional\" src=\"" +
-            PATH_IMAGES_APP + NAME_SIGNATURE + "-@docSignatureProfessional@." + Constantes.IMAGE_FORMAT + "\" width=\"130\" />\n"
+            PATH_IMAGES_APP + NAME_SIGNATURE + "-@docSignatureProfessional@." + IMAGE_FORMAT + "\" width=\"130\" />\n"
             +
             "                                                                 <div class=\"subrayado\">______________________________</div>\n"
             //            + "                                                                 <div class=\"subrayado3\"><u><i>@TipoDocProfesional@  @NroDocumentoProfesional@</i></u> Registro: <u><i>@NroRegistro@</i></u></div>\n"
@@ -234,7 +233,7 @@ public class DentalCovidConsent extends ConsentInterface implements Command {
             + "                                                         <div>\n"
             + "                                                             <span class=\"position-firma\">\n"
             + "                                                                 <img class=\"img-firma\" src=\"" + PATH_IMAGES_APP +
-            NAME_SIGNATURE + "-@docSignature@." + Constantes.IMAGE_FORMAT + "\" width=\"130\" />\n"
+            NAME_SIGNATURE + "-@docSignature@." + IMAGE_FORMAT + "\" width=\"130\" />\n"
             +
             "                                                                 <div class=\"subrayado\">______________________________</div>\n"
             //            + "                                                                 <div class=\"subrayado3\"><u><i>@TipoDoc@ @NroDocumento@</i></u></div>\n"
@@ -253,7 +252,7 @@ public class DentalCovidConsent extends ConsentInterface implements Command {
             + "                                                         <div>\n"
             + "                                                             <span class=\"position-firma\">\n"
             + "                                                                 <img class=\"img-firma-profesional\" src=\"" +
-            PATH_IMAGES_APP + NAME_SIGNATURE + "-@docSignatureProfessional@." + Constantes.IMAGE_FORMAT + "\" width=\"130\" />\n"
+            PATH_IMAGES_APP + NAME_SIGNATURE + "-@docSignatureProfessional@." + IMAGE_FORMAT + "\" width=\"130\" />\n"
             +
             "                                                                 <div class=\"subrayado\">______________________________</div>\n"
             //            + "                                                                 <div class=\"subrayado3\"><u><i>@TipoDocProfesional@  @NroDocumentoProfesional@</i></u> Registro: <u><i>@NroRegistro@</i></u></div>\n"
@@ -279,14 +278,14 @@ public class DentalCovidConsent extends ConsentInterface implements Command {
         if (this.getPatient() != null
                 && this.getPatient().getDocumentNumber() != null
                 && this.getPatient().getDocumentNumber().equals("")
-                && !this.getPatient().getDocumentNumber().matches(Constantes.REGEX_DOCUMENTO)) {
+                && !this.getPatient().getDocumentNumber().matches(REGEX_DOCUMENT)) {
             return "Ingrese un nro de documento válido para el paciente";
 
         }
         if (this.getPatient() != null
                 && this.getPatient().getName() != null
                 && this.getPatient().getName().equals("")
-                && !this.getPatient().getName().matches(Constantes.REGEX_NOMBRE)) {
+                && !this.getPatient().getName().matches(REGEX_NAME)) {
             return "Ingrese un nombre válido para el paciente";
 
         }
@@ -294,7 +293,7 @@ public class DentalCovidConsent extends ConsentInterface implements Command {
                 && this.getPatient().getGuardian() != null
                 && this.getPatient().getGuardian().getDocumentNumber() != null
                 && this.getPatient().getGuardian().getDocumentNumber().equals("")
-                && !this.getPatient().getGuardian().getDocumentNumber().matches(Constantes.REGEX_DOCUMENTO)) {
+                && !this.getPatient().getGuardian().getDocumentNumber().matches(REGEX_DOCUMENT)) {
             return "Ingrese un nro de documento válido para el acudiente";
 
         }
@@ -302,13 +301,13 @@ public class DentalCovidConsent extends ConsentInterface implements Command {
                 && this.getPatient().getGuardian() != null
                 && this.getPatient().getGuardian().getName() != null
                 && this.getPatient().getGuardian().getName().equals("")
-                && !this.getPatient().getGuardian().getName().matches(Constantes.REGEX_NOMBRE)) {
+                && !this.getPatient().getGuardian().getName().matches(REGEX_NAME)) {
             return "Ingrese un nombre válido para el acudiente";
 
         }
 
         if (this.getPatient().getAge() != null
-                && !this.getPatient().getAge().toString().matches(Constantes.REGEX_DIGITO)) {
+                && !this.getPatient().getAge().toString().matches(REGEX_DIGIT)) {
             return "Ingrese un número válido para la Edad";
 
         }

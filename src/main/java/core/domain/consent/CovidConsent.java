@@ -2,7 +2,6 @@ package core.domain.consent;
 
 import app.config.Configuration;
 import core.domain.bus.command.Command;
-import utilidades.Constantes;
 
 public class CovidConsent extends ConsentInterface implements Command {
 
@@ -124,7 +123,7 @@ public class CovidConsent extends ConsentInterface implements Command {
             + "                                             <div>\n"
             + "                                                 <span class=\"position-firma\">\n"
             + "                                                     <img class=\"img-firma\" src=\"" + PATH_IMAGES_APP + NAME_SIGNATURE +
-            "-@docSignature@." + Constantes.IMAGE_FORMAT + "\"  width=\"130\" />\n"
+            "-@docSignature@." + IMAGE_FORMAT + "\"  width=\"130\" />\n"
             + "                                                     <div class=\"subrayado\">______________________________</div>\n"
             + "                                                     <div class=\"subrayado3\"><u><i> @NroDocumento@</i></u></div>\n"
             + "                                                 </span>\n"
@@ -262,7 +261,7 @@ public class CovidConsent extends ConsentInterface implements Command {
             + "                                             <div>\n"
             + "                                                 <span class=\"position-firma\">\n"
             + "                                                     <img class=\"img-firma\" src=\"" + PATH_IMAGES_APP + NAME_SIGNATURE +
-            "-@docSignature@." + Constantes.IMAGE_FORMAT + "\"  width=\"130\" />\n"
+            "-@docSignature@." + IMAGE_FORMAT + "\"  width=\"130\" />\n"
             + "                                                     <div class=\"subrayado\">______________________________</div>\n"
             + "                                                     <div class=\"subrayado3\"><u><i> @NroDocumento@</i></u></div>\n"
             + "                                                 </span>\n"
@@ -294,14 +293,14 @@ public class CovidConsent extends ConsentInterface implements Command {
         if (this.getPatient() != null
                 && this.getPatient().getDocumentNumber() != null
                 && this.getPatient().getDocumentNumber().equals("")
-                && !this.getPatient().getDocumentNumber().matches(Constantes.REGEX_DOCUMENTO)) {
+                && !this.getPatient().getDocumentNumber().matches(REGEX_DOCUMENT)) {
             return "Ingrese un nro de documento válido para el paciente";
 
         }
         if (this.getPatient() != null
                 && this.getPatient().getName() != null
                 && this.getPatient().getName().equals("")
-                && !this.getPatient().getName().matches(Constantes.REGEX_NOMBRE)) {
+                && !this.getPatient().getName().matches(REGEX_NAME)) {
             return "Ingrese un nombre válido para el paciente";
 
         }
@@ -309,7 +308,7 @@ public class CovidConsent extends ConsentInterface implements Command {
                 && this.getPatient().getGuardian() != null
                 && this.getPatient().getGuardian().getDocumentNumber() != null
                 && this.getPatient().getGuardian().getDocumentNumber().equals("")
-                && !this.getPatient().getGuardian().getDocumentNumber().matches(Constantes.REGEX_DOCUMENTO)) {
+                && !this.getPatient().getGuardian().getDocumentNumber().matches(REGEX_DOCUMENT)) {
             return "Ingrese un nro de documento válido para el acudiente";
 
         }
@@ -317,52 +316,52 @@ public class CovidConsent extends ConsentInterface implements Command {
                 && this.getPatient().getGuardian() != null
                 && this.getPatient().getGuardian().getName() != null
                 && this.getPatient().getGuardian().getName().equals("")
-                && !this.getPatient().getGuardian().getName().matches(Constantes.REGEX_NOMBRE)) {
+                && !this.getPatient().getGuardian().getName().matches(REGEX_NAME)) {
             return "Ingrese un nombre válido para el acudiente";
 
         }
         if (this.getProfessional() != null
-                && !this.getProfessional().getName().matches(Constantes.REGEX_NOMBRE)) {
+                && !this.getProfessional().getName().matches(REGEX_NAME)) {
             return "Ingrese un nombre válido para el profesional que realiza el procedimiento";
 
         }
         if (this.getPatient().getAge() != null
-                && !this.getPatient().getAge().toString().matches(Constantes.REGEX_DIGITO)) {
+                && !this.getPatient().getAge().toString().matches(REGEX_DIGIT)) {
             return "Ingrese un valor númerico correcto en campo Edad";
 
         }
         if (this.getEPSPatient() != null
-                && !this.getEPSPatient().matches(Constantes.REGEX_NOMBRE)) {
+                && !this.getEPSPatient().matches(REGEX_NAME)) {
             return "Ingrese un valor nombre válido para la EPS";
 
         }
         if (this.getPatient().getPhoneNumber() != null
-                && !this.getPatient().getPhoneNumber().matches(Constantes.REGEX_TELEFONO)) {
+                && !this.getPatient().getPhoneNumber().matches(REGEX_CELL_PHONE_NUMBER)) {
             return "Ingrese un número de telefono válido";
 
         }
         if (this.getPatient().getEmail() != null
-                && !this.getPatient().getEmail().matches(Constantes.REGEX_EMAIL)) {
+                && !this.getPatient().getEmail().matches(REGEX_EMAIL)) {
             return "Ingrese un correo electronico válido";
 
         }
         if (this.getHasSymptoms()
-                && !this.getDescriptionOfSymptoms().matches(Constantes.REGEX_NOMBRE)) {
+                && !this.getDescriptionOfSymptoms().matches(REGEX_NAME)) {
             return "Los sintomas no puede contener simbolos, números ni caracteres especilas";
 
         }
         if (this.getHasSymptoms() && (this.getSymptomsStartDate("dd-MM-yyyy") == null
-                || !this.getSymptomsStartDate("dd-MM-yyyy").matches(Constantes.REGEX_FECHA))) {
+                || !this.getSymptomsStartDate("dd-MM-yyyy").matches(REGEX_DATE))) {
             return "La fecha de los sintomas tiene formato incorrecto";
 
         }
         if (this.getVaccinated() && (this.getDateVaccine("dd-MM-yyyy") == null
-                || !this.getDateVaccine("dd-MM-yyyy").matches(Constantes.REGEX_FECHA))) {
+                || !this.getDateVaccine("dd-MM-yyyy").matches(REGEX_DATE))) {
             return "La fecha de la vacuna tiene formato incorrecto";
 
         }
         if (this.getPatient().getOccupation() != null
-                && !this.getPatient().getOccupation().matches(Constantes.REGEX_NOMBRE)) {
+                && !this.getPatient().getOccupation().matches(REGEX_NAME)) {
             return "La ocupación no puede contener simbolos, números ni caracteres especilas";
 
         }
@@ -371,7 +370,7 @@ public class CovidConsent extends ConsentInterface implements Command {
 
         }
         if (this.getHadTrips() && this.getTripsMade() != null
-                && !this.getTripsMade().matches(Constantes.REGEX_NOMBRE)) {
+                && !this.getTripsMade().matches(REGEX_NAME)) {
             return "El campo viajes no puede tener números ni caracteres especiales";
 
         }

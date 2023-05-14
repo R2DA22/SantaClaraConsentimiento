@@ -1,14 +1,14 @@
 package infrastructure.repository.process;
 
-import core.domain.Consulta;
 import core.domain.process.Process;
-import utilidades.Constantes;
 
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
 public class ProcessMapper implements MapperInterface {
+
+    private static String ID_OTRO_PROCEDIMIENTO = "18";
 
     public ProcessMapper() {
     }
@@ -24,7 +24,7 @@ public class ProcessMapper implements MapperInterface {
             list.add(process);
         }
         Process anotherProcess = new Process();
-        anotherProcess.setIdProcess(Integer.parseInt(Constantes.ID_OTRO_PROCEDIMIENTO));
+        anotherProcess.setIdProcess(Integer.parseInt(ID_OTRO_PROCEDIMIENTO));
         anotherProcess.setDescription("Otro");
         list.add(anotherProcess);
         return list;

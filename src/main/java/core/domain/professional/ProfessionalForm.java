@@ -3,7 +3,6 @@ package core.domain.professional;
 import app.config.Configuration;
 import core.domain.bus.command.Command;
 import core.domain.consent.ConsentInterface;
-import utilidades.Constantes;
 
 public class ProfessionalForm extends ConsentInterface implements Command {
 
@@ -21,17 +20,17 @@ public class ProfessionalForm extends ConsentInterface implements Command {
         if (this.getProfessional() != null
                 && this.getProfessional().getDocumentNumber() != null
                 && this.getProfessional().getDocumentNumber().equals("")
-                && !this.getProfessional().getDocumentNumber().matches(Constantes.REGEX_DOCUMENTO)) {
+                && !this.getProfessional().getDocumentNumber().matches(REGEX_DOCUMENT)) {
             return "Ingrese un nro de documento válido para el profesional";
         }
         if (this.getProfessional() != null
                 && this.getProfessional().getName() != null
                 && this.getProfessional().getName().equals("")
-                && !this.getProfessional().getName().matches(Constantes.REGEX_NOMBRE)) {
+                && !this.getProfessional().getName().matches(REGEX_NAME)) {
             return "Ingrese un nombre válido para el profesional";
         }
         if (this.getProfessional().getRegistryNumber() != null
-                && !this.getProfessional().getRegistryNumber().toString().matches(Constantes.REGEX_DIGITO)) {
+                && !this.getProfessional().getRegistryNumber().toString().matches(REGEX_DIGIT)) {
             return "Ingrese un valor válido para la Nro de registro";
         }
         if (this.getSignature() == null || this.getSignature().equals("")) {

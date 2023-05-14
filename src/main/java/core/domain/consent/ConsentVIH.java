@@ -5,7 +5,6 @@ import core.domain.bus.command.Command;
 import core.domain.sickness.Sickness;
 import java.util.ArrayList;
 import java.util.List;
-import utilidades.Constantes;
 
 public class ConsentVIH extends ConsentInterface implements Command {
 
@@ -168,7 +167,7 @@ public class ConsentVIH extends ConsentInterface implements Command {
             "                        <div>\n" +
             "                           <span class=\"position-firma\">\n" +
             "                              <img class=\"img-firma\" src=\"" + PATH_IMAGES_APP + NAME_SIGNATURE +
-            "-@docSignature@." + Constantes.IMAGE_FORMAT + "\"  width=\"130\" />\n" +
+            "-@docSignature@." + IMAGE_FORMAT + "\"  width=\"130\" />\n" +
             "                              <div class=\"subrayado\">______________________________</div>\n" +
             "                              <div class=\"subrayado3\"><u><i>   @NroDocumento@  </i></u></div>\n" +
             "                           </span>\n" +
@@ -212,44 +211,44 @@ public class ConsentVIH extends ConsentInterface implements Command {
         if (this.getPatient() != null
                 && this.getPatient().getDocumentNumber() != null
                 && this.getPatient().getDocumentNumber().equals("")
-                && !this.getPatient().getDocumentNumber().matches(Constantes.REGEX_DOCUMENTO)) {
+                && !this.getPatient().getDocumentNumber().matches(REGEX_DOCUMENT)) {
             return "Ingrese un nro de documento válido para el paciente";
 
         }
         if (this.getPatient() != null
                 && this.getPatient().getName() != null
                 && this.getPatient().getName().equals("")
-                && !this.getPatient().getName().matches(Constantes.REGEX_NOMBRE)) {
+                && !this.getPatient().getName().matches(REGEX_NAME)) {
             return "Ingrese un nombre válido para el paciente";
 
         }
         if (this.getProfessional() != null
-                && !this.getProfessional().getName().matches(Constantes.REGEX_NOMBRE)) {
+                && !this.getProfessional().getName().matches(REGEX_NAME)) {
             return "Ingrese un nombre válido para el profesional que realiza el procedimiento";
 
         }
         if (this.getPatient().getAge() != null
-                && !this.getPatient().getAge().toString().matches(Constantes.REGEX_DIGITO)) {
+                && !this.getPatient().getAge().toString().matches(REGEX_DIGIT)) {
             return "Ingrese un valor númerico correcto en campo Edad";
 
         }
         if (this.getPatient().getPhoneNumber() != null
-                && !this.getPatient().getPhoneNumber().matches(Constantes.REGEX_TELEFONO)) {
+                && !this.getPatient().getPhoneNumber().matches(REGEX_CELL_PHONE_NUMBER)) {
             return "Ingrese un número de telefono válido";
 
         }
         if (this.getPatient().getOccupation() != null
-                && !this.getPatient().getOccupation().matches(Constantes.REGEX_NOMBRE)) {
+                && !this.getPatient().getOccupation().matches(REGEX_NAME)) {
             return "Ingrese una ocupacion valida";
 
         }
         if (this.getPatient().getBornDate() != null
-                && !this.getPatient().getBornDate("dd-MM-yyyy").matches(Constantes.REGEX_FECHA)) {
+                && !this.getPatient().getBornDate("dd-MM-yyyy").matches(REGEX_DATE)) {
             return "La fecha de nacimiento no es valida";
 
         }
         if (this.getPatient().getCity() != null
-                && !this.getPatient().getCity().matches(Constantes.REGEX_NOMBRE)) {
+                && !this.getPatient().getCity().matches(REGEX_NAME)) {
             return "Ingrese un nombre válido para el municipio";
 
         }

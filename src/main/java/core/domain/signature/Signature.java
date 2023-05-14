@@ -1,7 +1,6 @@
 package core.domain.signature;
 
 import app.ui.UIBean;
-import utilidades.Constantes;
 
 import java.awt.BasicStroke;
 import java.awt.Color;
@@ -24,6 +23,10 @@ public class Signature {
 
     private String pathDestiny;
     private String jsonSignature;
+
+    private static String IMAGE_FORMAT = "png";
+    private static int SIGNATURE_HEIGHT = 280;
+    private static int SIGNATURE_WIDTH = 650;
 
     public Signature(String pathDestiny, String jsonSignature) {
         this.pathDestiny = pathDestiny;
@@ -83,7 +86,7 @@ public class Signature {
      * @return the corresponding signature image * @throws IOException if a problem generating the signature
      */ 
     private static byte[] redrawSignature(List<List<Point>> lines) throws IOException {
-        BufferedImage signature = new BufferedImage( Constantes.SIGNATURE_WIDTH, Constantes.SIGNATURE_HEIGHT, BufferedImage.TYPE_BYTE_GRAY);
+        BufferedImage signature = new BufferedImage( SIGNATURE_WIDTH, SIGNATURE_HEIGHT, BufferedImage.TYPE_BYTE_GRAY);
         Graphics2D g = (Graphics2D)signature.getGraphics(); 
         g.setColor(Color.WHITE);
         g.fillRect(0, 0, signature.getWidth(), signature.getHeight()); 
@@ -101,8 +104,8 @@ public class Signature {
             lastPoint = null;
         } 
         ByteArrayOutputStream output = new ByteArrayOutputStream();
-        ImageIO.write(signature, Constantes.IMAGE_FORMAT, output); 
-        ImageIO.write(signature, Constantes.IMAGE_FORMAT, output);
+        ImageIO.write(signature, IMAGE_FORMAT, output);
+        ImageIO.write(signature, IMAGE_FORMAT, output);
         return output.toByteArray(); 
     }
 
