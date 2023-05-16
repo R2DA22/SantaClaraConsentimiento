@@ -31,7 +31,7 @@
                                          }"
                              styleClass="form-control" value="#{uiBean.consent.patient.documentNumber}">
                     <p:ajax event="blur" process="@this"
-                            update="pnl-paciente,pnl-profesional,@(.pnl-vih)"
+                            update="pnl-paciente,pnl-profesional,@(.pnl-vih),pnl-btn"
                             listener="#{uiBean.searchPatientData()}" oncomplete="actualizarInputs()"/>
                 </p:inputText>
                 <p class="formulario__input-error">El documento solo llevar máximo 15 digitos.</p>

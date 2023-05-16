@@ -57,9 +57,11 @@
                <ui:param name="descripcionFirma" value="Autorizo la realización de la prueba de VIH" />
             </ui:include>
 
-            <p:panelGrid  columns="1" layout="grid" styleClass="ui-panelgrid-blank ui-fluid r2da-pnl-grid"  >
-               <p:commandButton id="btn-submit" value="Guardar" styleClass="btn btn-info btn-confirmar"
-                                style="height: 60px;" process="@form"
+            <p:panelGrid id="pnl-btn" columns="1" layout="grid"
+                         styleClass="pnl-btn ui-panelgrid-blank ui-fluid r2da-pnl-grid"  >
+               <p:commandButton id="btn-submit" value="#{uiBean.consent.createConsent?'Guardar':'Finalizar'}"
+                                styleClass="btn #{uiBean.consent.createConsent?'btn-info':'btn-red'} btn-confirmar"
+                                style="height: 60px; color: #ffffff" process="@form"
                                 oncomplete="validarGuardarVIH()" />
             </p:panelGrid>
          </h:form>
