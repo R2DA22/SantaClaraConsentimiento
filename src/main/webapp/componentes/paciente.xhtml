@@ -7,7 +7,7 @@
       xmlns:f="http://java.sun.com/jsf/core">
 <h:body>
     <p:outputLabel id="pnl-paciente" style="width: 100%;">
-        <p:spacer height="15px" rendered="#{uiBean.consent.isGuardian()}"/>
+        <p:spacer height="15px" rendered="#{uiBean.consent.isGuardian() or uiBean.consent.typeConsent eq 'Abandono'}"/>
         <p:panelGrid columns="1" layout="grid" styleClass="ui-panelgrid-blank ui-fluid r2da-pnl-grid">
             <p:outputPanel styleClass="rd2a-header">
                 <p:outputLabel value="Datos del paciente"/>
@@ -31,7 +31,7 @@
                                          }"
                              styleClass="form-control" value="#{uiBean.consent.patient.documentNumber}">
                     <p:ajax event="blur" process="@this"
-                            update="pnl-paciente,pnl-profesional,@(.pnl-vih),pnl-btn"
+                            update="pnl-paciente,@(.pnl-profesional),@(.pnl-vih),@(.pnl-btn)"
                             listener="#{uiBean.searchPatientData()}" oncomplete="actualizarInputs()"/>
                 </p:inputText>
                 <p class="formulario__input-error">El documento solo llevar máximo 15 digitos.</p>

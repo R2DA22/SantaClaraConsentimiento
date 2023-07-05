@@ -43,8 +43,14 @@
                                  value="VIH" styleClass="btn-menu btn-green" onstart="PF('statusDialog').show()"
                                  action="#{uiBean.redirect(7)}"
                                  process="@form"/>
+                <p:commandButton id="btn-9" rendered="true"
+                                 value="Abandono" styleClass="btn-menu btn-red" onstart="PF('statusDialog').show()"
+                                 action="#{uiBean.redirect(8)}"
+                                 process="@form"/>
+                <p:commandButton id="btn-8" rendered="true" style="display: none"
+                                 value="Abandono" styleClass="btn-menu btn-red" />
                 <p:commandButton id="btn-6" rendered="true"
-                                 value="Profesionales" styleClass="btn-menu btn-red"
+                                 value="Profesionales" styleClass="btn-menu btn-green"
                                  onstart="PF('statusDialog').show()"
                                  action="#{uiBean.redirect(6)}"
                                  process="@form"/>

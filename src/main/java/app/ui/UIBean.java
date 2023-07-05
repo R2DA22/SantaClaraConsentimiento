@@ -10,6 +10,7 @@ import app.config.Environment;
 import core.domain.Consulta;
 import core.domain.area.Area;
 import core.domain.configuration.Configuration;
+import core.domain.consent.ConsentAbandon;
 import core.domain.consent.ConsentInterface;
 import core.domain.consent.ConsentVIH;
 import core.domain.consent.CovidConsent;
@@ -124,10 +125,19 @@ public class UIBean implements Serializable {
     public void findPatient() {
         try {
             if (consent.getPatient() != null && !consent.getPatient().isEmptyPerson()) {
-                consent.setPatient((Patient) controller.dispatchQuery(consent.getPatient()));
+                Patient patientResult=(Patient) controller.dispatchQuery(consent.getPatient());
+                if(patientResult!=null) {
+                    consent.setPatient(patientResult);
+                }
             }
         } catch (Exception ex) {
             Logger.getLogger(UIBean.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    public void changeTypeDocument() {
+        if (consent.getTypeConsent().equals("Abandono")) {
+            consent.getPatient().setDocumentType(getListDocumentTypes().get(consent.isGuardian() ? 1 : 0));
         }
     }
 
@@ -363,7 +373,6 @@ public class UIBean implements Serializable {
         if (AlertType.equals("success")) {
             isGuardian = false;
             reBuildConsent();
-
             consent.getPatient().setDocumentType(new DocumentType());
             ExternalContext ec = FacesContext.getCurrentInstance().getExternalContext();
             if (((HttpServletRequest) ec.getRequest()).getRequestURI().contains("consentimiento_procedimiento")) {
@@ -420,6 +429,7 @@ public class UIBean implements Serializable {
         isGuardian = false;
         reBuildConsent();
         consent.getPatient().setDocumentType(new DocumentType());
+
     }
 
     public String redirect(Integer option) {
@@ -458,6 +468,12 @@ public class UIBean implements Serializable {
                 consent = new ConsentVIH(environment.getConfiguration());
                 consent.setCreateConsent(true);
                 break;
+            case 8:
+                consent = new ConsentAbandon(environment.getConfiguration());
+                consent.setGuardian(true);
+                changeTypeDocument();
+                break;
+
             default:
                 return "index.xhtml?faces-redirect=true";
         }

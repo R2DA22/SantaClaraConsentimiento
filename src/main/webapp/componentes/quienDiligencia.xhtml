@@ -6,12 +6,13 @@
       xmlns:f="http://java.sun.com/jsf/core">
     <h:body>
         <p:panelGrid columns="1"  layout="grid" styleClass="ui-panelgrid-blank ui-fluid r2da-pnl-grid">
-            <p:outputLabel styleClass="r2da-lbl" value="Con acudiente?"/>
+            <p:outputLabel styleClass="r2da-lbl" value="#{abandono?'Abandono de':'Con acudiente?'}"/>
             <p:selectOneButton id="rbtn-quien-diligencia" style="margin-bottom: 10px;" 
                                styleClass="btn-one-button" value="#{uiBean.consent.guardian}"  >
-                <f:selectItem   itemLabel="SI" itemValue="true"  />
-                <f:selectItem   itemLabel="NO" itemValue="false" />
-                <p:ajax event="change" process="@this" update="@this pnl-acudiente pnl-paciente @(.pnl-profesional)"  oncomplete="actualizarInputs()"  />
+                <f:selectItem   itemLabel="#{abandono?'Menor':'SI'}" itemValue="true"  />
+                <f:selectItem   itemLabel="#{abandono?'Adulto Mayor':'NO'}" itemValue="false" />
+                <p:ajax event="change" process="@this" update="@this pnl-acudiente pnl-paciente @(.pnl-profesional)"
+                        oncomplete="actualizarInputs()"  listener="#{uiBean.changeTypeDocument()}" />
             </p:selectOneButton>
         </p:panelGrid>
         <p:spacer height="15px"  />

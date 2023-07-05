@@ -323,8 +323,10 @@ public class DentalCovidConsent extends ConsentInterface implements Command {
         String html;
         if (this.isGuardian()) {
             html = FORMAT_DOCUMENT_WITH_GUARDIAN.replace("@docSignature@", this.getSignatureConsent());
+            html = html.replace("@docSignatureProfessional@", this.getSignatureProfessional());
         } else {
             html = FORMAT_DOCUMENT_WITHOUT_GUARDIAN.replace("@docSignature@", this.getSignatureConsent());
+            html = html.replace("@docSignatureProfessional@", this.getSignatureProfessional());
         }
         html = html.replace("@Fecha@", this.getDate("dd/MM/yyyy"));
         html = html.replace("@Dia@", this.getDay() + " " + this.getDate("dd"));

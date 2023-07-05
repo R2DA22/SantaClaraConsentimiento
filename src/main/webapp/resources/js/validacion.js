@@ -288,6 +288,19 @@ function validarGuardarFormCovid() {
     }
 }
 
+function validarGuardarFormAbandon() {
+    if (campos["documento-acudiente"]
+        && campos["documento-paciente"]
+        && campos["nombre-paciente"]
+        && campos["nombre-acudiente"]) {
+        saveConsent();
+    } else {
+        inputs.forEach((input) => {
+            validarFormularioGuardar(input);
+        });
+    }
+}
+
 
 function validarGuardarFormUrgencias() {
     const firma = document.getElementById(nameForm + ':firma_value');

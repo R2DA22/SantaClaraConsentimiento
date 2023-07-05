@@ -6,8 +6,8 @@
       xmlns:f="http://java.sun.com/jsf/core">
     <h:body>
                 <p:outputLabel id="pnl-acudiente" style="width: 100%;" >
-                    <p:spacer height="15px" rendered="#{uiBean.consent.guardian}" />
-                    <p:panelGrid  rendered="#{uiBean.consent.guardian}"
+                    <p:spacer height="15px" rendered="#{uiBean.consent.guardian or uiBean.consent.typeConsent eq 'Abandono'}" />
+                    <p:panelGrid  rendered="#{uiBean.consent.guardian or uiBean.consent.typeConsent eq 'Abandono'}"
                                   columns="1" layout="grid" styleClass="ui-panelgrid-blank ui-fluid r2da-pnl-grid"  >
                         <p:outputPanel styleClass="rd2a-header" >
                             <p:outputLabel value="Datos del acudiente" />
@@ -36,7 +36,6 @@
                         </p:outputPanel>
                         <p:outputPanel styleClass="formulario__grupo"  id="grupo-nombre-acudiente" >
 
-                            <!--</div>-->
                             <p:outputLabel styleClass="r2da-lbl" value="Nombre"/>
                             <p:inputText id="nombre-acudiente" 
                                          onkeypress="if (event.keyCode === 13) {
