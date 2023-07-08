@@ -11,6 +11,6 @@ public interface ProfessionalRepositoryInterface {
     void update(Professional professional) throws Exception;
 
     Professional find(Integer idType, String id) throws Exception;
-
+    Professional findBySpeciality(Integer specialityID) throws Exception;
     ProfessionalList findAll() throws Exception;
 }

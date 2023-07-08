@@ -273,22 +273,22 @@
             </p:inputText>
             <p class="formulario__input-error">No puede llevar números o caracteres especiales.</p>
         </p:outputPanel>
-        <p:spacer height="15px"/>
+        <p:spacer height="15px" rendered="#{laboratoryHIV and !uiBean.consent.createConsent}"/>
 
-        <p:outputPanel styleClass="rd2a-header" rendered="#{laboratoryHIV}">
+        <p:outputPanel styleClass="rd2a-header" rendered="#{laboratoryHIV and !uiBean.consent.createConsent}">
             <p:outputLabel value="Laboratorio"/>
         </p:outputPanel>
-        <p:spacer height="15px"/>
+        <p:spacer height="15px" rendered="#{laboratoryHIV and !uiBean.consent.createConsent}"/>
 
-        <p:outputPanel styleClass="formulario__grupo" id="grupo-lab-date" rendered="#{laboratoryHIV}">
+        <p:outputPanel styleClass="formulario__grupo" id="grupo-lab-date" rendered="#{laboratoryHIV and !uiBean.consent.createConsent}">
             <p:outputLabel styleClass="r2da-lbl" value="Fecha"/>
             <p:calendar id="lab-date" mask="true" pattern="dd-MM-yyyy"
                         value="#{uiBean.consent.laboratoryHIVDate}">
                 <p:ajax event="blur" process="@this"/>
             </p:calendar>
         </p:outputPanel>
-        <p:spacer height="15px"/>
-        <p:selectOneButton rendered="#{laboratoryHIV}" id="rbtn-si-no-11" style="margin-bottom: 10px;"
+        <p:spacer height="15px" rendered="#{laboratoryHIV and !uiBean.consent.createConsent}"/>
+        <p:selectOneButton rendered="#{laboratoryHIV and !uiBean.consent.createConsent}" id="rbtn-si-no-11" style="margin-bottom: 10px;"
                            styleClass="btn-one-button"
                            value="#{uiBean.consent.laboratoryHIV}">
             <f:selectItem itemLabel="Reactivo" itemValue="true"/>
@@ -296,21 +296,21 @@
             <p:ajax event="change" process="@this" update="@this"/>
         </p:selectOneButton>
         <p:spacer height="15px"/>
-        <p:outputPanel styleClass="rd2a-header" rendered="#{confirmHIV}">
+        <p:outputPanel styleClass="rd2a-header" rendered="#{confirmHIV and !uiBean.consent.createConsent}">
             <p:outputLabel value="Confirmatoria"/>
         </p:outputPanel>
-        <p:spacer height="15px"/>
+        <p:spacer height="15px" rendered="#{confirmHIV and !uiBean.consent.createConsent}"/>
 
-        <p:outputPanel styleClass="formulario__grupo" id="grupo-confirm-date" rendered="#{confirmHIV}">
+        <p:outputPanel styleClass="formulario__grupo" id="grupo-confirm-date" rendered="#{confirmHIV and !uiBean.consent.createConsent}">
             <p:outputLabel styleClass="r2da-lbl" value="Fecha"/>
             <p:calendar id="confirm-date" mask="true" pattern="dd-MM-yyyy"
                         value="#{uiBean.consent.confirmHIVDate}">
                 <p:ajax event="blur" process="@this"/>
             </p:calendar>
         </p:outputPanel>
-        <p:spacer height="15px"/>
+        <p:spacer height="15px" rendered="#{confirmHIV and !uiBean.consent.createConsent}"/>
 
-        <p:selectOneButton rendered="#{confirmHIV}" id="rbtn-si-no-12" style="margin-bottom: 10px;"
+        <p:selectOneButton rendered="#{confirmHIV and !uiBean.consent.createConsent}" id="rbtn-si-no-12" style="margin-bottom: 10px;"
                            styleClass="btn-one-button"
                            value="#{uiBean.consent.confirmHIV}">
             <f:selectItem itemLabel="Positivo" itemValue="Positivo"/>
@@ -318,19 +318,19 @@
             <f:selectItem itemLabel="Indeterminado" itemValue="Indeterminado"/>
             <p:ajax event="change" process="@this" update="@this"/>
         </p:selectOneButton>
-        <p:spacer height="15px"/>
-        <p:outputPanel styleClass="rd2a-header" rendered="#{fastTestDate}">
+        <p:spacer height="15px" rendered="#{confirmHIV and !uiBean.consent.createConsent}"/>
+        <p:outputPanel styleClass="rd2a-header" rendered="#{fastTestDate and !uiBean.consent.createConsent}">
             <p:outputLabel value="Prueba rapida utilizada"/>
         </p:outputPanel>
-        <p:spacer height="15px"/>
-        <p:outputPanel styleClass="formulario__grupo" id="grupo-fast-test-date" rendered="#{fastTestDate}">
+        <p:spacer height="15px" rendered="#{fastTestDate and !uiBean.consent.createConsent}"/>
+        <p:outputPanel styleClass="formulario__grupo" id="grupo-fast-test-date" rendered="#{fastTestDate and !uiBean.consent.createConsent}">
             <p:outputLabel styleClass="r2da-lbl" value="Lote"/>
             <p:calendar id="fast-test-date" mask="true" pattern="dd-MM-yyyy"
                         value="#{uiBean.consent.fastTestDate}">
                 <p:ajax event="blur" process="@this"/>
             </p:calendar>
         </p:outputPanel>
-        <p:outputPanel styleClass="formulario__grupo" id="grupo-fast-test-date-expiration" rendered="#{fastTestDate}">
+        <p:outputPanel styleClass="formulario__grupo" id="grupo-fast-test-date-expiration" rendered="#{fastTestDate and !uiBean.consent.createConsent}">
             <p:outputLabel styleClass="r2da-lbl" value="Fecha de vencimiento"/>
             <p:calendar id="fast-test-date-expiration" mask="true" pattern="dd-MM-yyyy"
                         value="#{uiBean.consent.fastTestExpirationDate}">

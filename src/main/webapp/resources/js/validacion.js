@@ -405,20 +405,22 @@ function validarGuardarVIH() {
     const firma = document.getElementById(nameForm + ':firma_value');
     const bornDate = document.getElementById(nameForm + ':born-date-patient_input');
     validarCampo(expresiones.date, bornDate, "born-date-patient");
-    if (firma.value !== '') {
-        document.getElementById(`${nameForm}:grupo-firma`).classList.remove(formGrupoIncorrecto);
-        document.getElementById(`${nameForm}:grupo-firma`).classList.add(formGrupoCorrecto);
-        document.querySelector(`#${nameForm}\\:grupo-firma .formulario__input-error`).classList.remove('formulario__input-error-activo');
-    } else {
-        document.getElementById(`${nameForm}:grupo-firma`).classList.add(formGrupoIncorrecto);
-        document.getElementById(`${nameForm}:grupo-firma`).classList.remove(formGrupoCorrecto);
-        document.querySelector(`#${nameForm}\\:grupo-firma .formulario__input-error`).classList.add('formulario__input-error-activo');
+    if (firma != null) {
+        if (firma.value !== '') {
+            document.getElementById(`${nameForm}:grupo-firma`).classList.remove(formGrupoIncorrecto);
+            document.getElementById(`${nameForm}:grupo-firma`).classList.add(formGrupoCorrecto);
+            document.querySelector(`#${nameForm}\\:grupo-firma .formulario__input-error`).classList.remove('formulario__input-error-activo');
+        } else {
+            document.getElementById(`${nameForm}:grupo-firma`).classList.add(formGrupoIncorrecto);
+            document.getElementById(`${nameForm}:grupo-firma`).classList.remove(formGrupoCorrecto);
+            document.querySelector(`#${nameForm}\\:grupo-firma .formulario__input-error`).classList.add('formulario__input-error-activo');
+        }
     }
     const transmission = document.getElementById(nameForm + ':transmission').value === 'true';
     const mood = document.getElementById(nameForm + ':mood').value === 'true';
     const condom = document.getElementById(nameForm + ':condom').value === 'true';
     if (campos["documento-paciente"]
-        && campos["nombre-paciente"]  && firma.value !== ''
+        && campos["nombre-paciente"] && (firma ==null || firma.value !== '')
         && ((campos["use-condom-reason"] || !condom) || (campos["why-no-use-condom"] || condom))
         && (campos["another-transmission"] || !transmission)
         && campos["positive-result-reaction"] && (campos["another-mood"] || !mood) && campos["test-reason"]

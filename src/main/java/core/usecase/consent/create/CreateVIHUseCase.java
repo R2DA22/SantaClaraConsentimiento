@@ -1,7 +1,6 @@
 package core.usecase.consent.create;
 
 import core.domain.consent.ConsentVIH;
-import core.domain.consent.CovidConsent;
 import core.usecase.consent.ConsentRepositoryInterface;
 
 public class CreateVIHUseCase implements CreateVIHUseCaseInterface {
@@ -17,7 +16,7 @@ public class CreateVIHUseCase implements CreateVIHUseCaseInterface {
         if (consent.isCreateConsent()) {
             repository.createVIHConsent(consent);
         }else{
-            repository.updateVIHConsent(consent.getId());
+            repository.updateVIHConsent(consent.getId(), consent.getFileName());
         }
     }
 }

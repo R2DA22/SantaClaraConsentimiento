@@ -3,6 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+
 package core.domain.speciality;
 
 import core.domain.bus.query.Query;
@@ -10,16 +11,19 @@ import core.domain.bus.query.Query;
 import java.util.Objects;
 
 /**
- *
  * @author diego.ramirez
  */
 public class Speciality implements Query {
-    
+
     private String descripcion;
-    private Integer id; 
+    private Integer id;
 
     public Speciality(String descripcion, Integer id) {
         this.descripcion = descripcion;
+        this.id = id;
+    }
+
+    public Speciality(Integer id) {
         this.id = id;
     }
 
@@ -59,8 +63,7 @@ public class Speciality implements Query {
     public String toString() {
         return "Especialidad{" + "descripcion=" + descripcion + ", id=" + id + '}';
     }
-    
-    
+
 
     public String getDescripcion() {
         return descripcion;
@@ -77,5 +80,5 @@ public class Speciality implements Query {
     public void setId(Integer id) {
         this.id = id;
     }
-    
+
 }

@@ -30,6 +30,8 @@ public class ConsentVIHDTO {
     private String anotherMood;
     private boolean test;
     private String testReason;
+    private String filename;
+    private String signature;
     private List<Sickness> sicknessList;
 
     public ConsentVIHDTO() {
@@ -217,5 +219,21 @@ public class ConsentVIHDTO {
 
     public void setProfessional(Professional professional) {
         this.professional = professional;
+    }
+
+    public String getFilename() {
+        return filename;
+    }
+
+    public void setFilename(String filename) {
+        this.filename = filename;
+    }
+
+    public String getSignature() {
+        return signature;
+    }
+
+    public void setSignature(String signature) {
+        this.signature = signature;
     }
 }

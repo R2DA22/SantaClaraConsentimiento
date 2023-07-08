@@ -7,7 +7,7 @@
     <h:body>
         <ui:composition template="plantilla.xhtml" >        
             <ui:define name="content">
-                <p:focus context="frmFormulario"/>
+                <p:focus context="frmFormulario" for="frmFormulario:documento-profesional"/>
                 <h:form id="frmFormulario" >
                     <ui:include src="componentes/profesional.xhtml" >
                         <ui:param name="nro_registro" value="true" />
@@ -21,8 +21,8 @@
                     </ui:include>
                     <p:panelGrid  columns="1" layout="grid" styleClass="ui-panelgrid-blank ui-fluid r2da-pnl-grid"  >
                         <p:commandButton id="btn-submint" value="Guardar" styleClass="btn btn-info btn-confirmar"  
-                                         style="height: 60px;" process="@form" 
-                                         onclick="validarGuardarFormRegistroProfesional();"
+                                         style="height: 60px;" process="@form"
+                                         oncomplete="validarGuardarFormRegistroProfesional();"
                                          />
 
                     </p:panelGrid>

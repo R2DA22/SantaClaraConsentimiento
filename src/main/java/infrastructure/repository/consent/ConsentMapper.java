@@ -76,6 +76,8 @@ public class ConsentMapper implements ConsentMapperInterface {
                 consent.setAnotherMood(resultSet.getString("estado_paciente"));
                 consent.setTest(resultSet.getBoolean("test_obligatorio"));
                 consent.setTestReason(resultSet.getString("motivo_test"));
+                consent.setFilename(resultSet.getString("filename"));
+                consent.setSignature(resultSet.getString("firma"));
             }
         } catch ( Exception e){
 

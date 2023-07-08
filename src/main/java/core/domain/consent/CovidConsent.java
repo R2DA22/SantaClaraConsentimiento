@@ -7,7 +7,7 @@ public class CovidConsent extends ConsentInterface implements Command {
 
     private static final String TYPE = "COVID";
     private static final String URL = "consentimiento_covid.xhtml?faces-redirect=true";
-     private String FORMAT_DOCUMENT_WITHOUT_GUARDIAN = "<html>\n"
+    private String FORMAT_DOCUMENT_WITHOUT_GUARDIAN = "<html>\n"
             + "<head>\n"
             + "<title>SBCPM-F-001.V3 Consentimiento Informado de Proc.</title>\n"
             + "<meta charset=\"utf-8\">\n"
@@ -145,7 +145,7 @@ public class CovidConsent extends ConsentInterface implements Command {
             + "</body>\n"
             + "</html>";
 
-     private String FORMAT_DOCUMENT_WITH_GUARDIAN = "<html>\n"
+    private String FORMAT_DOCUMENT_WITH_GUARDIAN = "<html>\n"
             + "<head>\n"
             + "<title>SBCPM-F-001.V3 Consentimiento Informado de Proc.</title>\n"
             + "<meta charset=\"utf-8\">\n"
@@ -409,7 +409,7 @@ public class CovidConsent extends ConsentInterface implements Command {
 
         html = html.replaceAll("@edad@", this.getPatient().getAge().toString());
 
-        html = html.replaceAll("@viajes@", this.getHadTrips()?this.getTripsMade():"");
+        html = html.replaceAll("@viajes@", this.getHadTrips() ? this.getTripsMade() : "");
 
         if (this.getVaccinated() != null) {
             if (this.getVaccinated()) {
@@ -427,9 +427,9 @@ public class CovidConsent extends ConsentInterface implements Command {
                 if (this.getHasSymptoms() != null) {
                     html = html.replaceAll("@sintomas@", this.getDescriptionOfSymptoms());
                 }
-                if (this.getSymptomsStartDate() != null) {
-                    html = html.replaceAll("@fechaSintomas@", this.getSymptomsStartDate("dd/MM/yyyy"));
-                }
+                html = html.replaceAll("@fechaSintomas@",
+                        this.getSymptomsStartDate() != null ? this.getSymptomsStartDate("dd/MM/yyyy") : "");
+
             } else {
                 html = html.replaceAll("@sintomas@", "");
                 html = html.replaceAll("@fechaSintomas@", "");

@@ -43,9 +43,9 @@
                     </p:inputText>
                     <p class="formulario__input-error">El documento solo llevar máximo 15 digitos.</p>
                 </p:outputPanel>
-                <p:outputPanel styleClass="formulario__grupo"  id="grupo-nombre-profesional" rendered="#{nombre}" >
+                <p:outputPanel styleClass="formulario__grupo"  id="grupo-nombre-profesional" rendered="#{nombre}"  >
                     <p:outputLabel styleClass="r2da-lbl" value="Nombre"/>
-                    <p:inputText  id="nombre-profesional"
+                    <p:inputText  id="nombre-profesional" readonly="#{nombrereadonly}"
                                   onkeypress="
                                           if (event.keyCode === 13) {
                                               siguiente('frmFormulario', 'nombre-profesional');

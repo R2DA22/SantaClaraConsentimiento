@@ -4,15 +4,10 @@ import core.domain.bus.query.Query;
 
 import java.util.List;
 
-public class SpecialityList  {
+public class SpecialityList implements Query {
 
-    private List<Speciality> list;
 
-    public SpecialityList(List<Speciality> list) {
-        this.list = list;
+    public SpecialityList() {
     }
 
-    public List<Speciality> getList() {
-        return list;
-    }
 }

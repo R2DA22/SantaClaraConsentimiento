@@ -7,7 +7,6 @@
 package app.ui;
 
 import app.config.Environment;
-import core.domain.Consulta;
 import core.domain.area.Area;
 import core.domain.configuration.Configuration;
 import core.domain.consent.ConsentAbandon;
@@ -27,6 +26,7 @@ import core.domain.professional.ProfessionalForm;
 import core.domain.professional.ProfessionalList;
 import core.domain.sickness.Sickness;
 import core.domain.speciality.Speciality;
+import core.domain.speciality.SpecialityList;
 import core.domain.vaccine.Vaccine;
 import infrastructure.controllers.Controller;
 
@@ -125,8 +125,8 @@ public class UIBean implements Serializable {
     public void findPatient() {
         try {
             if (consent.getPatient() != null && !consent.getPatient().isEmptyPerson()) {
-                Patient patientResult=(Patient) controller.dispatchQuery(consent.getPatient());
-                if(patientResult!=null) {
+                Patient patientResult = (Patient) controller.dispatchQuery(consent.getPatient());
+                if (patientResult != null) {
                     consent.setPatient(patientResult);
                 }
             }
@@ -168,6 +168,8 @@ public class UIBean implements Serializable {
                 consent.setAnotherMood(consentVIHDTO.getAnotherMood());
                 consent.setTest(consentVIHDTO.isTest());
                 consent.setTestReason(consentVIHDTO.getTestReason());
+                consent.setFileName(consentVIHDTO.getFilename());
+                consent.setSignature(consentVIHDTO.getSignature());
                 if (consentVIHDTO.getProfessional() != null) {
                     consent.setProfessional(consentVIHDTO.getProfessional());
                     consent.setCreateConsent(false);
@@ -216,6 +218,9 @@ public class UIBean implements Serializable {
             createGuardian();
         }
         createPatient();
+        Signature oldFile = new Signature(this.urlFile + consent.getFileName(), "");
+        oldFile.delete();
+        String pathPdf = consent.buildFileName(this.urlFile);
         createConsent();
         Signature patientSignature = createSignature(consent.getPathSignature(), consent.getSignature());
         Signature professionalSignature = null;
@@ -225,8 +230,8 @@ public class UIBean implements Serializable {
             professionalSignature = createSignature(consent.getPathSignatureProfessional(), consent.getProfessional().getSignature());
         }
         String html = consent.getFormat();
-        String pathPdf = this.urlFile + consent.getPatient().getDocumentNumber() + "_" + consent.getDate("dd_MM_yyyy_HH_mm") + ".pdf";
         PdfFile.createPDF(pathPdf, html);
+
         patientSignature.delete();
         if (professionalSignature != null) {
             professionalSignature.delete();
@@ -272,8 +277,7 @@ public class UIBean implements Serializable {
 
     public void findAllSpeciality() {
         try {
-            specialities = (List<Speciality>) controller.dispatchQuery(new Speciality());
-
+            specialities = (List<Speciality>) controller.dispatchQuery(new SpecialityList());
             if (specialities != null && !specialities.isEmpty()) {
                 consent.getProfessional().setSpecialty(specialities.get(0));
             }
@@ -369,6 +373,20 @@ public class UIBean implements Serializable {
         }
     }
 
+    public void findProfessionalBySpeciality() {
+        try {
+                Professional professional = (Professional) controller.dispatchQuery(new Speciality(5));
+                if (professional != null) {
+                    consent.setProfessional(professional);
+                } else {
+                    consent.getProfessional().setName("");
+                }
+
+        } catch (Exception ex) {
+            Logger.getLogger(UIBean.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
     public String cleanFields() {
         if (AlertType.equals("success")) {
             isGuardian = false;
@@ -395,6 +413,9 @@ public class UIBean implements Serializable {
             }
             if (((HttpServletRequest) ec.getRequest()).getRequestURI().contains("consentimiento_VIH")) {
                 return redirect(7);
+            }
+            if (((HttpServletRequest) ec.getRequest()).getRequestURI().contains("abandono")) {
+                return redirect(8);
             }
         }
         return "";
@@ -445,7 +466,7 @@ public class UIBean implements Serializable {
             case 2:
                 consent = new CovidConsent(environment.getConfiguration());
                 findAllVaccine();
-                consent.getProfessional().setName("Antonio Jose Sanchez Niñez");
+                findProfessionalBySpeciality();
                 break;
             case 3:
                 consent = new EmergencyConsent(environment.getConfiguration());
@@ -464,8 +485,8 @@ public class UIBean implements Serializable {
                 findAllSpeciality();
                 break;
             case 7:
-                findAllProfessional();
                 consent = new ConsentVIH(environment.getConfiguration());
+                findProfessionalBySpeciality();
                 consent.setCreateConsent(true);
                 break;
             case 8:

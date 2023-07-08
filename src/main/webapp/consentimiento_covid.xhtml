@@ -7,12 +7,12 @@
     <h:body>
         <ui:composition template="plantilla.xhtml" >        
             <ui:define name="content">
-                <p:focus context="frmFormulario"/>
+                <p:focus context="frmFormulario" for="frmFormulario:documento-paciente"/>
                 <h:form id="frmFormulario" >
-
                     <ui:include src="componentes/quienDiligencia.xhtml"/>
                     <ui:include src="componentes/profesional.xhtml" >
                         <ui:param name="nombre" value="true" />
+                        <ui:param name="nombrereadonly" value="true"/>
                     </ui:include>
                     <ui:include src="componentes/acudiente.xhtml"/>
                     <ui:include src="componentes/paciente.xhtml">
@@ -40,7 +40,6 @@
                         <ui:param name="tratamiento_datos" value="true" />
                     </ui:include>
                     <ui:include src="componentes/firmas.xhtml" >
-                        <ui:param name="firma_profesional" value="false" />
                         <ui:param name="firma_paciente" value="true" />
                         <ui:param name="descripcionFirma" value="Autorizo la realización de la prueba Covid" />
                     </ui:include>

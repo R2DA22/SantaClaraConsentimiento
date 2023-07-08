@@ -9,7 +9,6 @@ import core.domain.process.Process;
 import core.domain.sickness.Sickness;
 import infrastructure.repository.ClientDB;
 
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -328,6 +327,22 @@ public class Postgresql extends DataBaseManager implements ClientDB {
     }
 
     @Override
+    public ResultSet findProfessionalBySpeciality(Integer specialityID) throws Exception {
+        try {
+            this.openConnection();
+            String sql = "SELECT * FROM profesional p  "
+                    + " inner join tipo_Documento t using (id_tipo_Documento)"
+                    + " inner join especialidad e using (id_especialidad)"
+                    + " WHERE id_especialidad=? and p.estado ";
+            PreparedStatement ps = this.getConnection().prepareStatement(sql);
+            ps.setInt(1, specialityID);
+            return ps.executeQuery();
+        } finally {
+            this.closeConnection();
+        }
+    }
+
+    @Override
     public ResultSet findAllProfessional() throws Exception {
         try {
             this.openConnection();
@@ -407,13 +422,14 @@ public class Postgresql extends DataBaseManager implements ClientDB {
     }
 
     @Override
-    public void updateVIHConsent(int id) throws Exception {
+    public void updateVIHConsent(int id, String filename) throws Exception {
         try {
             this.openConnection();
-            String sql = "UPDATE consentimiento_vih SET estado='F' "
+            String sql = "UPDATE consentimiento_vih SET estado='F', filename=? "
                     + "	WHERE id_consentimiento=?";
             PreparedStatement ps = this.getConnection().prepareStatement(sql);
-            ps.setInt(1, id);
+            ps.setString(1, filename);
+            ps.setInt(2, id);
             ps.executeUpdate();
         } finally {
             this.closeConnection();
@@ -427,8 +443,8 @@ public class Postgresql extends DataBaseManager implements ClientDB {
                     "conoce_prevencion, usa_condon, motivo, frecuencia, tipo_relacion_sexual, " +
                     "mecanismo_transmision, transfusion_site, reaccion_resultado, " +
                     "estado_paciente, test_obligatorio, motivo_test, estado," +
-                    "id_tipo_documento_profesional, documento_profesional)" +
-                    "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+                    "id_tipo_documento_profesional, documento_profesional, filename, firma)" +
+                    "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
             PreparedStatement ps = this.getConnection().prepareStatement(sql);
             ps.setInt(1, consent.getId());
             ps.setString(2, consent.getEvent());
@@ -449,6 +465,8 @@ public class Postgresql extends DataBaseManager implements ClientDB {
             ps.setString(17, "P");
             ps.setInt(18, consent.getProfessional().getDocumentType().getId());
             ps.setString(19, consent.getProfessional().getDocumentNumber());
+            ps.setString(20, consent.getFileName());
+            ps.setString(21, consent.getSignature());
             ps.executeUpdate();
         } catch (SQLException e) {
             throw new RuntimeException(e);

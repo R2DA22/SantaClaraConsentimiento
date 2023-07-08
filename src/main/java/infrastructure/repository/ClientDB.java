@@ -53,6 +53,7 @@ public interface ClientDB {
     void updateProfessional(Professional professional) throws Exception;
 
     ResultSet findProfessional(Integer idType, String id) throws Exception;
+    ResultSet findProfessionalBySpeciality(Integer specialityID) throws Exception;
     ResultSet findAllProfessional() throws Exception;
 
     ResultSet findProcessByName(String name) throws Exception;
@@ -60,5 +61,5 @@ public interface ClientDB {
     ResultSet findVIHData(VIHData filter) throws Exception;
     ResultSet findSicknessVIHData(int id) throws Exception;
 
-    void updateVIHConsent(int id) throws Exception;
+    void updateVIHConsent(int id, String filename) throws Exception;
 }

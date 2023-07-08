@@ -8,7 +8,7 @@
     <h:body>
         <ui:composition template="plantilla.xhtml" >        
             <ui:define name="content">
-                <p:focus context="frmFormulario"/>
+                <p:focus context="frmFormulario" for="frmFormulario:documento-paciente"/>
                 <h:form id="frmFormulario" >
                     <ui:include src="componentes/quienDiligencia.xhtml"/>
                     <ui:include src="componentes/profesional.xhtml" >

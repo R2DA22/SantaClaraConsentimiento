@@ -35,6 +35,12 @@ public class ProfessionalRepository implements ProfessionalRepositoryInterface {
     }
 
     @Override
+    public Professional findBySpeciality(Integer SpecialityID) throws Exception {
+        ResultSet resultSet = dataBase.findProfessionalBySpeciality(SpecialityID);
+        return mapper.toDomain(resultSet);
+    }
+
+    @Override
     public ProfessionalList findAll() throws Exception {
         ResultSet resultSet = dataBase.findAllProfessional();
         ProfessionalList result = mapper.toDomainList(resultSet);

@@ -12,8 +12,8 @@ public class ConsentRepository implements ConsentRepositoryInterface {
     private ClientDB db;
     private ConsentMapperInterface mapper;
 
-    public ConsentRepository(ClientDB sql,ConsentMapperInterface mapper ) {
-        this.mapper=mapper;
+    public ConsentRepository(ClientDB sql, ConsentMapperInterface mapper) {
+        this.mapper = mapper;
         this.db = sql;
     }
 
@@ -29,18 +29,18 @@ public class ConsentRepository implements ConsentRepositoryInterface {
 
     @Override
     public ConsentVIHDTO findVIHData(VIHData filter) throws Exception {
-        ResultSet resultSet=db.findVIHData(filter);
+        ResultSet resultSet = db.findVIHData(filter);
         return mapper.toConsentVIH(resultSet);
     }
 
     @Override
     public SicknessList findSicknessVIHData(int id) throws Exception {
-        ResultSet resultSet=db.findSicknessVIHData(id);
+        ResultSet resultSet = db.findSicknessVIHData(id);
         return mapper.toSicknessList(resultSet);
     }
 
     @Override
-    public void updateVIHConsent(int id) throws Exception {
-        db.updateVIHConsent(id);
+    public void updateVIHConsent(int id, String filename) throws Exception {
+        db.updateVIHConsent(id, filename);
     }
 }

@@ -6,13 +6,10 @@ import core.domain.professional.Professional;
 import core.domain.sickness.Sickness;
 import core.domain.vaccine.Vaccine;
 import core.domain.area.Area;
-import core.domain.bus.query.Query;
 import core.domain.patient.Guardian;
 import core.domain.patient.Patient;
 import core.domain.process.Process;
 
-import java.net.URI;
-import java.net.URISyntaxException;
 import java.text.SimpleDateFormat;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
@@ -92,6 +89,7 @@ public abstract class ConsentInterface implements Command {
     private Date fastTestDate;
     private Date fastTestExpirationDate;
     private List<Sickness> sicknessList;
+    private String fileName;
 
     public ConsentInterface(Configuration configuration) {
         this.APPLICATION_SERVER = configuration.getApplicationPath();
@@ -236,6 +234,9 @@ public abstract class ConsentInterface implements Command {
     }
 
     public Boolean getHadContactCovid() {
+        if (hadContactCovid == null) {
+            return false;
+        }
         return hadContactCovid;
     }
 
@@ -244,6 +245,9 @@ public abstract class ConsentInterface implements Command {
     }
 
     public Boolean getHasSymptoms() {
+        if (hasSymptoms == null) {
+            return false;
+        }
         return hasSymptoms;
     }
 
@@ -252,6 +256,9 @@ public abstract class ConsentInterface implements Command {
     }
 
     public Boolean getHadTrips() {
+        if (hadTrips == null) {
+            return false;
+        }
         return hadTrips;
     }
 
@@ -293,6 +300,9 @@ public abstract class ConsentInterface implements Command {
     }
 
     public Boolean getHaveWorkInHealth() {
+        if (haveWorkInHealth == null){
+            return false;
+        }
         return haveWorkInHealth;
     }
 
@@ -301,6 +311,10 @@ public abstract class ConsentInterface implements Command {
     }
 
     public Boolean getVaccinated() {
+        if (isVaccinated == null){
+            return false;
+        }
+
         return isVaccinated;
     }
 
@@ -351,6 +365,9 @@ public abstract class ConsentInterface implements Command {
     }
 
     public Boolean getDisagree() {
+        if (disagree == null) {
+            return false;
+        }
         return disagree;
     }
 
@@ -370,7 +387,7 @@ public abstract class ConsentInterface implements Command {
     }
 
     public List<Process> getProcesses() {
-        if (processes==null){
+        if (processes == null) {
             return new ArrayList<>();
         }
         return processes;
@@ -407,6 +424,12 @@ public abstract class ConsentInterface implements Command {
         // Obtienes el nombre del mes
         String name = day.getDisplayName(TextStyle.FULL, new Locale("es", "ES"));
         return name;
+    }
+
+    public String buildFileName(String url) {
+        fileName = patient.getDocumentNumber() + "_" + getDate("dd_MM_yyyy_HH_mm") + ".pdf";
+
+        return url + fileName;
     }
 
     public String getCatchment() {
@@ -615,5 +638,13 @@ public abstract class ConsentInterface implements Command {
 
     public void setCreateConsent(boolean createConsent) {
         this.createConsent = createConsent;
+    }
+
+    public String getFileName() {
+        return fileName;
+    }
+
+    public void setFileName(String fileName) {
+        this.fileName = fileName;
     }
 }

@@ -22,5 +22,5 @@ public interface ConsentRepositoryInterface {
     ConsentVIHDTO findVIHData(VIHData filter) throws Exception;
     SicknessList findSicknessVIHData(int id) throws Exception;
 
-    void updateVIHConsent(int id) throws Exception;
+    void updateVIHConsent(int id, String filename) throws Exception;
 }
