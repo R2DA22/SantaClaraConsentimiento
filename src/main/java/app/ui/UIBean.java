@@ -444,6 +444,10 @@ public class UIBean implements Serializable {
             consent = new ConsentVIH(environment.getConfiguration());
             consent.setCreateConsent(true);
         }
+        if (consent instanceof ConsentAbandon) {
+            consent = new ConsentAbandon(environment.getConfiguration());
+            consent.setCreateConsent(true);
+        }
     }
 
     public void clearForm() {

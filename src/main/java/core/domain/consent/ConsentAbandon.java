@@ -64,7 +64,16 @@ public class ConsentAbandon extends ConsentInterface implements Command {
             "                        <td colspan=\"4\"></td>\n" +
             "                    </tr>\n" +
             "                    <tr>\n" +
-            "                        <td colspan=\"2\">YO: @NombreAcudiente@</td>\n" +
+            "                        <td colspan=\"2\">" +
+            "                           <div class=\"container-signature\">\n" +
+            "                                <div class=\"left-content\">YO: @NombreAcudiente@ </div>" +
+            "                                <div class=\"right-content,image-cell\">\n" +
+            "                                    <span class=\"background-image\">\n" +
+            "                                       <img class=\"img-firma\" src=\"" + PATH_IMAGES_APP + NAME_SIGNATURE + "-@docSignature@." + IMAGE_FORMAT + "\"  width=\"130\" />\n" +
+            "                                    </span>\n" +
+            "                                </div>\n" +
+            "                           </div>\n" +
+            "                        </td>\n" +
             "                        <td colspan=\"2\">CON: @TipoDocAcudiente@  @NroDocumentoAcudiente@</td>\n" +
             "                    </tr>\n" +
             "                    <tr>\n" +
@@ -138,6 +147,7 @@ public class ConsentAbandon extends ConsentInterface implements Command {
         } else {
             abandonOf="MENOR DE EDAD";
         }
+        html = FORMAT_DOCUMENT.replace("@docSignature@", this.getSignatureConsent());
         html = html.replace("@Abandono@", abandonOf);
         html = html.replace("@mAbandono@", abandonOf.toLowerCase());
         html = html.replace("@Fecha@", this.getDate("dd/MM/yyyy"));
@@ -152,6 +162,7 @@ public class ConsentAbandon extends ConsentInterface implements Command {
         html = html.replace("@TipoDocAcudiente@", this.getGuardianData().getDocumentType().getInitials());
         html = html.replace("@NombreAcudiente@", this.getGuardianData().getName());
         html = html.replace("@Nombre@", this.getPatient().getName());
+
 
         return html;
     }
