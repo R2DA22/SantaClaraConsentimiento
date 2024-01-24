@@ -15,9 +15,10 @@ public class Configuration {
     private static Configuration instance;
     private Properties properties;
     private String applicationPath;
-    private String cssPath="css/";
-    private String imagesPath="imagenes/";
-    private String resourcesPath="resources/";
+    private String cssPath = "css/";
+    private String imagesPath = "imagenes/";
+    private String resourcesPath = "resources/";
+    private String pathDivisor = "/";
     private final String LOCAL_CONFIGURATION = "configurations_local.properties";
     private final String BETA_CONFIGURATION = "configurations_beta.properties";
     private final String PROD_CONFIGURATION = "configurations_prod.properties";
@@ -40,10 +41,11 @@ public class Configuration {
                 applicationPath = applicationPath.replaceAll("/", "\\\\");
                 imagesPath = imagesPath.replaceAll("/", "\\\\");
                 cssPath = cssPath.replaceAll("/", "\\\\");
+                pathDivisor = pathDivisor.replaceAll("/", "\\\\");
             }
             String propertiesPath = determinatePropertiesPath(applicationPath);
             String part[] = applicationPath.split(WEB_INF);
-            applicationPath=part[0]+resourcesPath;
+            applicationPath = part[0] + resourcesPath;
             properties = loadProperties(propertiesPath);
         } catch (Exception ignored) {
             System.out.println(ignored);
@@ -99,5 +101,9 @@ public class Configuration {
 
     public String getImagesPath() {
         return imagesPath;
+    }
+
+    public String getPathDivisor() {
+        return pathDivisor;
     }
 }

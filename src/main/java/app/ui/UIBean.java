@@ -390,7 +390,7 @@ public class UIBean implements Serializable {
     public String cleanFields() {
         if (AlertType.equals("success")) {
             isGuardian = false;
-            reBuildConsent();
+            //reBuildConsent();
             consent.getPatient().setDocumentType(new DocumentType());
             ExternalContext ec = FacesContext.getCurrentInstance().getExternalContext();
             if (((HttpServletRequest) ec.getRequest()).getRequestURI().contains("consentimiento_procedimiento")) {
@@ -454,7 +454,6 @@ public class UIBean implements Serializable {
         isGuardian = false;
         reBuildConsent();
         consent.getPatient().setDocumentType(new DocumentType());
-
     }
 
     public String redirect(Integer option) {
@@ -502,8 +501,8 @@ public class UIBean implements Serializable {
             default:
                 return "index.xhtml?faces-redirect=true";
         }
-        return consent.getUrl();
 
+        return consent.getUrl();
     }
 
 
@@ -596,9 +595,8 @@ public class UIBean implements Serializable {
                 if (this.urlFile != null && !this.urlFile.equals("")) {
                     File ruta = new File(this.urlFile.replaceAll("\\\\", "\\\\\\\\"));
                     if (ruta.exists()) {
-                        streamedContent = new DefaultStreamedContent(new FileInputStream(ruta), "application/pdf",
-                                consent.getPatient().getDocumentNumber() + "_" + consent.getDate("dd_MM_yyyy_HH_mm") +
-                                        ".pdf");
+                        streamedContent = new DefaultStreamedContent(new FileInputStream(ruta+consent.PATH_DIVISOR+consent.getFileName()), "application/pdf",
+                                consent.getFileName());
                     }
                 }
             }

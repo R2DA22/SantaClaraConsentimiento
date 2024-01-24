@@ -26,6 +26,7 @@ public abstract class ConsentInterface implements Command {
     public String APPLICATION_SERVER;
     public String PATH_IMAGES_APP;
     public String PATH_CSS_APP;
+    public String PATH_DIVISOR;
     public static final String NAME_SIGNATURE = "firma";
     public static final String NAME_LOGO = "logo.png";
     public static final String STYLES = "formulario_sbcpm.css";
@@ -95,6 +96,7 @@ public abstract class ConsentInterface implements Command {
         this.APPLICATION_SERVER = configuration.getApplicationPath();
         this.PATH_IMAGES_APP = APPLICATION_SERVER + configuration.getImagesPath();
         this.PATH_CSS_APP = APPLICATION_SERVER + configuration.getCssPath();
+        this.PATH_DIVISOR = configuration.getPathDivisor();
         this.patient = new Patient();
         professional = new Professional();
         this.signature = "";

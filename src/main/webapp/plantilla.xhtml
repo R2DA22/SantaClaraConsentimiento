@@ -28,10 +28,6 @@
                                          update="formSoporte"
                                          onstart="PF('statusDialog').show()"
                                          oncomplete="PF('statusDialog').hide()" />
-                        <p:remoteCommand name="endConsent"  actionListener="#{uiBean.saveConsent()}"
-                                         update="formSoporte"
-                                         onstart="PF('statusDialog').show()"
-                                         oncomplete="PF('statusDialog').hide()" />
                         <p:remoteCommand name="saveProfessional"  actionListener="#{uiBean.saveProfessional()}"
                                          update="formSoporte"
                                          onstart="PF('statusDialog').show()"
@@ -66,7 +62,7 @@
                 <br/>
                 <center>
                     <p:commandButton id="btncerrar" value="Cerrar" styleClass="btn btn-#{uiBean.alertType}"
-                                     actionListener="#{uiBean.cleanFields()}"
+                                     onclick="limpiarFormulario();"
                                      oncomplete="PF('dlgAlertModal').hide();" />
                 </center>
 
@@ -94,7 +90,7 @@
             <p:graphicImage  name="imagenes/consultando.gif" />
         </p:dialog>
         <div class="footer">
-            <h:outputText value="Versión 7.0" />
+            <h:outputText value="Versión 7.1" />
         </div>
     </h:body>
 </html>

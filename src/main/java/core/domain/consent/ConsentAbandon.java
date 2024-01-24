@@ -140,7 +140,7 @@ public class ConsentAbandon extends ConsentInterface implements Command {
 
     @Override
     public String getFormat() {
-        String html = FORMAT_DOCUMENT;
+        String html;
         String abandonOf;
         if (!this.isGuardian()) {
             abandonOf="ADULTO MAYOR";
