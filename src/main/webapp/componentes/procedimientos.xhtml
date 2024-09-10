@@ -12,11 +12,11 @@
                 <p:outputLabel value="Procedimiento aplicado" />
             </p:outputPanel> 
             <p:spacer rendered="#{area}" height="15px" />
-            <p:outputLabel rendered="#{area}" styleClass="r2da-lbl" value="Área" />
+            <p:outputLabel rendered="#{area}" styleClass="r2da-lbl" value="Procedimiento" />
             <p:selectOneMenu rendered="#{area}" id="slc-area" value="#{uiBean.consent.area}"
                              converter="objectConverter"
                              styleClass="rd2a-slc-on-menu">
-                <f:selectItem noSelectionOption="true"  itemLabel="Seleccione un área"/>
+                <f:selectItem noSelectionOption="true"  itemLabel="Seleccione un procedimiento"/>
                 <f:selectItems value="#{uiBean.areas}" var="vararea"
                                itemLabel="#{vararea.name}"
                                itemValue="#{vararea}" />
