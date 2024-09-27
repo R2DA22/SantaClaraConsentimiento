@@ -66,7 +66,7 @@ public class Postgresql extends DataBaseManager implements ClientDB {
             ps.setString(3, patient.getName());
             ps.setObject(4, patient.getBornDate(), Types.DATE);
             ps.setObject(5, patient.isGender(), Types.BOOLEAN);
-            ps.setObject(6, patient.getMaritalStatus(), Types.BOOLEAN);
+            ps.setObject(6, patient.getMaritalStatus(), Types.VARCHAR);
             ps.setObject(7, patient.getCity(), Types.VARCHAR);
             ps.setObject(8, patient.getAddress(), Types.VARCHAR);
             ps.setObject(9, patient.getPhoneNumber(), Types.VARCHAR);
