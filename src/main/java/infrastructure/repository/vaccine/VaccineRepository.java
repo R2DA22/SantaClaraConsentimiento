@@ -5,10 +5,13 @@ import core.domain.vaccine.VaccineList;
 import core.usecase.vaccine.VaccineRepositoryInterface;
 import infrastructure.repository.ClientDB;
 
+import java.io.Serializable;
 import java.sql.ResultSet;
 import java.util.List;
 
-public class VaccineRepository implements VaccineRepositoryInterface {
+public class VaccineRepository implements VaccineRepositoryInterface, Serializable {
+    private static final long serialVersionUID = 1L;
+
 
     private ClientDB dataBase;
     private MapperInterface mapper;

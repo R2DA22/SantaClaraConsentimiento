@@ -3,11 +3,14 @@ package infrastructure.repository.vaccine;
 import core.domain.vaccine.Vaccine;
 import core.domain.vaccine.VaccineList;
 
+import java.io.Serializable;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
-public class VaccineMapper implements MapperInterface{
+public class VaccineMapper implements MapperInterface, Serializable {
+    private static final long serialVersionUID = 1L;
+
     public VaccineMapper() {
     }
 

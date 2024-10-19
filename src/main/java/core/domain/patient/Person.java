@@ -9,6 +9,7 @@ package core.domain.patient;
 import core.domain.bus.command.Command;
 import core.domain.bus.query.Query;
 
+import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Objects;
@@ -16,7 +17,10 @@ import java.util.Objects;
 /**
  * @author diego.ramirez
  */
-public abstract class Person implements Command, Query {
+public abstract class Person implements Command, Query, Serializable {
+
+    private static final long serialVersionUID = 1L;
+
 
     private DocumentType documentType;
     private String documentNumber;

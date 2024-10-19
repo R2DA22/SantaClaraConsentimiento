@@ -8,12 +8,14 @@ package core.domain.speciality;
 
 import core.domain.bus.query.Query;
 
+import java.io.Serializable;
 import java.util.Objects;
 
 /**
  * @author diego.ramirez
  */
-public class Speciality implements Query {
+public class Speciality implements Query, Serializable {
+    private static final long serialVersionUID = 1L;
 
     private String descripcion;
     private Integer id;

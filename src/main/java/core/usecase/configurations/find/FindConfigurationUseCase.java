@@ -2,9 +2,12 @@ package core.usecase.configurations.find;
 
 import core.domain.configuration.Configuration;
 import core.usecase.configurations.ConfigurationsRepositoryInterface;
+import java.io.Serializable;
 
 
-public class FindConfigurationUseCase implements FindConfiguratiosUseCaseInterface {
+public class FindConfigurationUseCase implements FindConfiguratiosUseCaseInterface, Serializable {
+    private static final long serialVersionUID = 1L;
+
 
     private ConfigurationsRepositoryInterface repository;
 

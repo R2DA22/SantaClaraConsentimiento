@@ -9,14 +9,17 @@ import core.domain.bus.command.Command;
 import core.domain.bus.query.Query;
 import core.domain.speciality.Speciality;
 import core.domain.patient.Person;
+import java.io.Serializable;
 import java.util.Objects;
 
 /**
  *
  * @author diego.ramirez
  */
-public class Professional extends Person implements Command, Query {
-    
+public class Professional extends Person implements Command, Query, Serializable {
+    private static final long serialVersionUID = 1L;
+
+
     private Integer registryNumber;
     private Speciality specialty;
 

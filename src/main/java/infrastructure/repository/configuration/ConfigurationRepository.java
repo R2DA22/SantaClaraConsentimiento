@@ -4,9 +4,11 @@ import core.domain.configuration.Configuration;
 import core.usecase.configurations.ConfigurationsRepositoryInterface;
 import infrastructure.repository.ClientDB;
 
+import java.io.Serializable;
 import java.sql.ResultSet;
 
-public class ConfigurationRepository implements ConfigurationsRepositoryInterface {
+public class ConfigurationRepository implements ConfigurationsRepositoryInterface, Serializable {
+    private static final long serialVersionUID = 1L;
 
     private ClientDB dataBase;
 

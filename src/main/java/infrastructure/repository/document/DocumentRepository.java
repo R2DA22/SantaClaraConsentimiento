@@ -4,9 +4,12 @@ import core.domain.patient.ListDocumentType;
 import core.usecase.document.DocumentTypeRepositoryInterface;
 import infrastructure.repository.ClientDB;
 
+import java.io.Serializable;
 import java.sql.ResultSet;
 
-public class DocumentRepository implements DocumentTypeRepositoryInterface {
+public class DocumentRepository implements DocumentTypeRepositoryInterface, Serializable {
+    private static final long serialVersionUID = 1L;
+
     private ClientDB db;
     private MapperInterface mapper;
 

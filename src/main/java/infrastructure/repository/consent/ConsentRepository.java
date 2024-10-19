@@ -5,10 +5,14 @@ import core.domain.consent.VIHData;
 import core.domain.sickness.SicknessList;
 import core.usecase.consent.ConsentRepositoryInterface;
 import infrastructure.repository.ClientDB;
+import java.io.Serializable;
 import java.sql.ResultSet;
 
 
-public class ConsentRepository implements ConsentRepositoryInterface {
+public class ConsentRepository implements ConsentRepositoryInterface, Serializable {
+    private static final long serialVersionUID = 1L;
+
+
     private ClientDB db;
     private ConsentMapperInterface mapper;
 

@@ -3,9 +3,12 @@ package infrastructure.repository.guardian;
 import core.domain.patient.DocumentType;
 import core.domain.patient.Guardian;
 
+import java.io.Serializable;
 import java.sql.ResultSet;
 
-public class GuardianMapper implements MapperInterface {
+public class GuardianMapper implements MapperInterface, Serializable {
+    private static final long serialVersionUID = 1L;
+
 
     public GuardianMapper() {
     }

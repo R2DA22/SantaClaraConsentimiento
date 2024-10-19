@@ -5,10 +5,12 @@ import core.domain.bus.command.CommandBus;
 import core.domain.bus.command.CommandHandler;
 
 
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
-public class CommandSyncBus implements CommandBus {
+public class CommandSyncBus implements CommandBus, Serializable {
+    private static final long serialVersionUID = 1L;
 
     private Map<String, CommandHandler> handlers;
 

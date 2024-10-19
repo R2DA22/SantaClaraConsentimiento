@@ -4,10 +4,13 @@ import core.domain.process.Process;
 import core.usecase.process.ProcessRepositoryInterface;
 import infrastructure.repository.ClientDB;
 
+import java.io.Serializable;
 import java.sql.ResultSet;
 import java.util.List;
 
-public class ProcessRepository implements ProcessRepositoryInterface {
+public class ProcessRepository implements ProcessRepositoryInterface, Serializable {
+    private static final long serialVersionUID = 1L;
+
 
     private ClientDB dataBase;
     private MapperInterface mapper;

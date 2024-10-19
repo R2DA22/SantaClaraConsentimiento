@@ -4,8 +4,11 @@ import core.domain.bus.command.Command;
 import core.domain.bus.command.CommandHandler;
 import core.domain.patient.Guardian;
 import core.usecase.guardian.create.CreateGuardianUseCaseInterface;
+import java.io.Serializable;
 
-public class CreateGuardianHandler implements CommandHandler {
+public class CreateGuardianHandler implements CommandHandler, Serializable {
+    private static final long serialVersionUID = 1L;
+
 
     private CreateGuardianUseCaseInterface useCase;
 

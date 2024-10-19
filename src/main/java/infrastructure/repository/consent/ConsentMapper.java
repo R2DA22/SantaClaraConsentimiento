@@ -10,11 +10,15 @@ import core.domain.professional.Professional;
 import core.domain.sickness.Sickness;
 import core.domain.sickness.SicknessList;
 import core.domain.speciality.Speciality;
+import java.io.Serializable;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ConsentMapper implements ConsentMapperInterface {
+public class ConsentMapper implements ConsentMapperInterface, Serializable {
+    private static final long serialVersionUID = 1L;
+
+
     @Override
     public SicknessList toSicknessList(ResultSet resultSet) {
         List<Sickness> list=new ArrayList<>();

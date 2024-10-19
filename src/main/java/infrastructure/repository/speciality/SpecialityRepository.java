@@ -5,10 +5,13 @@ import core.domain.speciality.SpecialityList;
 import core.usecase.speciality.SpecialityRepositoryInterface;
 import infrastructure.repository.ClientDB;
 
+import java.io.Serializable;
 import java.sql.ResultSet;
 import java.util.List;
 
-public class SpecialityRepository implements SpecialityRepositoryInterface {
+public class SpecialityRepository implements SpecialityRepositoryInterface, Serializable {
+    private static final long serialVersionUID = 1L;
+
 
     private ClientDB dataBase;
     private MapperInterface mapper;

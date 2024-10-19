@@ -1,5 +1,6 @@
 package infrastructure.platform.postgresql;
 
+import java.io.Serializable;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -9,7 +10,9 @@ import java.sql.DriverManager;
 /**
  * @author diego.ramirez
  */
-public class DataBase {
+public class DataBase implements Serializable {
+    private static final long serialVersionUID = 1L;
+
 
     private final Properties properties;
 

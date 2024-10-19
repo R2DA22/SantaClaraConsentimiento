@@ -9,6 +9,7 @@ import core.domain.process.Process;
 import core.domain.sickness.Sickness;
 import infrastructure.repository.ClientDB;
 
+import java.io.Serializable;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -16,7 +17,9 @@ import java.sql.Types;
 import java.util.List;
 import java.util.Properties;
 
-public class Postgresql extends DataBaseManager implements ClientDB {
+public class Postgresql extends DataBaseManager implements ClientDB, Serializable {
+    private static final long serialVersionUID = 1L;
+
 
     public Postgresql(Properties properties) throws Exception {
         super(properties);

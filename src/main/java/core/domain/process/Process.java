@@ -12,6 +12,8 @@ import java.util.Objects;
  * @author brahyam.pineda
  */
 public class Process implements Serializable, Command, Query {
+    private static final long serialVersionUID = 1L;
+
 
     private Integer idProcess;
     private String description;

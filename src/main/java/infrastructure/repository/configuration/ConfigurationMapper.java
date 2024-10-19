@@ -3,9 +3,12 @@ package infrastructure.repository.configuration;
 import core.domain.configuration.Configuration;
 import infrastructure.repository.configuration.MapperInterface;
 
+import java.io.Serializable;
 import java.sql.ResultSet;
 
-public class ConfigurationMapper implements MapperInterface {
+public class ConfigurationMapper implements MapperInterface, Serializable {
+    private static final long serialVersionUID = 1L;
+
 
     public ConfigurationMapper() {
     }

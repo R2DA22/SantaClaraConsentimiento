@@ -3,9 +3,12 @@ package infrastructure.handlers.vaccine;
 import core.domain.bus.query.Query;
 import core.domain.bus.query.QueryHandler;
 import core.usecase.vaccine.find.FindAllVaccineUseCaseInterface;
+import java.io.Serializable;
 
 
-public class FindAllVaccineHandler implements QueryHandler {
+public class FindAllVaccineHandler implements QueryHandler, Serializable {
+    private static final long serialVersionUID = 1L;
+
 
     private FindAllVaccineUseCaseInterface useCase;
 

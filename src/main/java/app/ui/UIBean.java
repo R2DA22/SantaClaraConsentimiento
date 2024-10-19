@@ -1,9 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package app.ui;
 
 import app.config.Environment;
@@ -47,7 +41,7 @@ import javax.faces.context.FacesContext;
 import javax.faces.event.PhaseId;
 import javax.servlet.http.HttpServletRequest;
 
-import org.primefaces.context.RequestContext;
+import org.primefaces.PrimeFaces;
 import org.primefaces.model.DefaultStreamedContent;
 import org.primefaces.model.StreamedContent;
 import utilidades.PdfFile;
@@ -237,8 +231,9 @@ public class UIBean implements Serializable {
             professionalSignature.delete();
         }
         this.AlertType = "success";
-        RequestContext.getCurrentInstance().update("@(.formSoporte)");
-        RequestContext.getCurrentInstance().execute("PF('dlgview-pdf').show()");
+        PrimeFaces currentInstance = PrimeFaces.current();
+        currentInstance.ajax().update("@(.formSoporte)");
+        currentInstance.executeScript("PF('dlgview-pdf').show()");
     }
 
     private Signature createSignature(String path, String json) {
@@ -351,7 +346,7 @@ public class UIBean implements Serializable {
                 this.headerMessage = "Información";
                 break;
         }
-        RequestContext.getCurrentInstance().execute("mostrarModalAlert(\"" + message + " \", \"" + typeAlert + "\")");
+        PrimeFaces.current().executeScript("mostrarModalAlert(\"" + message + " \", \"" + typeAlert + "\")");
 
     }
 

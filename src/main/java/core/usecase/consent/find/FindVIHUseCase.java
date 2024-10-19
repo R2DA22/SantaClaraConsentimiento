@@ -4,8 +4,10 @@ import core.domain.consent.VIHData;
 import core.domain.sickness.SicknessList;
 import core.usecase.consent.ConsentRepositoryInterface;
 import infrastructure.repository.consent.ConsentVIHDTO;
+import java.io.Serializable;
 
-public class FindVIHUseCase implements FindVIHDataUseCaseInterface{
+public class FindVIHUseCase implements FindVIHDataUseCaseInterface, Serializable {
+    private static final long serialVersionUID = 1L;
 
     private ConsentRepositoryInterface repository;
 

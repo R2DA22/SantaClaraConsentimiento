@@ -126,7 +126,7 @@ public class DentalConsent extends ConsentInterface implements Command {
             + "                                <td width=\"50%\">\n"
             + "                                        <div style=\"float: left; margin-top: 32px\">\n"
             + "                                            <p>Firma del usuario o acudiente:</p>\n"
-            + "                                            <p>Idetificación:<u><i>@TipoDoc@ @NroDocumento@</p>\n"
+            + "                                            <p>Identificación:<u><i>@TipoDoc@ @NroDocumento@</p>\n"
             + "                                        </div>\n"
             + "                                        <div>\n"
             + "                                            <span class=\"position-firma\">\n"
@@ -180,7 +180,7 @@ public class DentalConsent extends ConsentInterface implements Command {
             + "                                        <div style=\"float: left; margin-top: 32px\">\n"
             + "                                            <p>Firma del usuario o acudiente:</p>\n"
             +
-            "                                            <p>Idetificación:<u style=\"display:@displayFirma@\"><i>@TipoDoc@ @NroDocumento@</p>\n"
+            "                                            <p>Identificación:<u style=\"display:@displayFirma@\"><i>@TipoDoc@ @NroDocumento@</p>\n"
             + "                                        </div>\n"
             + "                                        <div>\n"
             + "                                            <span class=\"position-firma\">\n"
@@ -328,11 +328,11 @@ public class DentalConsent extends ConsentInterface implements Command {
             + "                                        <div style=\"float: left; margin-top: 32px\">\n"
             + "                                            <p>Firma del usuario o acudiente:</p>\n"
             +
-            "                                            <p>Idetificación:<u style=\"display:@displayFirma@\"><i>@TipoDoc@ @NroDocumento@</p>\n"
+            "                                            <p>Identificación:<u><i>@TipoDoc@ @NroDocumento@</p>\n"
             + "                                        </div>\n"
             + "                                        <div>\n"
             + "                                            <span class=\"position-firma\">\n"
-            + "                                                <img style=\"display:@displayFirma@\" class=\"img-firma\" src=\"" +
+            + "                                                <img class=\"img-firma\" src=\"" +
             PATH_IMAGES_APP + NAME_SIGNATURE + "-@docSignature@." + IMAGE_FORMAT + "\" width=\"130\" />\n"
             +
             "                                                <div class=\"subrayado\">______________________________</div>                                 \n"
@@ -348,7 +348,7 @@ public class DentalConsent extends ConsentInterface implements Command {
             + "                                        </div>\n"
             + "                                        <div>\n"
             + "                                            <span class=\"position-firma\">\n"
-            + "                                                <img style=\"display:@displayFirma@\" class=\"img-firma\" src=\"" +
+            + "                                                <img class=\"img-firma\" src=\"" +
             PATH_IMAGES_APP + NAME_SIGNATURE + "-@docSignatureProfessional@." + IMAGE_FORMAT + "\" width=\"130\" />\n"
             + "                                                <div class=\"subrayado\">______________________________</div>\n"
             + "                                            </span>\n"
@@ -382,7 +382,7 @@ public class DentalConsent extends ConsentInterface implements Command {
             + "                                        <div style=\"float: left; margin-top: 32px\">\n"
             + "                                            <p>Firma del usuario o acudiente:</p>\n"
             +
-            "                                            <p>Idetificación:<u style=\"display:@displayFirma@\"><i>@TipoDoc@ @NroDocumento@</p>\n"
+            "                                            <p>Identificación:<u style=\"display:@displayFirma@\"><i>@TipoDoc@ @NroDocumento@</p>\n"
             + "                                        </div>\n"
             + "                                        <div>\n"
             + "                                            <span class=\"position-firma\">\n"

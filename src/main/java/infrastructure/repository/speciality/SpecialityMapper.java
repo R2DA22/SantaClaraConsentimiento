@@ -3,11 +3,14 @@ package infrastructure.repository.speciality;
 import core.domain.speciality.Speciality;
 import core.domain.speciality.SpecialityList;
 
+import java.io.Serializable;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SpecialityMapper implements MapperInterface {
+public class SpecialityMapper implements MapperInterface, Serializable {
+    private static final long serialVersionUID = 1L;
+
 
     public SpecialityMapper() {
     }

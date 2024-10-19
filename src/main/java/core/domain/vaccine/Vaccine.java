@@ -7,14 +7,16 @@ package core.domain.vaccine;
 
 import core.domain.bus.query.Query;
 
+import java.io.Serializable;
 import java.util.Objects;
 
 /**
  *
  * @author diego.ramirez
  */
-public class Vaccine implements Query {
-    
+public class Vaccine implements Query, Serializable {
+    private static final long serialVersionUID = 1L;
+
     private Integer id;
     private String name;
 

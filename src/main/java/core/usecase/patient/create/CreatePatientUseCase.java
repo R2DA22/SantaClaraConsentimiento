@@ -2,8 +2,11 @@ package core.usecase.patient.create;
 
 import core.domain.patient.Patient;
 import core.usecase.patient.PatientRepositoryInterface;
+import java.io.Serializable;
 
-public class CreatePatientUseCase implements CreatePatientUseCaseInterface {
+public class CreatePatientUseCase implements CreatePatientUseCaseInterface, Serializable {
+    private static final long serialVersionUID = 1L;
+
 
     private PatientRepositoryInterface repository;
 

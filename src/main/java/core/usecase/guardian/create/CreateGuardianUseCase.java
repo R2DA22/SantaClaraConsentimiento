@@ -2,8 +2,11 @@ package core.usecase.guardian.create;
 
 import core.domain.patient.Guardian;
 import core.usecase.guardian.GuardianRepositoryInterface;
+import java.io.Serializable;
 
-public class CreateGuardianUseCase implements CreateGuardianUseCaseInterface {
+public class CreateGuardianUseCase implements CreateGuardianUseCaseInterface, Serializable {
+    private static final long serialVersionUID = 1L;
+
 
     private GuardianRepositoryInterface repository;
 

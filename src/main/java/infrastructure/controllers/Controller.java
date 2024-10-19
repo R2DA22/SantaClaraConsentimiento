@@ -4,8 +4,10 @@ import core.domain.bus.command.Command;
 import core.domain.bus.command.CommandBus;
 import core.domain.bus.query.Query;
 import core.domain.bus.query.QueryBus;
+import java.io.Serializable;
 
-public class Controller {
+public class Controller implements Serializable {
+    private static final long serialVersionUID = 1L;
 
     private CommandBus commandBus;
     private QueryBus queryBus;

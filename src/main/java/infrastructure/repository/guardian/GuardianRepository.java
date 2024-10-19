@@ -4,9 +4,12 @@ import core.domain.patient.Guardian;
 import core.usecase.guardian.GuardianRepositoryInterface;
 import infrastructure.repository.ClientDB;
 
+import java.io.Serializable;
 import java.sql.ResultSet;
 
-public class GuardianRepository implements GuardianRepositoryInterface {
+public class GuardianRepository implements GuardianRepositoryInterface, Serializable {
+    private static final long serialVersionUID = 1L;
+
 
     private ClientDB db;
 

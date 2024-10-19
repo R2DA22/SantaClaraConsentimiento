@@ -3,11 +3,14 @@ package infrastructure.repository.area;
 import core.domain.area.Area;
 import core.domain.area.AreaList;
 
+import java.io.Serializable;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AreaMapper  implements MapperInterface{
+public class AreaMapper  implements MapperInterface, Serializable {
+    private static final long serialVersionUID = 1L;
+
 
     public AreaMapper() {
     }

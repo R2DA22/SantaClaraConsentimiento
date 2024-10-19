@@ -6,9 +6,11 @@ import core.domain.professional.ProfessionalList;
 import core.usecase.professional.ProfessionalRepositoryInterface;
 import infrastructure.repository.ClientDB;
 
+import java.io.Serializable;
 import java.sql.ResultSet;
 
-public class ProfessionalRepository implements ProfessionalRepositoryInterface {
+public class ProfessionalRepository implements ProfessionalRepositoryInterface, Serializable {
+    private static final long serialVersionUID = 1L;
 
     private ClientDB dataBase;
     private MapperInterface mapper;

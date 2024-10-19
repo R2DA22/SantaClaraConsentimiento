@@ -4,8 +4,10 @@ import core.domain.bus.query.Query;
 import core.domain.bus.query.QueryHandler;
 import core.domain.configuration.Configuration;
 import core.usecase.configurations.find.FindConfiguratiosUseCaseInterface;
+import java.io.Serializable;
 
-public class FindConfigurationHandler implements QueryHandler {
+public class FindConfigurationHandler implements QueryHandler, Serializable {
+    private static final long serialVersionUID = 1L;
 
     private FindConfiguratiosUseCaseInterface useCase;
 

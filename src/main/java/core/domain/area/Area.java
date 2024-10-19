@@ -7,6 +7,7 @@ package core.domain.area;
 
 import core.domain.bus.query.Query;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -15,8 +16,9 @@ import java.util.Objects;
  *
  * @author diego.ramirez
  */
-public class Area implements Query {
-    
+public class Area implements Query, Serializable {
+    private static final long serialVersionUID = 1L;
+
     private Integer id;
     private String name;
     private List<String> process;

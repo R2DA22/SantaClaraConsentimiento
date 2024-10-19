@@ -3,9 +3,13 @@ package infrastructure.repository.patient;
 import core.domain.patient.DocumentType;
 import core.domain.patient.Patient;
 
+import java.io.Serializable;
 import java.sql.ResultSet;
 
-public class PatientMapper implements MapperInterface {
+public class PatientMapper implements MapperInterface, Serializable {
+
+    private static final long serialVersionUID = 1L;
+
 
     public PatientMapper() {
     }

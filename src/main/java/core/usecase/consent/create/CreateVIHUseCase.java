@@ -2,8 +2,11 @@ package core.usecase.consent.create;
 
 import core.domain.consent.ConsentVIH;
 import core.usecase.consent.ConsentRepositoryInterface;
+import java.io.Serializable;
 
-public class CreateVIHUseCase implements CreateVIHUseCaseInterface {
+public class CreateVIHUseCase implements CreateVIHUseCaseInterface, Serializable {
+    private static final long serialVersionUID = 1L;
+
 
     private ConsentRepositoryInterface repository;
 

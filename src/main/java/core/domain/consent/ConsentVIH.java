@@ -3,6 +3,7 @@ package core.domain.consent;
 import app.config.Configuration;
 import core.domain.bus.command.Command;
 import core.domain.sickness.Sickness;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 

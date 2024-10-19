@@ -3,11 +3,14 @@ package infrastructure.repository.document;
 import core.domain.patient.DocumentType;
 import core.domain.patient.ListDocumentType;
 
+import java.io.Serializable;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DocumentMapper implements MapperInterface {
+public class DocumentMapper implements MapperInterface, Serializable {
+    private static final long serialVersionUID = 1L;
+
 
     public DocumentMapper() {
     }

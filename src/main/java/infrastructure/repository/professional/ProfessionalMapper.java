@@ -8,12 +8,15 @@ import core.domain.professional.ProfessionalList;
 import core.domain.speciality.Speciality;
 import infrastructure.repository.professional.MapperInterface;
 
+import java.io.Serializable;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ProfessionalMapper implements MapperInterface {
+public class ProfessionalMapper implements MapperInterface, Serializable {
+    private static final long serialVersionUID = 1L;
+
 
     public ProfessionalMapper() {
     }

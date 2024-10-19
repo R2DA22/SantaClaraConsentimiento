@@ -2,6 +2,7 @@ package core.domain.consent;
 
 import app.config.Configuration;
 import core.domain.bus.command.Command;
+import java.io.Serializable;
 
 public class EmergencyConsent extends ConsentInterface implements Command {
 

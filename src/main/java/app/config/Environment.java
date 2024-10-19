@@ -73,10 +73,13 @@ import infrastructure.repository.speciality.SpecialityMapper;
 import infrastructure.repository.speciality.SpecialityRepository;
 import infrastructure.repository.vaccine.VaccineMapper;
 import infrastructure.repository.vaccine.VaccineRepository;
+import java.io.Serializable;
 import java.util.Properties;
 
 
-public class Environment {
+public class Environment implements Serializable {
+    private static final long serialVersionUID = 1L;
+
 
     private final Configuration configuration;
     private final Controller controller;

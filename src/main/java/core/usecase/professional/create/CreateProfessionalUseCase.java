@@ -2,8 +2,11 @@ package core.usecase.professional.create;
 
 import core.domain.professional.Professional;
 import core.usecase.professional.ProfessionalRepositoryInterface;
+import java.io.Serializable;
 
-public class CreateProfessionalUseCase implements CreateProfessionalUseCaseInterface {
+public class CreateProfessionalUseCase implements CreateProfessionalUseCaseInterface, Serializable {
+    private static final long serialVersionUID = 1L;
+
 
     private ProfessionalRepositoryInterface repository;
 

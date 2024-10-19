@@ -7,8 +7,10 @@ import core.domain.speciality.Speciality;
 import core.usecase.professional.find.FindProfessionalBySpecialityInterface;
 import core.usecase.professional.find.FindProfessionalBySpecialityUseCase;
 import core.usecase.professional.find.FindProfessionalUseCaseInterface;
+import java.io.Serializable;
 
-public class FindProfessionalBySpecialityHandler implements QueryHandler {
+public class FindProfessionalBySpecialityHandler implements QueryHandler, Serializable {
+    private static final long serialVersionUID = 1L;
 
     private FindProfessionalBySpecialityInterface useCase;
 

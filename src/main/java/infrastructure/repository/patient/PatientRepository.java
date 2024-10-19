@@ -4,9 +4,12 @@ import core.domain.patient.Patient;
 import core.usecase.patient.PatientRepositoryInterface;
 import infrastructure.repository.ClientDB;
 
+import java.io.Serializable;
 import java.sql.ResultSet;
 
-public class PatientRepository implements PatientRepositoryInterface {
+public class PatientRepository implements PatientRepositoryInterface, Serializable {
+    private static final long serialVersionUID = 1L;
+
 
     private ClientDB db;
 

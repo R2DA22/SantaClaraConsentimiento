@@ -5,8 +5,10 @@ import core.domain.bus.command.CommandHandler;
 import core.domain.consent.ConsentVIH;
 import core.domain.consent.CovidConsent;
 import core.usecase.consent.create.CreateVIHUseCaseInterface;
+import java.io.Serializable;
 
-public class CreateVIHConsentHandler implements CommandHandler {
+public class CreateVIHConsentHandler implements CommandHandler, Serializable {
+    private static final long serialVersionUID = 1L;
 
     private CreateVIHUseCaseInterface useCase;
 

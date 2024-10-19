@@ -4,8 +4,11 @@ import core.domain.bus.query.Query;
 import core.domain.bus.query.QueryHandler;
 import core.domain.patient.Guardian;
 import core.usecase.guardian.find.FindGuardianUseCaseInterface;
+import java.io.Serializable;
 
-public class FindGuardianHandler implements QueryHandler {
+public class FindGuardianHandler implements QueryHandler, Serializable {
+    private static final long serialVersionUID = 1L;
+
 
     private FindGuardianUseCaseInterface useCase;
 

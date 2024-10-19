@@ -7,14 +7,17 @@ package core.domain.patient;
 
 import core.domain.bus.query.Query;
 
+import java.io.Serializable;
 import java.util.Objects;
 
 /**
  *
  * @author diego.ramirez
  */
-public class DocumentType implements Query {
-    
+public class DocumentType implements Query, Serializable {
+    private static final long serialVersionUID = 1L;
+
+
     private Integer id;
     private String description;
     private String initials;

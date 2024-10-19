@@ -3,10 +3,13 @@ package infrastructure.repository.consent;
 import core.domain.patient.Patient;
 import core.domain.professional.Professional;
 import core.domain.sickness.Sickness;
+import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
-public class ConsentVIHDTO {
+public class ConsentVIHDTO implements Serializable {
+    private static final long serialVersionUID = 1L;
+
 
     private int id;
     private Boolean dataTreatment;

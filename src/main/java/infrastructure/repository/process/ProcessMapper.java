@@ -2,11 +2,14 @@ package infrastructure.repository.process;
 
 import core.domain.process.Process;
 
+import java.io.Serializable;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ProcessMapper implements MapperInterface {
+public class ProcessMapper implements MapperInterface, Serializable {
+    private static final long serialVersionUID = 1L;
+
 
     private static String ID_OTRO_PROCEDIMIENTO = "18";
 

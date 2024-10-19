@@ -1,6 +1,7 @@
 package app.config;
 
 import java.io.FileInputStream;
+import java.io.Serializable;
 import java.net.URI;
 import java.util.Enumeration;
 import java.util.Properties;
@@ -10,7 +11,8 @@ import java.util.ResourceBundle;
 /**
  * @author diego.ramirez
  */
-public class Configuration {
+public class Configuration implements Serializable {
+    private static final long serialVersionUID = 1L;
 
     private static Configuration instance;
     private Properties properties;

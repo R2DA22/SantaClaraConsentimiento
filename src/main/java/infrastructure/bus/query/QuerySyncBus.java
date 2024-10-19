@@ -5,10 +5,13 @@ import core.domain.bus.query.Query;
 import core.domain.bus.query.QueryBus;
 import core.domain.bus.query.QueryHandler;
 
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
-public class QuerySyncBus implements QueryBus {
+public class QuerySyncBus implements QueryBus, Serializable {
+    private static final long serialVersionUID = 1L;
+
 
     private Map<String, QueryHandler> handlers;
 

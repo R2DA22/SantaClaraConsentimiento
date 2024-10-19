@@ -2,8 +2,11 @@ package core.usecase.professional.find;
 
 import core.domain.professional.Professional;
 import core.usecase.professional.ProfessionalRepositoryInterface;
+import java.io.Serializable;
 
-public class FindProfessionalBySpecialityUseCase implements FindProfessionalBySpecialityInterface{
+public class FindProfessionalBySpecialityUseCase implements FindProfessionalBySpecialityInterface, Serializable {
+    private static final long serialVersionUID = 1L;
+
 
     private ProfessionalRepositoryInterface repository;
 

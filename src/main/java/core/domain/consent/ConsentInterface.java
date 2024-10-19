@@ -10,6 +10,7 @@ import core.domain.patient.Guardian;
 import core.domain.patient.Patient;
 import core.domain.process.Process;
 
+import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
@@ -20,7 +21,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
-public abstract class ConsentInterface implements Command {
+public abstract class ConsentInterface implements Command, Serializable {
+    private static final long serialVersionUID = 1L;
 
     public static final String IMAGE_FORMAT = "png";
     public String APPLICATION_SERVER;
