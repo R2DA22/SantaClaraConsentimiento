@@ -33,6 +33,7 @@ public class PatientMapper implements MapperInterface, Serializable {
                 patient.setOccupation(resultSet.getString("ocupacion"));
                 patient.setEps(resultSet.getString("eps"));
                 patient.setEmail(resultSet.getString("email"));
+                patient.setExpeditionPlace(resultSet.getString("lugar_expedicion"));
                 DocumentType doc = new DocumentType();
                 doc.setDescription(resultSet.getString("tipo_documento"));
                 doc.setId(resultSet.getInt("id_tipo_Documento"));

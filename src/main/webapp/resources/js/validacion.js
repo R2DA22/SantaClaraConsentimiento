@@ -44,7 +44,8 @@ const campos = {
     "test-reason": false,
     "city-patient": false,
     "address-patient": false,
-    "born-date-patient": false
+    "born-date-patient": false,
+    "lugar-expedicion": false
 };
 const validarFormulario = (e) => {
     var miString = e.target.value;
@@ -129,6 +130,9 @@ const validarFormulario = (e) => {
         case nameForm + ":city-patient":
             validarCampo(expresiones.nombre, e.target, "city-patient");
             break;
+        case nameForm + ":lugar-expedicion":
+            validarCampo(expresiones.nombre, e.target, "lugar-expedicion");
+            break;
     }
 };
 const validarFormularioGuardar = (input) => {
@@ -202,6 +206,9 @@ const validarFormularioGuardar = (input) => {
             break;
         case nameForm + ":city-patient":
             validarCampo(expresiones.nombre, input, "city-patient");
+            break;
+        case nameForm + ":lugar-expedicion":
+            validarCampo(expresiones.nombre, input, "lugar-expedicion");
             break;
     }
     submit = false;
@@ -426,6 +433,35 @@ function validarGuardarVIH() {
         && campos["positive-result-reaction"] && (campos["another-mood"] || !mood) && campos["test-reason"]
         && campos["city-patient"] && campos["born-date-patient"]
         && campos["edad-paciente"] && campos["telefono-paciente"] && campos["ocupacion-paciente"]
+    ) {
+        saveConsent();
+    } else {
+        inputs.forEach((input) => {
+            validarFormularioGuardar(input);
+        });
+    }
+}
+
+function validarGuardarVoluntaryDischarge() {
+    const firma = document.getElementById(nameForm + ':firma_value');
+    const bornDate = document.getElementById(nameForm + ':born-date-patient_input');
+    validarCampo(expresiones.date, bornDate, "born-date-patient");
+    if (firma != null) {
+        if (firma.value !== '') {
+            document.getElementById(`${nameForm}:grupo-firma`).classList.remove(formGrupoIncorrecto);
+            document.getElementById(`${nameForm}:grupo-firma`).classList.add(formGrupoCorrecto);
+            document.querySelector(`#${nameForm}\\:grupo-firma .formulario__input-error`).classList.remove('formulario__input-error-activo');
+        } else {
+            document.getElementById(`${nameForm}:grupo-firma`).classList.add(formGrupoIncorrecto);
+            document.getElementById(`${nameForm}:grupo-firma`).classList.remove(formGrupoCorrecto);
+            document.querySelector(`#${nameForm}\\:grupo-firma .formulario__input-error`).classList.add('formulario__input-error-activo');
+        }
+    }
+    if (campos["documento-paciente"]
+        && campos["lugar-expedicion"]
+        && campos["admision"]
+        && campos["nombre-paciente"] && (firma ==null || firma.value !== '')
+        && campos["born-date-patient"]
     ) {
         saveConsent();
     } else {

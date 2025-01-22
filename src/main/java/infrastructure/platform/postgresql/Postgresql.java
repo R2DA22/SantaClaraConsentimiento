@@ -60,8 +60,8 @@ public class Postgresql extends DataBaseManager implements ClientDB, Serializabl
         try {
             this.openConnection();
             String query = "INSERT INTO paciente(id_tipo_documento, documento, nombre, fecha_nacimiento, masculino,estado_civil," +
-                    "ciudad,direccion,telefono,escolaridad,esquema_social,ocupacion,email,eps)" +
-                    " VALUES (?, ?, ?, ?, ?, ?,?, ?, ?, ?, ?, ?, ?, ?)";
+                    "ciudad,direccion,telefono,escolaridad,esquema_social,ocupacion,email,eps,lugar_expedicion)" +
+                    " VALUES (?, ?, ?, ?, ?, ?,?, ?, ?, ?, ?, ?, ?, ?,?)";
             PreparedStatement ps = this.getConnection().prepareStatement(query);
 
             ps.setInt(1, patient.getDocumentType().getId());
@@ -78,6 +78,7 @@ public class Postgresql extends DataBaseManager implements ClientDB, Serializabl
             ps.setObject(12, patient.getOccupation(), Types.VARCHAR);
             ps.setObject(13, patient.getEmail(), Types.VARCHAR);
             ps.setObject(14, patient.getEps(), Types.VARCHAR);
+            ps.setObject(15, patient.getExpeditionPlace(), Types.VARCHAR);
             ps.executeUpdate();
         } finally {
             this.closeConnection();
@@ -90,7 +91,7 @@ public class Postgresql extends DataBaseManager implements ClientDB, Serializabl
             this.openConnection();
             String sql = "UPDATE paciente SET " +
                     "fecha_nacimiento=?,nombre=?,masculino=?,estado_civil=?,ciudad=?,direccion=?," +
-                    "telefono=?,escolaridad=?,esquema_social=?,ocupacion=?,email=?,eps=?"
+                    "telefono=?,escolaridad=?,esquema_social=?,ocupacion=?,email=?,eps=?,lugar_expedicion=?"
                     + " WHERE id_tipo_documento=? AND documento=?";
             PreparedStatement ps = this.getConnection().prepareStatement(sql);
             ps.setObject(1, patient.getBornDate(), Types.DATE);
@@ -105,9 +106,10 @@ public class Postgresql extends DataBaseManager implements ClientDB, Serializabl
             ps.setObject(10, patient.getOccupation(), Types.VARCHAR);
             ps.setString(11, patient.getEmail());
             ps.setString(12, patient.getEps());
+            ps.setString(13, patient.getExpeditionPlace());
 
-            ps.setInt(13, patient.getIdTypeDocument());
-            ps.setString(14, patient.getDocumentNumber());
+            ps.setInt(14, patient.getIdTypeDocument());
+            ps.setString(15, patient.getDocumentNumber());
             ps.executeUpdate();
         } finally {
             this.closeConnection();

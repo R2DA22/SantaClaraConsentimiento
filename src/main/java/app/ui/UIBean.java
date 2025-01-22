@@ -6,6 +6,7 @@ import core.domain.configuration.Configuration;
 import core.domain.consent.ConsentAbandon;
 import core.domain.consent.ConsentInterface;
 import core.domain.consent.ConsentVIH;
+import core.domain.consent.ConsentVoluntaryDischarge;
 import core.domain.consent.CovidConsent;
 import core.domain.consent.DentalConsent;
 import core.domain.consent.DentalCovidConsent;
@@ -412,6 +413,9 @@ public class UIBean implements Serializable {
             if (((HttpServletRequest) ec.getRequest()).getRequestURI().contains("abandono")) {
                 return redirect(8);
             }
+            if (((HttpServletRequest) ec.getRequest()).getRequestURI().contains("retiro_voluntario")) {
+                return redirect(9);
+            }
         }
         return "";
     }
@@ -442,6 +446,10 @@ public class UIBean implements Serializable {
         if (consent instanceof ConsentAbandon) {
             consent = new ConsentAbandon(environment.getConfiguration());
             consent.setCreateConsent(true);
+        }
+
+        if (consent instanceof ConsentVoluntaryDischarge) {
+            consent = new ConsentVoluntaryDischarge(environment.getConfiguration());
         }
     }
 
@@ -489,6 +497,12 @@ public class UIBean implements Serializable {
                 break;
             case 8:
                 consent = new ConsentAbandon(environment.getConfiguration());
+                consent.setGuardian(true);
+                changeTypeDocument();
+                break;
+            case 9:
+                consent = new ConsentVoluntaryDischarge(environment.getConfiguration());
+                findAllProfessional();
                 consent.setGuardian(true);
                 changeTypeDocument();
                 break;

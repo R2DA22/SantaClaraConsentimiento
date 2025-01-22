@@ -24,6 +24,7 @@ public abstract class Person implements Command, Query, Serializable {
 
     private DocumentType documentType;
     private String documentNumber;
+    private String expeditionPlace;
     private String name;
     private Integer age;
     private String phoneNumber;
@@ -211,5 +212,13 @@ public abstract class Person implements Command, Query, Serializable {
 
     public void setAnotherSocialScheme(String anotherSocialScheme) {
         AnotherSocialScheme = anotherSocialScheme;
+    }
+
+    public String getExpeditionPlace() {
+        return expeditionPlace;
+    }
+
+    public void setExpeditionPlace(String expeditionPlace) {
+        this.expeditionPlace = expeditionPlace;
     }
 }

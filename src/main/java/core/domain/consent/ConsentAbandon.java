@@ -25,7 +25,7 @@ public class ConsentAbandon extends ConsentInterface implements Command {
             + "	                    </td>\n"
             + "                     <td >SISTEMA DE GESTION INTEGRADO EN CALIDAD</td>\n"
             + "                     <td >FECHA:</td>\n"
-            + "                     <td >@Fecha@</td>\n"
+            + "                     <td >29/11/2024</td>\n"
             + "                 </tr>\n"
             + "                 <tr>\n"
             + "                     <td  rowspan=\"2\" >PROCEDIMIENTO ANTE ABANDONO DEL @Abandono@</td>\n"
@@ -34,7 +34,7 @@ public class ConsentAbandon extends ConsentInterface implements Command {
             + "                 </tr>\n"
             + "                 <tr>\n"
             + "                     <td >CODIGO:</td>\n"
-            + "                     <td >SBCUO-F-029</td>\n"
+            + "                     <td >@Code@</td>\n"
             + "                 </tr>        \n"
             + "         </tbody>\n"
             + "     </table>\n"
@@ -143,13 +143,17 @@ public class ConsentAbandon extends ConsentInterface implements Command {
     public String getFormat() {
         String html;
         String abandonOf;
+        String codigo;
         if (!this.isGuardian()) {
             abandonOf="ADULTO MAYOR";
+            codigo = "SBCUO-F-29";
         } else {
             abandonOf="MENOR DE EDAD";
+            codigo = "SBCUO-F-28";
         }
         html = FORMAT_DOCUMENT.replace("@docSignature@", this.getSignatureConsent());
         html = html.replace("@Abandono@", abandonOf);
+        html = html.replace("@Code@", codigo);
         html = html.replace("@mAbandono@", abandonOf.toLowerCase());
         html = html.replace("@Fecha@", this.getDate("dd/MM/yyyy"));
         html = html.replace("@Dia@", this.getDay() + " " + this.getDate("dd"));

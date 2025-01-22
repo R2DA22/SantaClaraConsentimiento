@@ -24,6 +24,7 @@
                         </p:selectOneMenu>
                         <p:outputPanel styleClass="formulario__grupo"  id="grupo-documento-acudiente" >
                             <p:outputLabel styleClass="r2da-lbl" value="Nro. documento" />
+                            <p:focus for="documento-acudiente" />
                             <p:inputText id="documento-acudiente" 
                                          onkeypress="if (event.keyCode === 13) {
                                                      siguiente('frmFormulario', 'documento-acudiente');

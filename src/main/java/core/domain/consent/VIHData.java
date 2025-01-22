@@ -1,7 +1,6 @@
 package core.domain.consent;
 
 import core.domain.bus.query.Query;
-import core.domain.patient.DocumentType;
 
 public class VIHData implements Query {
     private int documentType;

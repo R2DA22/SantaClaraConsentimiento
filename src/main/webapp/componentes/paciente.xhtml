@@ -37,6 +37,17 @@
                 <p class="formulario__input-error">El documento solo llevar máximo 15 digitos.</p>
 
             </p:outputPanel>
+            <p:outputPanel styleClass="formulario__grupo" id="grupo-lugar-expedicion" rendered="#{expeditionPlace}">
+                <p:outputLabel styleClass="r2da-lbl" value="Lugar de expedición"/>
+                <p:inputText id="lugar-expedicion"
+                             onkeypress="if (event.keyCode === 13) {
+                                             siguiente('frmFormulario', 'lugar-expedicion');
+                                         }"
+                             styleClass="form-control" value="#{uiBean.consent.patient.expeditionPlace}">
+                    <p:ajax event="blur" process="@this"/>
+                </p:inputText>
+                <p class="formulario__input-error">El lugar de expedición no puede llevar números o caracteres especiales.</p>
+            </p:outputPanel>
             <p:outputPanel styleClass="formulario__grupo" id="grupo-nombre-paciente">
                 <p:outputLabel styleClass="r2da-lbl" value="Nombre"/>
                 <p:inputText id="nombre-paciente"

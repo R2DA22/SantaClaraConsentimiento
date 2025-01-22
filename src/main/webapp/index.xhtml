@@ -54,12 +54,17 @@
                                  onstart="PF('statusDialog').show()"
                                  action="#{uiBean.redirect(6)}"
                                  process="@form"/>
+                <p:commandButton id="btn-10" rendered="true"
+                                 value="Retiro voluntario" styleClass="btn-menu btn-green"
+                                 onstart="PF('statusDialog').show()"
+                                 action="#{uiBean.redirect(9)}"
+                                 process="@form"/>
 
             </p:panelGrid>
         </div>
     </h:form>
     <div class="footer" style="color: black">
-        <h:outputText value="Versión 7.2"/>
+        <h:outputText value="Versión 7.3"/>
     </div>
 </h:body>
 </html>
