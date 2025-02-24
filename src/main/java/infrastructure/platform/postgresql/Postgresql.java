@@ -137,12 +137,14 @@ public class Postgresql extends DataBaseManager implements ClientDB, Serializabl
     public void createGuardian(Guardian guardian) throws Exception {
         try {
             this.openConnection();
-            String sql = "INSERT INTO public.paciente(id_tipo_documento, documento, nombre)"
-                    + "	VALUES (?,?,?);";
+            String sql = "INSERT INTO public.paciente(id_tipo_documento, documento, nombre, lugar_expedicion)"
+                    + "	VALUES (?,?,?,?);";
             PreparedStatement ps = this.getConnection().prepareStatement(sql);
             ps.setInt(1, guardian.getIdTypeDocument());
             ps.setString(2, guardian.getDocumentNumber());
             ps.setString(3, guardian.getName());
+            ps.setObject(4, guardian.getExpeditionPlace(), Types.VARCHAR);
+
             ps.executeUpdate();
         } finally {
             this.closeConnection();
@@ -153,12 +155,14 @@ public class Postgresql extends DataBaseManager implements ClientDB, Serializabl
     public void updateGuardian(Guardian guardian) throws Exception {
         try {
             this.openConnection();
-            String sql = "UPDATE public.paciente SET nombre=?" +
+            String sql = "UPDATE public.paciente SET nombre=?,lugar_expedicion=?" +
                     " WHERE id_tipo_documento=? AND documento=?";
             PreparedStatement ps = this.getConnection().prepareStatement(sql);
-            ps.setInt(2, guardian.getIdTypeDocument());
-            ps.setString(3, guardian.getDocumentNumber());
             ps.setString(1, guardian.getName());
+            ps.setString(2, guardian.getExpeditionPlace());
+            ps.setInt(3, guardian.getIdTypeDocument());
+            ps.setString(4, guardian.getDocumentNumber());
+
             ps.executeUpdate();
         } finally {
             this.closeConnection();

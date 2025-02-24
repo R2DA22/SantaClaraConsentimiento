@@ -25,15 +25,26 @@
                         <p:outputPanel styleClass="formulario__grupo"  id="grupo-documento-acudiente" >
                             <p:outputLabel styleClass="r2da-lbl" value="Nro. documento" />
                             <p:focus for="documento-acudiente" />
-                            <p:inputText id="documento-acudiente" 
+                            <p:inputText id="documento-acudiente"
                                          onkeypress="if (event.keyCode === 13) {
                                                      siguiente('frmFormulario', 'documento-acudiente');
                                                  }"
                                          styleClass="form-control" value="#{uiBean.consent.guardianData.documentNumber}"  >
-                                <p:ajax event="blur" process="@this" update="frmFormulario:grupo-nombre-acudiente"
+                                <p:ajax event="blur" process="@this" update="frmFormulario:grupo-nombre-acudiente,grupo-lugar-expedicion-acudiente"
                                         listener="#{uiBean.findGuardian()}" oncomplete="actualizarInputs()"/>
                             </p:inputText>
                             <p class="formulario__input-error">El documento solo llevar máximo 15 digitos.</p>
+                        </p:outputPanel>
+                        <p:outputPanel styleClass="formulario__grupo" id="grupo-lugar-expedicion-acudiente" rendered="#{expeditionPlace}">
+                            <p:outputLabel styleClass="r2da-lbl" value="Lugar de expedición"/>
+                            <p:inputText id="lugar-expedicion-acudiente"
+                                         onkeypress="if (event.keyCode === 13) {
+                                             siguiente('frmFormulario', 'lugar-expedicion-acudiente');
+                                         }"
+                                         styleClass="form-control" value="#{uiBean.consent.guardianData.expeditionPlace}">
+                                <p:ajax event="blur" process="@this"/>
+                            </p:inputText>
+                            <p class="formulario__input-error">El lugar de expedición no puede llevar números o caracteres especiales.</p>
                         </p:outputPanel>
                         <p:outputPanel styleClass="formulario__grupo"  id="grupo-nombre-acudiente" >
 

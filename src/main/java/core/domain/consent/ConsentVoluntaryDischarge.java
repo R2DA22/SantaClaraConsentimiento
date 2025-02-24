@@ -11,7 +11,7 @@ import javax.ejb.Local;
 public class ConsentVoluntaryDischarge extends ConsentInterface implements Command {
 
     public static final String TYPE = "VoluntaryDischarge";
-    public static final String CODE = "SBCUO-F-037.V1";
+    public static final String CODE = "SBCUO-F-037";
     private static final String URL = "consentimiento_retiro_voluntario.xhtml?faces-redirect=true";
     private String FORMAT_DOCUMENT_WITH_GUARDIAN = "<html>\n"
             + "<head>\n"
@@ -159,7 +159,7 @@ public class ConsentVoluntaryDischarge extends ConsentInterface implements Comma
             "               </tr>\n" +
             "               <tr>\n" +
             "                  <td colspan=\"4\">\n" +
-            "                     Reg.Medico: @NroDocumentoProfessional@\n" +
+            "                     Reg.Medico: @NroRegistro@\n" +
             "                  </td>\n" +
             "               </tr>\n" +
             "            </tbody>\n" +
@@ -217,7 +217,7 @@ public class ConsentVoluntaryDischarge extends ConsentInterface implements Comma
     @Override
     public String getFormat() {
         String html = FORMAT_DOCUMENT_WITH_GUARDIAN.replace("@docSignature@", this.getSignatureConsent());
-
+        html = html.replace("@docSignatureProfessional@", this.getSignatureProfessional());
         html = html.replace("@Fecha@", this.getDate("dd/MM/yyyy"));
         html = html.replace("@Hora@", this.getDate("hh:mm:ss a"));
         html = html.replace("@Dia@", this.getDay() + " " + this.getDate("dd"));
@@ -238,7 +238,7 @@ public class ConsentVoluntaryDischarge extends ConsentInterface implements Comma
         html = html.replace("@NroRegistro@", this.getProfessional().getRegistryNumber().toString());
         html = html.replace("@TipoDocGuardianDescription@", this.getPatient().getGuardian().getDocumentType().getInitials());
         html = html.replace("@NroDocumentoGuardian@", this.getPatient().getGuardian().getDocumentNumber());
-        html = html.replace("@ExpeditionPlace@", this.getPatient().getExpeditionPlace());
+        html = html.replace("@ExpeditionPlace@", this.getPatient().getGuardian().getExpeditionPlace());
         return html;
     }
 

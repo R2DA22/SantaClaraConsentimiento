@@ -47,17 +47,15 @@
                                  value="Abandono" styleClass="btn-menu btn-red" onstart="PF('statusDialog').show()"
                                  action="#{uiBean.redirect(8)}"
                                  process="@form"/>
-                <p:commandButton id="btn-8" rendered="true" style="display: none"
-                                 value="Abandono" styleClass="btn-menu btn-red" />
+                <p:commandButton id="btn-5" rendered="true"
+                                 value="Retiro voluntario" styleClass="btn-menu btn-blue"
+                                 onstart="PF('statusDialog').show()"
+                                 action="#{uiBean.redirect(9)}"
+                                 process="@form"/>
                 <p:commandButton id="btn-6" rendered="true"
                                  value="Profesionales" styleClass="btn-menu btn-green"
                                  onstart="PF('statusDialog').show()"
                                  action="#{uiBean.redirect(6)}"
-                                 process="@form"/>
-                <p:commandButton id="btn-10" rendered="true"
-                                 value="Retiro voluntario" styleClass="btn-menu btn-green"
-                                 onstart="PF('statusDialog').show()"
-                                 action="#{uiBean.redirect(9)}"
                                  process="@form"/>
 
             </p:panelGrid>
