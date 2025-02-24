@@ -45,7 +45,7 @@ const campos = {
     "city-patient": false,
     "address-patient": false,
     "born-date-patient": false,
-    "lugar-expedicion": false
+    "lugar-expedicion-acudiente": false
 };
 const validarFormulario = (e) => {
     var miString = e.target.value;
@@ -130,8 +130,8 @@ const validarFormulario = (e) => {
         case nameForm + ":city-patient":
             validarCampo(expresiones.nombre, e.target, "city-patient");
             break;
-        case nameForm + ":lugar-expedicion":
-            validarCampo(expresiones.nombre, e.target, "lugar-expedicion");
+        case nameForm + ":lugar-expedicion-acudiente":
+            validarCampo(expresiones.nombre, e.target, "lugar-expedicion-acudiente");
             break;
     }
 };
@@ -207,8 +207,8 @@ const validarFormularioGuardar = (input) => {
         case nameForm + ":city-patient":
             validarCampo(expresiones.nombre, input, "city-patient");
             break;
-        case nameForm + ":lugar-expedicion":
-            validarCampo(expresiones.nombre, input, "lugar-expedicion");
+        case nameForm + ":lugar-expedicion-acudiente":
+            validarCampo(expresiones.nombre, input, "lugar-expedicion-acudiente");
             break;
     }
     submit = false;
@@ -458,7 +458,7 @@ function validarGuardarVoluntaryDischarge() {
         }
     }
     if (campos["documento-paciente"]
-        && campos["lugar-expedicion"]
+        && campos["lugar-expedicion-acudiente"]
         && campos["admision"]
         && campos["nombre-paciente"] && (firma ==null || firma.value !== '')
         && campos["born-date-patient"]

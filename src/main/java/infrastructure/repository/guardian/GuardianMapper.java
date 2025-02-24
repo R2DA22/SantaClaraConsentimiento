@@ -20,10 +20,12 @@ public class GuardianMapper implements MapperInterface, Serializable {
                 guardian= new Guardian();
                 guardian.setDocumentNumber(resultSet.getString("documento"));
                 guardian.setName(resultSet.getString("nombre"));
+                guardian.setExpeditionPlace(resultSet.getString("lugar_expedicion"));
                 DocumentType doc = new DocumentType();
                 doc.setDescription(resultSet.getString("tipo_documento"));
                 doc.setId(resultSet.getInt("id_tipo_Documento"));
                 doc.setInitials(resultSet.getString("inicial"));
+
                 guardian.setDocumentType(doc);
             }
         }catch (Exception e){

@@ -12,12 +12,13 @@
                     <ui:include src="componentes/profesional.xhtml" >
                         <ui:param name="profesional" value="true" />
                     </ui:include>
-                    <ui:include src="componentes/acudiente.xhtml"/>
+                    <ui:include src="componentes/acudiente.xhtml">
+                        <ui:param name="expeditionPlace" value="true" />
+                    </ui:include>
                     <ui:include src="componentes/paciente.xhtml">
                         <ui:param name="gender" value="true" />
                         <ui:param name="bornDate" value="true" />
                         <ui:param name="nro_admision" value="true" />
-                        <ui:param name="expeditionPlace" value="true" />
                     </ui:include>
                     <ui:include src="componentes/firmas.xhtml" >
                         <ui:param name="firma_paciente" value="true" />
@@ -25,8 +26,8 @@
                     </ui:include>
                     <p:panelGrid  columns="1" layout="grid" styleClass="ui-panelgrid-blank ui-fluid r2da-pnl-grid"  >
                         <p:commandButton id="btn-submint" value="Guardar" styleClass="btn btn-info btn-confirmar"  
-                                         style="height: 60px;" process="@form" 
-                                         onclick="validarGuardarVoluntaryDischarge();"
+                                         style="height: 60px;" process="@form"
+                                         oncomplete="validarGuardarVoluntaryDischarge();"
                                          />
 
                     </p:panelGrid>

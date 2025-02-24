@@ -112,6 +112,9 @@ public class UIBean implements Serializable {
         try {
             ProfessionalList result = (ProfessionalList) controller.dispatchQuery(new ProfessionalList());
             professionalList = result.getProfessionals();
+            if (!professionalList.isEmpty()){
+                this.consent.setProfessional(professionalList.get(0));
+            }
         } catch (Exception e) {
             Logger.getLogger(UIBean.class.getName()).log(Level.SEVERE, null, e);
         }
@@ -193,7 +196,7 @@ public class UIBean implements Serializable {
                     && !consent.getPatient().getGuardian().isEmptyPerson()) {
                 Guardian guardian = (Guardian) controller.dispatchQuery(consent.getPatient().getGuardian());
                 if (guardian != null) {
-                    consent.getPatient().getGuardian().setName(guardian.getName());
+                    consent.getPatient().setGuardian(guardian);
                 } else {
                     consent.getPatient().getGuardian().setName("");
                 }
@@ -447,7 +450,6 @@ public class UIBean implements Serializable {
             consent = new ConsentAbandon(environment.getConfiguration());
             consent.setCreateConsent(true);
         }
-
         if (consent instanceof ConsentVoluntaryDischarge) {
             consent = new ConsentVoluntaryDischarge(environment.getConfiguration());
         }
@@ -501,8 +503,8 @@ public class UIBean implements Serializable {
                 changeTypeDocument();
                 break;
             case 9:
-                consent = new ConsentVoluntaryDischarge(environment.getConfiguration());
                 findAllProfessional();
+                consent = new ConsentVoluntaryDischarge(environment.getConfiguration());
                 consent.setGuardian(true);
                 changeTypeDocument();
                 break;
